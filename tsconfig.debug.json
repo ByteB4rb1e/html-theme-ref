@@ -1,10 +1,16 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "sourceMap": true,
-    "noEmit": false,
-    "incremental": true,
-    "module": "commonjs",
-    "moduleResolution": "node"
-  }
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "sourceMap": true,
+        "noEmit": false,
+        "incremental": true,
+        "outDir": "build/debug"
+    },
+    "watchOptions": {
+      "watchFile": "useFsEvents",
+      "watchDirectory": "useFsEvents",
+      "fallbackPolling": "dynamicPriority",
+      "synchronousWatchDirectory": true,
+      "excludeDirectories": ["**/node_modules", "build"]
+    }
 }
