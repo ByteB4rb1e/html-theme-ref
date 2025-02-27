@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Unknown Title{% endblock %}</title>
+    <link rel="stylesheet" href="global.css"/>
+    <!-- Include BrowserSync script for auto-reloading -->
+    <script id="__bs_script__">
+        //<![CDATA[ document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.14'><\/script>".replace("HOST", location.hostname)); //]]>
+    </script>
+</head>
+<body>
+    <h1>{% block heading %}Heading{% endblock %}</h1>
+    <p>{% block content %}Content{% endblock %}</p>
+    <pre><code>{% block code %}Code{% endblock %}</code></pre>
+</body>
+</html>

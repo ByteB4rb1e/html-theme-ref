@@ -1,0 +1,49 @@
+{
+  "name": "victorykit-web-theme",
+  "version": "9.4.7",
+  "description": "A minimalist WordPress starter theme.",
+  "author": "Digitoimisto Dude Oy (moro@dude.fi)",
+  "devDependencies": {
+    "@types/moveto": "^1.8.4",
+    "autoprefixer": "^10.4.13",
+    "browser-sync": "^3.0.3",
+    "css-loader": "^7.1.2",
+    "cssnano": "^7.0.6",
+    "glob": "^11.0.0",
+    "gulp": "^5.0.0",
+    "gulp-nunjucks": "^6.0.0",
+    "gulp-nunjucks-render": "^2.2.3",
+    "gulp-postcss": "^9.0.1",
+    "gulp-sass": "^6.0.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-zip": "^6.0.0",
+    "html-webpack-plugin": "^5.6.3",
+    "mini-css-extract-plugin": "^2.9.2",
+    "postcss": "^8.4.31",
+    "sass": "^1.82.0",
+    "sass-loader": "^16.0.4",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2",
+    "webpack": "^5.97.1",
+    "webpack-remove-empty-scripts": "^1.0.4",
+    "webpack-stream": "^7.0.0"
+  },
+  "dependencies": {
+    "airbnb-browser-shims": "^3.3.0",
+    "moveto": "^1.8.2",
+    "reframe.js": "^4.0.2",
+    "vnu-jar": "^24.10.17"
+  },
+  "files": [
+    "build/production/**/*"
+  ],
+  "scripts": {
+    "build-js": "gulp buildJs",
+    "build-css": "gulp buildCss",
+    "build": "gulp build",
+    "watch": "gulp",
+    "clean": "rm -r build dist",
+    "dist": "mkdir -p dist && gulp writePackageJson && cd build/production && npm pack --pack-destination ../../dist"
+  }
+}

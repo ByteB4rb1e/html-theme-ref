@@ -1,0 +1,7 @@
+{
+  "scss_files": "src/scss/**/*.scss",
+  "plugins": ["stylelint-scss"],
+  "severity": "warning",
+  "rules": {
+  }
+}
