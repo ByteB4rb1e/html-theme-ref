@@ -1,0 +1,305 @@
+@use 'sass:math' as math;
+
+@use '../abstracts/variables/colors' as colors;
+@use '../abstracts/variables/typography' as typography;
+@use '../abstracts/variables/spacings' as spacings;
+@use '../abstracts/variables/layout' as layout;
+@use '../components/icon' as icon;
+
+@keyframes animation_blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.1; }
+  100% { opacity: 1; }
+}
+
+.sidebar-container {
+    details.header-menu {
+        > summary::before {
+            position: absolute;
+            right: 0;
+            content: icon.$menu;
+            font-size: typography.$global-settings-size;
+            font-family: icon.$font-family;
+            color: colors.$sidebar-search-icon;
+            transition: 0.2s;
+            margin: 0
+                    spacings.$sidebar-search-icon-horizontal
+                    0
+                    math.div(spacings.$sidebar-search-icon-horizontal, 2);
+            padding-top: math.div(spacings.$sidebar-search-icon-vertical, 2);
+            padding-bottom: math.div(spacings.$sidebar-search-icon-vertical, 2);
+        }
+
+        > summary {
+            line-height: 1;
+            justify-content: space-between;
+            align-items: center;
+            background: colors.$sidebar-search-background;
+            color: #30353b;
+        }
+
+        &[open] {
+            > summary::before {
+                animation-name: animation_blink;
+                animation-timing-function: ease-in;
+                animation-duration: 0.6s; 
+                animation-iteration-count: infinite;
+            }
+
+            > summary {
+                border-bottom: 2px solid #fff9f1;
+            }
+        }
+
+        details.global-options > summary {
+            padding-right: spacings.$sidebar-search-icon-horizontal * 4;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::marker {
+            content: '';
+        }
+    }
+}
+
+/*
+ * Brand on top of the scrollable tree.
+ */
+.sidebar-brand {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    background-color: colors.$sidebar-brand-background;
+    padding: spacings.$sidebar-item-horizontal
+             spacings.$sidebar-item-vertical;
+    text-decoration: none;
+}
+
+.sidebar-brand-text {
+    color: colors.$sidebar-brand-text;
+    overflow-wrap: break-word;
+    margin: 0 0 spacings.$sidebar-item-vertical 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.sidebar-logo-container {
+    margin: spacings.$sidebar-item-vertical 0;
+}
+
+.sidebar-logo {
+    margin: 0 auto;
+    display: block;
+    max-width: 100%;
+}
+
+/*
+ * Search
+ */
+.sidebar-search-container {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    margin-top: 0;
+    padding-top: spacings.$sidebar-search-icon-vertical;
+    padding-bottom: spacings.$sidebar-search-icon-vertical;
+    margin-bottom: 0;
+    position: relative;
+    background: colors.$sidebar-search-background;
+
+    &::before {
+        content: icon.$search;
+        font-family: icon.$font-family;
+        font-size: typography.$global-settings-size;
+        font-weight: 900;
+        position: absolute;
+        right: math.div(spacings.$sidebar-search-icon-horizontal, 2);
+        color: colors.$sidebar-search-icon;
+    }
+
+    &:focus-within {
+        background: colors.$sidebar-search-background-focus;
+
+        &::before {
+            color: colors.$sidebar-search-icon-active;
+            animation-name: animation_blink;
+            animation-timing-function: ease-in;
+            animation-duration: 0.6s; 
+            animation-iteration-count: infinite;
+        }
+    }
+}
+
+.sidebar-search {
+    box-sizing: border-box;
+    border: none;
+    padding: spacings.$sidebar-search-input-vertical
+             spacings.$sidebar-item-horizontal + spacings.$sidebar-search-input-horizontal + 1em
+             spacings.$sidebar-search-input-vertical 
+             spacings.$sidebar-search-input-horizontal;
+    width: 100%;
+    color: white;
+    background: transparent;
+    z-index: 10;
+
+    &:focus {
+        outline: none;
+        color: colors.$sidebar-search-text-active;
+    }
+
+    &::placeholder {
+        font-size: typography.$sidebar-search-input-font-size;
+    }
+}
+
+#searchbox .highlight-link {
+    padding: spacings.$sidebar-item-vertical
+             spacings.$sidebar-item-horizontal
+             0;
+    margin: 0;
+    text-align: center;
+
+    a {
+        color: colors.$sidebar-search-icon-active;
+        font-size: typography.$font-size-small;
+    }
+}
+
+.sidebar-progress-container {
+    background-color: colors.$sidebar-brand-background;
+    padding: 0 spacings.$sidebar-item-vertical;
+    padding-bottom: 2em;
+    font-family: typography.$font-primary;
+    font-size: 0.65rem;
+
+    .text-container {
+        margin: 0.6em 0;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: white;
+    }
+
+    .bar-container .progress-bar { 
+        height: 2px;
+        background-color: white;
+        width: 100%;
+    }
+}
+
+
+/*
+ * Structure/Skeleton of the navigation tree (left)
+ */
+.sidebar-tree {
+    font-family: typography.$font-primary;
+    background: white;
+    font-size: typography.$sidebar-item-font-size;
+    font-weight: bold;
+    margin-top: spacings.$sidebar-tree-space-above;
+    margin-bottom: spacings.$sidebar-item-vertical;
+
+    ul {
+        padding: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+    }
+
+    li {
+        position: relative;
+        margin: 0;
+
+        > ul {
+            margin-left: spacings.$sidebar-item-horizontal;
+        }
+    }
+
+    .icon {
+        color: colors.$sidebar-link-text;
+    }
+
+    .reference {
+        box-sizing: border-box;
+        color: colors.$sidebar-link-text;
+        display: inline-block;
+        line-height: typography.$sidebar-item-line-height;
+        text-decoration: none;
+        overflow-wrap: anywhere;
+        height: 100%;
+        width: 100%;
+        padding: spacings.$sidebar-item-vertical
+                 spacings.$sidebar-item-horizontal;
+
+        &:hover {
+            color: colors.$sidebar-link-text;
+            background: colors.$sidebar-item-background-hover;
+        }
+
+        &.external::after {
+          content: url('data:image/svg+xml,<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="%23607D8B" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11 7h-5a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-5" /><line x1="10" y1="14" x2="20" y2="4" /><polyline points="15 4 20 4 20 9" /></svg>');
+          margin: 0 0.25rem;
+          vertical-align: middle;
+          color: colors.$sidebar-link-text;
+        }
+    }
+
+    // Make the current page reference bold.
+    .current-page > .reference {
+        font-weight: bold;
+    }
+
+    label {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: layout.$sidebar-item-height;
+        width: layout.$sidebar-expander-width;
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: colors.$sidebar-item-expander-background;
+
+        &:hover {
+            background: colors.$sidebar-item-expander-background-hover;
+        }
+    }
+
+    .caption, :not(.caption) > .caption-text {
+        font-size: typography.$sidebar-caption-font-size;
+        color: colors.$sidebar-caption-text;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin: spacings.$sidebar-caption-space-above 0 0 0;
+        padding: spacings.$sidebar-item-vertical 
+                 spacings.$sidebar-item-horizontal;
+    }
+
+    .toctree-l1 {
+        & > .reference,
+        & > label .icon {
+            color: colors.$sidebar-link-text-top-level;
+        }
+    }
+
+    li.has-children {
+        > .reference {
+            padding-right: layout.$sidebar-expander-width;
+        }
+
+        &.current > .reference {
+            background: colors.$sidebar-item-background-current;
+
+            &:hover {
+                background: colors.$sidebar-item-background-hover;
+            }
+        }
+    }
+}
+

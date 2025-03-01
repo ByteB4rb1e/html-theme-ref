@@ -86,11 +86,16 @@ config.plugins.push(new HtmlWebpackPlugin({
     }
 }));
 
+config.entry['dev-server'] = [
+   'webpack/hot/dev-server.js',
+   'webpack-dev-server/client/index.js?hot=true&live-reload=true',
+]
+
 module.exports = {
     ...config,
     devServer: {
         compress: true,
         open: true,
-        watchFiles: ['demo/**/*.htm']
+        watchFiles: ['demo/**/*.htm', 'src/**/*.scss', 'src/**/*.ts']
     },
 };

@@ -1,10 +1,7 @@
 const { resolve } = require("path");
 const config = require('./webpack.config.js');
 
-config.mode = 'development';
-
 config.output.path = resolve(__dirname, 'build/debug');
-
 config.module.rules[1].use[0].options.configFile = 'tsconfig.debug.json';
 
 // disable CSS minification
@@ -12,4 +9,6 @@ config.module.rules[1].use[0].options.configFile = 'tsconfig.debug.json';
 
 module.exports = {
     ...config,
+    mode: 'development',
+    devtool: 'source-map',
 };

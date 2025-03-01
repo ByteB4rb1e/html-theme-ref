@@ -1,0 +1,3 @@
+[submodule "vendor/animate.scss"]
+	path = vendor/animate.scss
+	url = https://github.com/geoffgraham/animate.scss.git
