@@ -1,5 +1,8 @@
 # Tiara's HTML Theming Reference
 
+> Heads, up: I'm still working backwards. The abstract in this README might
+  point to non-existing (but also irrelevant) resources. 
+
 This project is a reference implementation designed to explore and discuss ways
 to standardize HTML5 theme development using CSS3 and ECMAScript 2017. It’s not
 a finished product for public consumption—think of it as a starting point for
@@ -12,8 +15,8 @@ The focus is on:
 
 * **Standardization**: Adhering to W3C standards, UNIX philosophy, and KISS
   principles to create a universal foundation.
-* **Collaboration**: Providing a practical example to discuss how HTML theming can
-  be consistent across platforms and teams.
+* **Collaboration**: Providing a practical example to discuss how HTML theming
+  can be consistent across platforms and teams.
 * **Separation of Concerns**: Keeping things modular and maintainable to support
   stable automation workflows.
 
@@ -21,7 +24,10 @@ This reference implementation is a solid starting point for developers working
 on HTML theme development. It plays nice with all sorts of systems — think CMS
 platforms (WordPress, Typo3), static site generators (Sphinx, Hugo), or even
 micro-blogging setups (Blogger.com) — showing how standardized themes can cut
-down on vendor lock-in and make migrations less of a nightmare.
+down on vendor lock-in and make migrations less of a nightmare. The guidelines
+of the various build subsystems are prioritized over any other practices, UNIX
+philosophy is just the glue to stick it together. Sticky, but not to sticky, so
+that build subsystems also don't cause vendor lock-in.
 
 **Heads-Up**: This is a foundation, not a framework, product, or service. It’s
 here for developers to mess with, build on, and kick around ideas — not a
@@ -31,7 +37,7 @@ and standardization, not something I’m babysitting. This reference
 implementation is the basis for my personal HTML theming though, so there
 definetly is conviction.
 
-This project is licenses under WTFPL. For more information, see
+This project is licensed under WTFPL. For more information, see
 [LICENSE](LICENSE).
 
 ## Goals
@@ -94,19 +100,20 @@ This setup is a proposal—let’s refine it together!
 Want to jump in and shape this standardization effort? Here’s how
 developers can engage:
 
-* **Clone It**: `git clone https://bitbucket.org/tiaracodes/html-tiara-assets.git`
+* **Clone It**: `git clone https://bitbucket.org/tiaracodes/html-theme-ref.git`
 * **Set Up**: Run `sh ./configure` (POSIX) or `git submodule update --init --remote --recursive && npm install` (PowerShell).
-* **Experiment**: Tweak src/, run npm run watch, and test ideas.
-* **Discuss**: Check out [CONTRIBUTING.md](CONTRIBUTING.md) and share your thoughts!
+* **Experiment**: Run `npm run serve-doc`, tweak `src/` and test ideas.
+* **Discuss**: Check out [CONTRIBUTING.md](CONTRIBUTING.md) and share your thoughts in [GitHub Discussions](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions)!
 
 To preview the example and docs: `npm run serve-doc`. It’s a kitchen-sink demo to
 spark ideas — let me know what you think!
 
 ## Customizing It
 
-Make it your own reference:
+Use it as a foundation:
 
-* Update package.json (name, version).
+* Update `package.json` (`name`, `version`).
+* Update `LICENSE`
 * Point to your repo: `git remote set-url origin <your-url>`.
 
 Swap out resources (fonts, icons) if needed — details in the README.
