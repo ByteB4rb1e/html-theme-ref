@@ -1,133 +1,120 @@
-# Tiara's HTML assets
+# Tiara's HTML Theming Reference
 
-This program is my reference implementation for scalable, standardized HTML5
-document theming with CSS3 and ECMAScript 2017. That is all the modern fancy
-stuff for designers, but with UNIX sanity for administrators, and without bloat
-for developers.
+This project is a reference implementation designed to explore and discuss ways
+to standardize HTML5 theme development using CSS3 and ECMAScript 2017. It’s not
+a finished product for public consumption—think of it as a starting point for
+developers to dig into, critique, and build upon as we figure out practices to 
+standardize together. It combines modern frontend techniques with DevOps
+principles to create a scalable, standards-driven theme that generates HTML
+assets for static documents or dynamic web applications.
 
-This is my long-term contribution to finding a maturing reference implementation
-for HTML document theming. It follows well-known practices for frontend
-development and adapts them to DevOps engineering principles. It's the best
-way I could find to enable efficient collaboration between IT-professionals
-with differing specializations, as well as a stable end-to-end automation by
-applying a strict separation of concern, where plausible.
+The focus is on:
 
-Very few modifications were applied to the guildelines, philosophies and
-principles followed.
+* **Standardization**: Adhering to W3C standards, UNIX philosophy, and KISS
+  principles to create a universal foundation.
+* **Collaboration**: Providing a practical example to discuss how HTML theming can
+  be consistent across platforms and teams.
+* **Separation of Concerns**: Keeping things modular and maintainable to support
+  stable automation workflows.
 
-The program, in addition to being a reference implementation, provides a
-complete development environment, documentation with a kitchen-sink, as well as
-CI/CD interface. This way one can easily (and strictly) integrate a common
-theme into content management systems like Wordpress, Typo3, etc., static site
-generators like Sphinx, Hugo, etc., as well as micro-blogging services like
-Blogger.com. This way one can avoid an escalating commitment towards a system,
-because migration to another system is standardized.
+This reference implementation is a solid starting point for developers working
+on HTML theme development. It plays nice with all sorts of systems — think CMS
+platforms (WordPress, Typo3), static site generators (Sphinx, Hugo), or even
+micro-blogging setups (Blogger.com) — showing how standardized themes can cut
+down on vendor lock-in and make migrations less of a nightmare.
+
+**Heads-Up**: This is a foundation, not a framework, product, or service. It’s
+here for developers to mess with, build on, and kick around ideas — not a
+polished, plug-and-play solution. If you’re expecting bug fixes, or feature
+requests, you’re in the wrong place. Think of it as a launchpad for discussion
+and standardization, not something I’m babysitting. This reference
+implementation is the basis for my personal HTML theming though, so there
+definetly is conviction.
+
+This project is licenses under WTFPL. For more information, see
+[LICENSE](LICENSE).
 
 ## Goals
 
-* adherance to W3 guidelines, UNIX philosophy and KISS principle
-* loose-coupling & strict separation of concern
-* styling over scripting
-* well-structured for command-line driven development
-* efficient enough for development on single-screen monitor
-* easy integration into content management systems, static site generators, and
-  other HTML document systems
-* logical grouping through Block-Element-Modifier (BEM) methodology
-* Sass-compliant SCSS stylesheets (7-1 pattern)
-* modern typed vanilla ECMAScript/JavaScript (Typescript)
-* modern up-to date orchestration (latest webpack)
-* 3rd party resources baseline (fonts, glyph icons, CSS animations)
+Here’s what this reference is aiming to achieve — let’s discuss how these align
+with your standardization ideas:
 
-### Software bill of materials (SBOM) - Summary
+* **Strict Standards Compliance**: Following W3C guidelines, UNIX philosophy, and KISS to keep it robust and universal.
 
-* [Tiara's HTML assets (GNU Public License v2)](LICENSE)
-* [Mona Sans Font (SIL Open Font License 1.1)](https://github.com/github/mona-sans/blob/main/LICENSE)
-* [Inter Font (SIL Open Font License 1.1)](https://fonts.google.com/specimen/Inter/license)
-* [*boxicons* iconset (MIT License)](https://github.com/atisawd/boxicons)
+* **Modularity**: Loose coupling and strict separation of concerns for maintainable, standardized workflows.
 
-### Build environment
+* **CSS-First Approach**: Prioritizing CSS over JavaScript to stay lean and standards-focused.
 
-* Build driver: *npm* (`package.json`)
-* CI/CD driver: *GNU Make* (`Makefile`)
-* Orchestrator: *webpack* (`webpack.config.js`, `webpack.config.debug.js`, `webpack.config.doc.js`)
-* Script Transpiler/Linter: *Typescript* (`tsconfig.json`, `tsconfig.debug.json`, `tsconfig.node.json`)
-* Script Testing Framework: *Jest* (`jest.config.js`)
-* Style Transpiler: *Sass* - *Dart 3* ()
-* Style Linter: *Stylelint* ()
-* Style Postprocessor: *postcss*, *nanocss* ()
+* **CLI-Driven Builds**: Command-line tools for automation and reproducibility—core to standardized processes.
 
+* **Resource Efficiency**: Works in constrained setups, making it a practical baseline.
 
-## Getting started
+* **Universal Integration**: Fits into CMS, static site generators, and more to demonstrate standardization across contexts.
 
-The build driver is `npm`, which requires an installation of *Node.js*. Also
-make sure to have *Git* installed.
+* **BEM Methodology**: Logical DOM grouping for consistent structure—thoughts on this approach?
 
-### Clone project
+* **Sass & 7-1 Pattern**: Modular SCSS stylesheets as a potential standard for styling.
 
-```
-git clone https://bitbucket.org/tiaracodes/html-tiara-assets.git
-```
+* **Type-Safe JS**: Using TypeScript for reliable, consistent scripting.
 
-### Initialize build environment
+* **Lean Webpack Setup**: Minimal dependencies for a standardized build process.
 
-In a POSIX shell session run `sh ./configure` to set up the build environment.
+* **Baseline Resources**: Includes fonts, icons, and CSS animations as a starting point—should we tweak these?
 
-Under PowerShell, execute `git submodule update --init --remote --recursive`,
-then `npm install`.
+This is stable but not static—updates will be minimal to keep it consistent as a
+reference. What do you think about these goals? Anything you’d add or change?
 
-### Reinitialize as your own reference implementation
+## Build Environment
 
-Reset `version` and `name` in `package.json`.
+The build setup is designed to show how a standardized HTML theme development
+process could look. It’s technical, reproducible, and open for discussion:
 
-Reset the remote of the repository by executing 
-`git remote set-url origin <url-to-your-repository>`.
+* **npm**: Drives the build via package.json for consistency across environments.
+* **GNU make**: Drives CI/CD for a consistent interface to the build driver
+* **Webpack**: Bundles assets with a lean config — better alternatives?
+* **TypeScript**: Ensures script consistency — overkill or essential?
+* **Sass**: Compiles SCSS with Dart 3 for modular styles. - no contest
+* **Jest**: Tests JS to maintain quality — TDD for the win?
+* **Stylelint**: Enforces style consistency — standard config is enough?
+* **PostCSS & NanoCSS**: Optimizes styles post - build—standard-worthy?
 
-Now you have to decide on whether you want to stick with the baseline of
-3rd-party resources provided. Currently these are `boxicons` (glyph icons), 
-`animate.scss` (css animations), `Mona Sans` (font), and *Inter* (font).
+Key commands:
 
-To remove `boxicons` (glyph icons), you need to either supply a replacement font
-for glyph icons, or remove all references to *icon* definitions. See
-`src/style/vendor/_boxicons.scss`, and `src/style/components/_icon.scss` on
-how `boxicons` is interlinked. Once all references are removed, or replaced,
-you remove the *dev-dependency* `boxicons` from `package.json`.
+`npm run build`: Produces production assets.
+`npm run watch`: Auto-rebuilds for experimentation.
+`npm run serve-doc`: Previews the kitchen-sink example — great for discussing implementation.
+`npm run lint:style`: Checks style standards.
+`npm run test:script`: Validates JS behavior.
+`npm run dist`: Packages it up — how should we share standardized themes?
 
-To remove `animate.scss` (CSS animations), you need to either supply a
-replacement CSS animations, or remove all references to *animations* resources.
-See `src/style/vendor/_animate.scss`, and `src/style/base/_animations.scss` on
-how `animate.scss` is interlinked. Once all references are removed, or replaced,
-you can remove the *animate.scss* git submodule by first deinitializing the
-submodule (`git submodule deinit vendor/animate.scss`), then removing it (`git
-rm vendor/animate.scss`).
+This setup is a proposal—let’s refine it together!
 
-To remove, or replace *Mona sans* (font), or *Inter* (font), you need to either
-supply replacement fonts, or remove all references to them. See
-`src/style/vendor/_monasans.scss`, `src/style/base/_typography.scss`, and
-`src/style/base/_typography.scss` on how fonts are interlinked. Once all
-references are removed, or replaced, you can remove the fonts by deleting their
-respective directories in `vendor/`.
+## Getting Started
 
-Make sure to update the templates of the documentation kitchen-sink under
-`docs/partial`.
+Want to jump in and shape this standardization effort? Here’s how
+developers can engage:
 
-You now have adopted this project. Edit source files under `src/` and use the
-`npm` build driver for development. For more information, see
-[CONTRIBUTING.md](CONTRIBUTING.md).
+**Clone It**: `git clone https://bitbucket.org/tiaracodes/html-tiara-assets.git`
+**Set Up**: Run `sh ./configure` (POSIX) or `git submodule update --init --remote --recursive && npm install` (PowerShell).
+**Experiment**: Tweak src/, run npm run watch, and test ideas.
+**Discuss**: Check out [CONTRIBUTING.md](CONTRIBUTING.md) and share your thoughts!
 
-### Demoing/Documentation
+To preview the example and docs: `npm run serve-doc`. It’s a kitchen-sink demo to
+spark ideas — let me know what you think!
 
-To start a local web server (with hot-reload) of the documentation and
-kitchen-sink, execute `npm run doc`. A new browser window will automatically
-open.
+## Customizing It
 
-### Publishing/Distribution
+Make it your own reference:
 
-The project can be distributed as a NPM package (tarball archive). To do so,
-execute `npm run dist`, then `npm run mypublish`. The sources can be seamlessly
-integrated as subsystem cascade.
+* Update package.json (name, version).
+* Point to your repo: `git remote set-url origin <your-url>`.
 
-### Using CI/CD driver
+Swap out resources (fonts, icons) if needed — details in the README.
 
-During the (POSIX) auto-configuration, an installation of GNU Make will have
-been checked for. GNU Make is the primary build driver for CI/CD of this project
-and is the interface for CI/CD pipelines.
+How would you adapt it?
+
+**Let’s Talk!**
+
+This is all about engaging you and other developers in a discussion. Does this
+setup work as a starting point for standardizing HTML theme development? What’s
+missing? Too heavy? Too light? Hit me up with your feedback — I’m all ears!
