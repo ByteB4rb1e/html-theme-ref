@@ -80,12 +80,12 @@ process could look. It’s technical, reproducible, and open for discussion:
 
 Key commands:
 
-`npm run build`: Produces production assets.
-`npm run watch`: Auto-rebuilds for experimentation.
-`npm run serve-doc`: Previews the kitchen-sink example — great for discussing implementation.
-`npm run lint:style`: Checks style standards.
-`npm run test:script`: Validates JS behavior.
-`npm run dist`: Packages it up — how should we share standardized themes?
+* `npm run build`: Produces production assets.
+* `npm run watch`: Auto-rebuilds for experimentation.
+* `npm run serve-doc`: Previews the kitchen-sink example — great for discussing implementation.
+* `npm run lint:style`: Checks style standards.
+* `npm run test:script`: Validates JS behavior.
+* `npm run dist`: Packages it up — how should we share standardized themes?
 
 This setup is a proposal—let’s refine it together!
 
