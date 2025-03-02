@@ -5,11 +5,8 @@ $line-paragraph: 1.7;
 $font-primary: "Mona Sans", -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
 $font-secondary: "Inter", sans-serif; // Placeholder; replace with your second font
 $font-icon: boxicons !important; // Placeholder; replace with your second font
-
 $sidebar-item-line-height: 1.25;
-
 $sidebar-caption-font-size: 1em;
-
 $font-heading: $font-primary;
 $font-monospace: $font-primary;
 $font-paragraph: $font-primary;
@@ -41,8 +38,6 @@ $font-weight-semibold: 600;
 $font-weight-bold: 700;
 $font-weight-paragraph: $font-weight-regular;
 $font-weight-heading: $font-weight-bold;
-
 $global-settings-size: $font-size-normal;
-
 $sidebar-search-input-font-size: $font-size-normal;
 $sidebar-item-font-size: $font-size-normal;

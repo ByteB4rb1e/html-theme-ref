@@ -2,7 +2,6 @@
 @use '../../helpers/variablefont' as *;
 @use '../../variables/typography' as *;
 @import '../../index';
-@include variablefont('Mona Sans', '../../../../vendor/fonts/monasansvf', 1 999);
 
 
 .themed.theme-tiara.themed--dark {

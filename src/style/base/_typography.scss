@@ -2,6 +2,8 @@
 @use "../abstracts/variables/typography" as typography;
 @use "../abstracts/variables/spacings" as spacings;
 
+@forward '../vendor/monasansvf';
+
 * {
     font-family: typography.$font-primary;
 }

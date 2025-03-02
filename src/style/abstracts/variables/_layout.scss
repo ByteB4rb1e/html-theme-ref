@@ -1,10 +1,9 @@
 $content-padding: 3em;
-$content-padding--small: 1em;
+$content-padding-small: 1em;
 $content-width: 55em;
 $sidebar-width: 16em;
 $content-padded-width: $content-width;
-$content-padded-width--small: $content-width + 2 * $content-padding--small;
+$content-padded-width-small: $content-width + 2 * $content-padding-small;
 $full-width: $content-padded-width;
-
 $sidebar-item-height: 100px;
 $sidebar-expander-width: 50px;

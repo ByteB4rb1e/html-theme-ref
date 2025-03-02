@@ -1,46 +1,51 @@
 {
-  "name": "html-tiara-assets",
-  "version": "1.0.0",
-  "description": "",
-  "author": "Tiara Rodney <t.rodney@administratrix.de>",
-  "devDependencies": {
-    "autoprefixer": "^10.4.19",
-    "css-loader": "^7.1.2",
-    "css-minimizer-webpack-plugin": "^7.0.0",
-    "cssnano": "^7.0.6",
-    "escape-html": "^1.0.3",
-    "html-webpack-plugin": "^5.6.3",
-    "mini-css-extract-plugin": "^2.9.0",
-    "normalize.css": "^8.0.1",
-    "postcss-loader": "^8.1.1",
-    "sass": "^1.77.6",
-    "sass-loader": "^16.0.0",
-    "stylelint": "^16.15.0",
-    "stylelint-config-standard-scss": "^14.0.0",
-    "ts-loader": "^9.5.2",
-    "typescript": "^5.7.3",
-    "webpack": "^5.92.1",
-    "webpack-cli": "^6.0.0",
-    "webpack-dev-server": "^5.2.0",
-    "webpack-remove-empty-scripts": "^1.0.4"
-  },
-  "files": [
-    "build/production/**/*"
-  ],
-  "scripts": {
-    "build": "npm run build:production",
-    "watch": "npm run watch:debug",
-    "demo": "webpack serve -c webpack.config.demo.js",
-    "build:production": "webpack",
-    "build:debug": "webpack -c webpack.config.debug.js",
-    "build:demo": "webpack -c webpack.config.demo.js",
-    "watch:production": "npm run build:production -- --watch",
-    "watch:debug": "npm run build:debug -- --watch",
-    "watch:demo": "npm run build:demo -- --watch",
-    "lint:style": "stylelint -c .stylelintrc.json src/style"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.7.2",
-    "boxicons": "^2.1.4"
-  }
+    "name": "html-tiara-assets",
+    "version": "1.0.0",
+    "description": "",
+    "author": "Tiara Rodney <t.rodney@administratrix.de>",
+    "devDependencies": {
+        "@types/jest": "^29.5.14",
+        "@types/yargs": "^17.0.33",
+        "autoprefixer": "^10.4.19",
+        "css-loader": "^7.1.2",
+        "css-minimizer-webpack-plugin": "^7.0.0",
+        "cssnano": "^7.0.6",
+        "escape-html": "^1.0.3",
+        "html-webpack-plugin": "^5.6.3",
+        "jest": "^29.7.0",
+        "mini-css-extract-plugin": "^2.9.0",
+        "normalize.css": "^8.0.1",
+        "postcss-loader": "^8.1.1",
+        "sass": "^1.77.6",
+        "sass-loader": "^16.0.0",
+        "stylelint": "^16.15.0",
+        "stylelint-config-standard-scss": "^14.0.0",
+        "ts-jest": "^29.2.6",
+        "ts-loader": "^9.5.2",
+        "ts-node": "^10.9.2",
+        "typedoc": "^0.27.9",
+        "typescript": "^5.7.3",
+        "webpack": "^5.92.1",
+        "webpack-cli": "^6.0.0",
+        "webpack-dev-server": "^5.2.0",
+        "yargs": "^17.7.2"
+    },
+    "scripts": {
+        "build": "npm run production",
+        "watch": "npm run watch:debug",
+        "serve-doc": "webpack serve -c webpack.config.doc.js",
+        "production": "webpack",
+        "debug": "webpack -c webpack.config.debug.js",
+        "doc": "webpack -c webpack.config.doc.js",
+        "watch:production": "npm run build:production -- --watch",
+        "watch:debug": "npm run build:debug -- --watch",
+        "watch:doc": "npm run build:doc -- --watch",
+        "lint:style": "stylelint -c .stylelintrc.json src/style",
+        "test:script": "jest",
+        "mypublish": "ts-node -P tsconfig.node.json scripts/publish.ts",
+        "dist": "ts-node -P tsconfig.node.json scripts/pack.ts build/production dist"
+    },
+    "dependencies": {
+        "boxicons": "^2.1.4"
+    }
 }

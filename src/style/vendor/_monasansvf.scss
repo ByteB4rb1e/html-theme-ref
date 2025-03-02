@@ -1,0 +1,3 @@
+@use '../abstracts/font' as *;
+
+@include font('Mona Sans', '../../../vendor/Mona\ Sans/monasansvf', 1 999);
