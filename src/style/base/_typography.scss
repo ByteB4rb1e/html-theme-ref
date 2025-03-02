@@ -1,7 +1,7 @@
 // base/_typography.scss
 @use "../abstracts/variables/typography" as typography;
 @use "../abstracts/variables/spacings" as spacings;
-
+@use "../abstracts/variables/colors" as colors;
 @forward '../vendor/monasansvf';
 
 * {
@@ -25,16 +25,20 @@ article {
     font-size: typography.$font-size-article;
 }
 
+p {
+    margin-top: spacings.$space-half;
+    margin-bottom: spacings.$space-three-quarter;
+    font-family: typography.$font-paragraph;
+    font-size: typography.$font-size-paragraph;
+    line-height: typography.$line-paragraph;
+}
+
 h1, h2, h3, h4, h5, h6 {
     line-height: typography.$line-heading;
     font-family: typography.$font-heading;
     font-weight: typography.$font-weight-heading;
-
     border-radius: spacings.$space-half;
-    margin-top: spacings.$space-half;
-    margin-bottom: spacings.$space-half;
-    margin-left: spacings.$space-neg-half;
-    margin-right: spacings.$space-neg-half;
+    margin: spacings.$space-half spacings.$space-neg-half spacings.$space-half spacings.$space-neg-half;
     padding-left: spacings.$space-half;
     padding-right: spacings.$space-half;
 
@@ -71,17 +75,10 @@ h6 {
 }
 
 small {
-    opacity: 75%;
+    opacity: 0.75;
     font-size: typography.$font-size-small;
 }
 
-p {
-    margin-top: spacings.$space-half;
-    margin-bottom: spacings.$space-three-quarter;
-    font-family: typography.$font-paragraph;
-    font-size: typography.$font-size-paragraph;
-    line-height: typography.$line-paragraph;
-}
 
 hr.docutils {
     height: 1px;
@@ -97,35 +94,21 @@ hr.docutils {
 
 a {
     text-decoration: underline;
-    color: var(--color-link);
-    text-decoration-color: var(--color-link-underline);
+    color: colors.$link;
+    text-decoration-color: colors.$link-underline;
 
     &:visited {
-        color: var(--color-link--visited);
-        text-decoration-color: var(--color-link-underline--visited);
+        color: colors.$link-visited;
+        text-decoration-color: colors.$link-underline-visited;
 
         &:hover {
-            color: var(--color-link--visited--hover);
-            text-decoration-color: var(--color-link-underline--visited--hover);
+            color: colors.$link-visited-hover;
+            text-decoration-color: colors.$link-underline-visited-hover;
         }
-    }
-
-    &:hover {
-        color: var(--color-link--hover);
-        text-decoration-color: var(--color-link-underline--hover);
     }
 
     &.muted-link {
         color: inherit;
     }
 
-    &:hover {
-        color: var(--color-link--hover);
-        text-decoration-color: var(--color-link-underline--hover);
-
-        &:visited {
-            color: var(--color-link--visited--hover);
-            text-decoration-color: var(--color-link-underline--visited--hover);
-        }
-    }
 }

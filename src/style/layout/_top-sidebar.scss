@@ -3,7 +3,7 @@
 @use '../abstracts/variables/typography' as typography;
 @use '../abstracts/variables/spacings' as spacings;
 @use '../abstracts/variables/layout' as layout;
-@use '../components/icon' as icon;
+@use '../components/icon' as icons;
 
 
 .sidebar-container {
@@ -11,9 +11,9 @@
         > summary::before {
             position: absolute;
             right: 0;
-            content: icon.$menu;
+            content: icons.$glyph-menu;
             font-size: typography.$global-settings-size;
-            font-family: icon.$font-family;
+            font-family: icons.$font-family;
             color: colors.$sidebar-search-icon;
             transition: 0.2s;
             margin: 0
@@ -105,8 +105,8 @@
     background: colors.$sidebar-search-background;
 
     &::before {
-        content: icon.$search;
-        font-family: icon.$font-family;
+        content: icons.$glyph-search;
+        font-family: icons.$font-family;
         font-size: typography.$global-settings-size;
         font-weight: 900;
         position: absolute;

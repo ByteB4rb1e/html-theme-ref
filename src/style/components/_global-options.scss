@@ -1,3 +1,4 @@
+@use 'sass:math' as math;
 @use '../abstracts/variables/typography' as typography;
 @use '../abstracts/variables/colors' as colors;
 @use '../abstracts/variables/spacings' as spacings;
@@ -20,7 +21,7 @@ details.global-options {
         color: colors.$sidebar-search-icon;
         transition: 0.2s;
         margin-right: spacings.$sidebar-search-icon-horizontal;
-        margin-left: spacings.$sidebar-search-icon-horizontal / 2;
+        margin-left: math.div(spacings.$sidebar-search-icon-horizontal, 2);
     }
 
     > summary::-webkit-details-marker {
