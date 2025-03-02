@@ -1,6 +1,7 @@
 @use '../abstracts/variables/typography' as typography;
 @use '../abstracts/variables/colors' as colors;
 @use '../abstracts/variables/spacings' as spacings;
+@use 'icon' as icons;
 
 details.global-options {
     > summary {
@@ -13,9 +14,9 @@ details.global-options {
     }
 
     > summary::after {
-        content: '\ea6e';
+        content: icons.$glyph-cog;
         font-size: typography.$global-settings-size;
-        font-family: boxicons;
+        font-family: icons.$font-family;
         color: colors.$sidebar-search-icon;
         transition: 0.2s;
         margin-right: spacings.$sidebar-search-icon-horizontal;

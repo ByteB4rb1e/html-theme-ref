@@ -4,6 +4,7 @@ $font-family: 'boxicons' !important;
 $line-height: 1;
 $glyph-search: boxicons.$search-alt-2;
 $glyph-menu: boxicons.$menu;
+$glyph-cog: boxicons.$cog;
 
 .icon {
     font-family: $font-family;
@@ -22,6 +23,10 @@ $glyph-menu: boxicons.$menu;
 /* see https://github.com/stylelint-scss/stylelint-config-standard-scss/issues/214 */
 /* stylelint-disable selector-class-pattern */
 .icon .icon- {
+    &cog::before {
+        content: $glyph-cog;
+    }
+
     &search::before {
         content: $glyph-search;
     }
