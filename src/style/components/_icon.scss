@@ -19,12 +19,14 @@ $glyph-menu: boxicons.$menu;
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* see https://github.com/stylelint-scss/stylelint-config-standard-scss/issues/214 */
+/* stylelint-disable selector-class-pattern */
 .icon .icon- {
-    &search:before {
+    &search::before {
         content: $glyph-search;
     }
 
-    &menu:before {
+    &menu::before {
         content: $glyph-menu;
     }
 
