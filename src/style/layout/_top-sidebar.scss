@@ -1,16 +1,10 @@
 @use 'sass:math' as math;
-
 @use '../abstracts/variables/colors' as colors;
 @use '../abstracts/variables/typography' as typography;
 @use '../abstracts/variables/spacings' as spacings;
 @use '../abstracts/variables/layout' as layout;
 @use '../components/icon' as icon;
 
-@keyframes animation_blink {
-  0% { opacity: 1; }
-  50% { opacity: 0.1; }
-  100% { opacity: 1; }
-}
 
 .sidebar-container {
     details.header-menu {

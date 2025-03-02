@@ -2,7 +2,6 @@
 
 $font-family: 'boxicons' !important;
 $line-height: 1;
-
 $glyph-search: boxicons.$search-alt-2;
 $glyph-menu: boxicons.$menu;
 
@@ -15,7 +14,6 @@ $glyph-menu: boxicons.$menu;
     text-rendering: auto;
     display: inline-block;
     text-transform: none;
-
     speak: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -25,12 +23,11 @@ $glyph-menu: boxicons.$menu;
     &search:before {
         content: $glyph-search;
     }
+
     &menu:before {
         content: $glyph-menu;
     }
-}
 
-.icon .icon- {
     &xs {
         font-size: 1rem!important;
     }
@@ -48,9 +45,9 @@ $glyph-menu: boxicons.$menu;
     }
 
     &fw {
-        font-size: 1.2857142857em;
+        font-size: 1.2857em;
         line-height: .8em;
-        width: 1.2857142857em;
+        width: 1.2857em;
         height: .8em;
         margin-top: -.2em!important;
         vertical-align: middle;

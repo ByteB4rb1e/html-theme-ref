@@ -1,7 +1,7 @@
 {
-    "name": "html-tiara-assets",
+    "name": "html-tiara-ref",
     "version": "1.0.0",
-    "description": "",
+    "description": "Tiara's HTML Theming Reference",
     "author": "Tiara Rodney <t.rodney@administratrix.de>",
     "devDependencies": {
         "@types/jest": "^29.5.14",

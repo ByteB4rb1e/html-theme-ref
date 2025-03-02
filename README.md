@@ -94,10 +94,10 @@ This setup is a proposal—let’s refine it together!
 Want to jump in and shape this standardization effort? Here’s how
 developers can engage:
 
-**Clone It**: `git clone https://bitbucket.org/tiaracodes/html-tiara-assets.git`
-**Set Up**: Run `sh ./configure` (POSIX) or `git submodule update --init --remote --recursive && npm install` (PowerShell).
-**Experiment**: Tweak src/, run npm run watch, and test ideas.
-**Discuss**: Check out [CONTRIBUTING.md](CONTRIBUTING.md) and share your thoughts!
+* **Clone It**: `git clone https://bitbucket.org/tiaracodes/html-tiara-assets.git`
+* **Set Up**: Run `sh ./configure` (POSIX) or `git submodule update --init --remote --recursive && npm install` (PowerShell).
+* **Experiment**: Tweak src/, run npm run watch, and test ideas.
+* **Discuss**: Check out [CONTRIBUTING.md](CONTRIBUTING.md) and share your thoughts!
 
 To preview the example and docs: `npm run serve-doc`. It’s a kitchen-sink demo to
 spark ideas — let me know what you think!
