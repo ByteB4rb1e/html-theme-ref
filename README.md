@@ -1,25 +1,26 @@
-# tiara - modern UNIX-style HTML document theme that scales...
+# Tiara's HTML assets
 
-Provide scalable, standardized HTML5 document theming with CSS3 and ECMAScript
-2017.
+This program is my reference implementation for scalable, standardized HTML5
+document theming with CSS3 and ECMAScript 2017. That is all the modern fancy
+stuff, but with UNIX sanity, and without bloat.
 
-This is my contribution to finding a maturing boilerplate for HTML document
-theming. It follows well-known practices for frontend development and adapts
-them to DevOps engineering principles. It's the best way I could find to enable
-efficient collaboration between IT-professionals with differing specializations,
-by applying a strict separation of concern, where plausible.
+This is my contribution to finding a maturing reference implementation for HTML
+document theming. It follows well-known practices for frontend development and
+adapts them to DevOps engineering principles. It's the best way I could find to
+enable efficient collaboration between IT-professionals with differing
+specializations, as well as a stable end-to-end automation by applying a strict
+separation of concern, where plausible.
 
 Very few modifications were applied to the guildelines, philosophies and
 principles followed.
 
-The project, in addition to being a skeleton, provides a complete development
-environment, documentation with a kitchen-sink, as well as CI/CD interface, so
-that one can stream-line all HTML theming related activities into a single
-project. This way one can easily (and strictly) integrate a common theme into
-content management systems like Wordpress, Typo3, etc., static site generators
-like Sphinx, Hugo, etc., as well as micro-blogging services like Blogger.com.
-This way one can avoid an escalating commitment towards a system, because
-migration to another system is standardized.
+The program, in addition to being a reference implementation, provides a
+complete development environment, documentation with a kitchen-sink, as well as
+CI/CD interface. This way one can easily (and strictly) integrate a common
+theme into content management systems like Wordpress, Typo3, etc., static site
+generators like Sphinx, Hugo, etc., as well as micro-blogging services like
+Blogger.com. This way one can avoid an escalating commitment towards a system,
+because migration to another system is standardized.
 
 ## Goals
 
