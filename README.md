@@ -79,7 +79,7 @@ process could look. It’s technical, reproducible, and open for discussion:
 * **GNU make**: Drives CI/CD for a consistent interface to the build driver
 * **Webpack**: Bundles assets with a lean config — better alternatives?
 * **TypeScript**: Ensures script consistency — overkill or essential?
-* **Sass**: Compiles SCSS with Dart 3 for modular styles. - no contest
+* **Sass**: Compiles SCSS with Dart 3 for modular styles.
 * **Jest**: Tests JS to maintain quality — TDD for the win?
 * **Stylelint**: Enforces style consistency — standard config is enough?
 * **PostCSS & NanoCSS**: Optimizes styles post - build—standard-worthy?
