@@ -38,6 +38,25 @@ because migration to another system is standardized.
 * modern up-to date orchestration (latest webpack)
 * 3rd party resources baseline (fonts, glyph icons, CSS animations)
 
+### Software bill of materials (SBOM) - Summary
+
+* [Tiara's HTML assets (GNU Public License v2)](LICENSE)
+* [Mona Sans Font (SIL Open Font License 1.1)](https://github.com/github/mona-sans/blob/main/LICENSE)
+* [Inter Font (SIL Open Font License 1.1)](https://fonts.google.com/specimen/Inter/license)
+* [*boxicons* iconset (MIT License)](https://github.com/atisawd/boxicons)
+
+### Build environment
+
+* Build driver: *npm* (`package.json`)
+* CI/CD driver: *GNU Make* (`Makefile`)
+* Orchestrator: *webpack* (`webpack.config.js`, `webpack.config.debug.js`, `webpack.config.doc.js`)
+* Script Transpiler/Linter: *Typescript* (`tsconfig.json`, `tsconfig.debug.json`, `tsconfig.node.json`)
+* Script Testing Framework: *Jest* (`jest.config.js`)
+* Style Transpiler: *Sass* - *Dart 3* ()
+* Style Linter: *Stylelint* ()
+* Style Postprocessor: *postcss*, *nanocss* ()
+
+
 ## Getting started
 
 The build driver is `npm`, which requires an installation of *Node.js*. Also
