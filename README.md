@@ -2,14 +2,15 @@
 
 This program is my reference implementation for scalable, standardized HTML5
 document theming with CSS3 and ECMAScript 2017. That is all the modern fancy
-stuff, but with UNIX sanity, and without bloat.
+stuff for designers, but with UNIX sanity for administrators, and without bloat
+for developers.
 
-This is my contribution to finding a maturing reference implementation for HTML
-document theming. It follows well-known practices for frontend development and
-adapts them to DevOps engineering principles. It's the best way I could find to
-enable efficient collaboration between IT-professionals with differing
-specializations, as well as a stable end-to-end automation by applying a strict
-separation of concern, where plausible.
+This is my long-term contribution to finding a maturing reference implementation
+for HTML document theming. It follows well-known practices for frontend
+development and adapts them to DevOps engineering principles. It's the best
+way I could find to enable efficient collaboration between IT-professionals
+with differing specializations, as well as a stable end-to-end automation by
+applying a strict separation of concern, where plausible.
 
 Very few modifications were applied to the guildelines, philosophies and
 principles followed.
@@ -39,9 +40,14 @@ because migration to another system is standardized.
 
 ## Getting started
 
+The build driver is `npm`, which requires an installation of *Node.js*. Also
+make sure to have *Git* installed.
+
 ### Clone project
 
+```
 git clone https://bitbucket.org/tiaracodes/html-tiara-assets.git
+```
 
 ### Initialize build environment
 
@@ -50,9 +56,12 @@ In a POSIX shell session run `sh ./configure` to set up the build environment.
 Under PowerShell, execute `git submodule update --init --remote --recursive`,
 then `npm install`.
 
-### Reinitialize as your project
+### Reinitialize as your own reference implementation
 
 Reset `version` and `name` in `package.json`.
+
+Reset the remote of the repository by executing 
+`git remote set-url origin <url-to-your-repository>`.
 
 Now you have to decide on whether you want to stick with the baseline of
 3rd-party resources provided. Currently these are `boxicons` (glyph icons), 
