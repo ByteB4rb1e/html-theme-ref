@@ -23,3 +23,6 @@ publish:
 
 dist:
 	npm run dist
+
+configure:
+	autoconf
