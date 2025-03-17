@@ -1,5 +1,13 @@
 # Tiara's HTML Theming Reference
 
+## Table of Contents
+* [Tiara's HTML Theming Reference](#tiaras-html-theming-reference)
+* [Goals](#goals)
+* [Build environment](#build-environment)
+* [Getting started](#getting-started)
+* [Customizing It](#customizing-it)
+* [Let's talk!](#lets-talk)
+
 > Heads, up: I'm still working backwards. The abstract in this README might
   point to non-existing (but also irrelevant) resources. 
 
@@ -64,7 +72,10 @@ with your standardization ideas:
 
 * **Modularity**: Loose coupling and strict separation of concerns for maintainable, standardized workflows.
 
-* **CSS-First Approach**: Prioritizing CSS over JavaScript to stay lean and standards-focused.
+* **CSS-First Approach**: Prioritizing CSS over JavaScript to stay lean and
+  standards-focused. Prioritizing CSS ensures smaller payloads, better
+  performance, and enhanced maintainability, focusing on declarative styling
+  over excessive scripting.
 
 * **CLI-Driven Builds**: Command-line tools for automation and reproducibility—core to standardized processes.
 
@@ -85,7 +96,7 @@ with your standardization ideas:
 This is stable but not static—updates will be minimal to keep it consistent as a
 reference. What do you think about these goals? Anything you’d add or change?
 
-## Build Environment
+## Build environment
 
 The build setup is designed to show how a standardized HTML theme development
 process could look. It’s technical, reproducible, and open for discussion:
@@ -110,20 +121,25 @@ Key commands:
 
 This setup is a proposal—let’s refine it together!
 
-## Getting Started
+## Getting started
 
 Want to jump in and shape this standardization effort? Here’s how
 developers can engage:
 
 * **Clone It**: `git clone https://bitbucket.org/tiaracodes/html-theme-ref.git`
 * **Set Up**: Run `sh ./configure` (POSIX) or `git submodule update --init --remote --recursive && npm install` (PowerShell).
+
 * **Experiment**: Run `npm run serve-doc`, tweak `src/` and test ideas.
 * **Discuss**: Check out [CONTRIBUTING.md](CONTRIBUTING.md) and share your thoughts in [GitHub Discussions](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions)!
 
 To preview the example and docs: `npm run serve-doc`. It’s a kitchen-sink demo to
 spark ideas — let me know what you think!
 
-## Customizing It
+> **A Note on Hosting**: Source code is hosted on Bitbucket, as it prioritizes
+  development over gamification. Discussions take place on GitHub to benefit
+  from its collaborative features and wider community reach.
+
+## Customizing it
 
 Use it as a foundation:
 
@@ -131,12 +147,21 @@ Use it as a foundation:
 * Update `LICENSE`
 * Point to your repo: `git remote set-url origin <your-url>`.
 
-Swap out resources (fonts, icons) if needed — details in the README.
+To customize the theme, you can replace resources (e.g., fonts, icons) or modify
+variables to align with your design needs. Here's an example of updating fonts:
+
+### Example: Updating fonts
+
+To replace the default fonts:
+
+1. Add new font files to `vendor/` and reference them in `src/style/vendors/`
+2. Update the font family variables in `src/style/base/_typography.scss`.
 
 How would you adapt it?
 
-**Let’s Talk!**
+## Let’s talk!
 
 This is all about engaging you and other developers in a discussion. Does this
 setup work as a starting point for standardizing HTML theme development? What’s
-missing? Too heavy? Too light? Hit me up with your feedback — I’m all ears!
+missing? Too heavy? Too light? Hit me up with your feedback — [I’m all ears](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions)!
+
