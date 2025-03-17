@@ -1,3 +1,3 @@
 [submodule "vendor/animate.scss"]
 	path = vendor/animate.scss
-	url = https://github.com/oxbqkwwxfrqccwtg/html-theme-ref.git
+	url = git@github.com:oxbqkwwxfrqccwtg/animate.scss.git
