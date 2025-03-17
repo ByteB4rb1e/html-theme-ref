@@ -3,6 +3,16 @@
 > Heads, up: I'm still working backwards. The abstract in this README might
   point to non-existing (but also irrelevant) resources. 
 
+> Will be ditching BEM methodology in favor of SMACSS. BEM doesn't align
+  with the principles of this reference implementation, since it doesn't really
+  consider scoping to avoid the reuse of components that aren't supposed to be
+  reused. There's one thing that I'm afraid of and that is CSS spaghetti...
+  Though I can also see some challenges with SMACSS coming up in regards to
+  universal state definitions and context-specific styling... Let me make
+  analogy: Let's take a tomato and a coconut and we want to describe the
+  behavior of them rotting. Tomato visibly rots from the outside, the
+  coconut won't. Though it's the same behavior, describing it is different...
+
 This project is a reference implementation designed to explore and discuss ways
 to standardize HTML5 theme development using CSS3 and ECMAScript 2017. It’s not
 a finished product for public consumption—think of it as a starting point for
