@@ -3,7 +3,7 @@
 > Heads, up: I'm still working backwards. The abstract in this README might
   point to non-existing (but also irrelevant) resources. 
 
-> Will be ditching BEM methodology in favor of SMACSS. BEM doesn't align
+> Ditching BEM methodology in favor of SMACSS. BEM doesn't align
   with the principles of this reference implementation, since it doesn't really
   consider scoping to avoid the reuse of components that aren't supposed to be
   reused. There's one thing that I'm afraid of and that is CSS spaghetti...
@@ -48,7 +48,12 @@ implementation is the basis for my personal HTML theming though, so there
 definetly is conviction.
 
 This project is licensed under WTFPL. For more information, see
-[LICENSE](LICENSE).
+[LICENSE](LICENSE). I'm focused on advancing a collaborative standardization
+effort, rather than getting bogged down by licensing politics. The beauty of
+WTFPL is that it aligns perfectly with this project's ethos: unrestricted
+freedom for you to build and collaborate upon without imposing unnecessary
+constraints. And if someone maintains their own fork or even improves upon it,
+that just contributes to the ecosystem around this project.
 
 ## Goals
 
@@ -67,7 +72,7 @@ with your standardization ideas:
 
 * **Universal Integration**: Fits into CMS, static site generators, and more to demonstrate standardization across contexts.
 
-* **BEM Methodology**: Logical DOM grouping for consistent structure—thoughts on this approach?
+* **SMACSS Methodology**: Logical DOM grouping for consistent structure
 
 * **Sass & 7-1 Pattern**: Modular SCSS stylesheets as a potential standard for styling.
 
