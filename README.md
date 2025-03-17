@@ -22,6 +22,8 @@
 * [Getting started](#getting-started)
 * [Customizing It](#customizing-it)
 * [Let's talk!](#lets-talk)
+* [Architecture overview](ARCHITECTURE.md)
+* [Contribution guidelines](CONTRIBUTING.md)
 
 This project is a reference implementation designed to explore and discuss ways
 to standardize HTML5 theme development using CSS3 and ECMAScript 2017. It’s not
