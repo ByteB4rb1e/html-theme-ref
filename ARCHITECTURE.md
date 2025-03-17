@@ -1,5 +1,8 @@
 # Architecture Overview
 
+This project adheres to [IETF RFC2119](https://www.rfc-editor.org/rfc/rfc2119)
+for identifying requirement levels.
+
 ## Styling
 
 This project adopts the [SMACSS (Scalable and Modular Architecture for
@@ -7,7 +10,6 @@ CSS)](https://smacss.com/) methodology, adhering strictly to the [7:1 SCSS
 pattern](https://sass-guidelin.es/#the-7-1-pattern). It focuses on modular,
 maintainable, and scalable styles while leveraging scoping and nesting to
 simplify naming conventions.
-
 
 ### 0. src/style/main.scss
 
@@ -33,11 +35,8 @@ structured order to compile the final CSS. It's the *1* in *7:1*.
 
 ### 1. src/style/base/
 
-This folder contains foundational styles and globally shared behaviors that
-apply across all components.
-
-Purpose: Define shared behaviors and base styles to maintain consistency
-throughout the project.
+The `base/` directory contains foundational styles and globally shared behaviors
+that apply across all components.
 
 **Example:** `_base.scss`
 
@@ -63,6 +62,9 @@ throughout the project.
 The `components/` directory contains styles for reusable UI components. Each
 file focuses on the content and functionality of a specific component in
 isolation.
+
+Contextual overrides (like `.is-rotten` for tomato and coconut) are managed at the
+component level.
 
 **Example**: `_header.scss`
 
@@ -117,7 +119,7 @@ broader layout context.
 ### 4. src/style/pages/
 
 The `pages/` directory contains stylesheets specific to unique page templates.
-These styles should not be reused across other pages.
+These styles SHOULD NOT be reused across other pages.
 
 **Example:** `_about.scss`
 
