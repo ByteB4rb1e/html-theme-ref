@@ -165,7 +165,8 @@ To replace the default fonts:
 1. Add new font files to `vendor/` and reference them in `src/style/vendors/`
 2. Update the font family variables in `src/style/base/_typography.scss`.
 
-How would you adapt it?
+How would you adapt it? You can find more examples in the [Contribution
+guidelines](CONTRIBUTING.md).
 
 <a name="lets-talk"></a>
 ## Let’s talk!
