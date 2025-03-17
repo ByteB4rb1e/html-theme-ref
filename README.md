@@ -1,12 +1,5 @@
+<a name="tiaras-html-theming-reference"></a>
 # Tiara's HTML Theming Reference
-
-## Table of Contents
-* [Tiara's HTML Theming Reference](#tiaras-html-theming-reference)
-* [Goals](#goals)
-* [Build environment](#build-environment)
-* [Getting started](#getting-started)
-* [Customizing It](#customizing-it)
-* [Let's talk!](#lets-talk)
 
 > Heads, up: I'm still working backwards. The abstract in this README might
   point to non-existing (but also irrelevant) resources. 
@@ -20,6 +13,15 @@
   analogy: Let's take a tomato and a coconut and we want to describe the
   behavior of them rotting. Tomato visibly rots from the outside, the
   coconut won't. Though it's the same behavior, describing it is different...
+  Let's discuss this [here](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions/2)
+
+## Table of Contents
+* [Tiara's HTML Theming Reference](#tiaras-html-theming-reference)
+* [Goals](#goals)
+* [Build environment](#build-environment)
+* [Getting started](#getting-started)
+* [Customizing It](#customizing-it)
+* [Let's talk!](#lets-talk)
 
 This project is a reference implementation designed to explore and discuss ways
 to standardize HTML5 theme development using CSS3 and ECMAScript 2017. It’s not
@@ -63,6 +65,7 @@ freedom for you to build and collaborate upon without imposing unnecessary
 constraints. And if someone maintains their own fork or even improves upon it,
 that just contributes to the ecosystem around this project.
 
+<a name="goals"></a>
 ## Goals
 
 Here’s what this reference is aiming to achieve — let’s discuss how these align
@@ -96,6 +99,7 @@ with your standardization ideas:
 This is stable but not static—updates will be minimal to keep it consistent as a
 reference. What do you think about these goals? Anything you’d add or change?
 
+<a name="build-environment"></a>
 ## Build environment
 
 The build setup is designed to show how a standardized HTML theme development
@@ -121,6 +125,7 @@ Key commands:
 
 This setup is a proposal—let’s refine it together!
 
+<a name="getting-started"></a>
 ## Getting started
 
 Want to jump in and shape this standardization effort? Here’s how
@@ -139,6 +144,7 @@ spark ideas — let me know what you think!
   development over gamification. Discussions take place on GitHub to benefit
   from its collaborative features and wider community reach.
 
+<a name="customizing-it"></a>
 ## Customizing it
 
 Use it as a foundation:
@@ -159,6 +165,7 @@ To replace the default fonts:
 
 How would you adapt it?
 
+<a name="lets-talk"></a>
 ## Let’s talk!
 
 This is all about engaging you and other developers in a discussion. Does this
