@@ -37,7 +37,7 @@ const BUILDTARGET = 'doc';
 const BUILDDIR = 'build';
 const DOC_PARTIAL_EXT = '.htm';
 const DOC_PARTIAL_PATH = ['docs', 'partial'];
-const DOC_SANDBOX_BASEDIR = 'sandbox';
+const DOC_SANDBOX_BASEDIR = '';
 const DOC_PARTIALS = findFilesBySuffix(path.join(...DOC_PARTIAL_PATH), DOC_PARTIAL_EXT);
 
 config.output.path = path.resolve(__dirname, path.join(BUILDDIR, BUILDTARGET));
