@@ -35,8 +35,25 @@ structured order to compile the final CSS. It's the *1* in *7:1*.
 
 ### 1. src/style/base/
 
-The `base/` directory contains foundational styles and globally shared behaviors
-that apply across all components.
+This directory contains foundational styles for the project, grouped by HTML
+elements and semantic purposes. The organization adheres to the principle of
+avoiding unnecessary abstraction, making the structure self-explanatory and easy
+to maintain. Applying SMACSS conventions SHOULD follow the semantic grouping
+defined in the HTML5 specification.
+
+1. **Plain Element Grouping**:
+   - Styles are grouped by element to ensure clarity and reduce abstraction.
+
+2. **Semantic Alignment**:
+   - Semantic stylesheets mirror HTML5 semantic groupings for intuitive
+     organization.
+   - This alignment with SMACSS principles ensures logical and scalable
+     structuring.
+
+3. **Maintainability**:
+   - Files are modular and scalable. Additional rules for an element or semantic
+     group can easily be added to the corresponding file without affecting
+     unrelated styles.
 
 **Example:** `_base.scss`
 
@@ -56,6 +73,32 @@ that apply across all components.
     opacity: 0.6;
 }
 ```
+
+
+#### Semantic Stylesheets:
+
+For logical grouping based on HTML5 specifications:
+
+* **`_sections.scss`**: For semantic section elements such as `article`, `nav`,
+                        `aside`, `header`, etc.
+* **`_grouping-content.scss`**: Handles grouping content (`<p>`, `<div>`,
+                                `<ul>`, etc.).
+* **`_links.scss`**: Specific to links (`<a>`).
+* **`_edits.scss`**: Includes styling for edit elements like `mark`, `del`, and
+                     `ins`.
+* **`_embedded.scss`**: Styles for embedded content (`<img>`, `<video>`, etc.).
+* **`_tabular.scss`**: Styles specific to tabular data (`<table>`, `<thead>`,
+                       `<td>`, etc.).
+* **`_text-level-semantics.scss`**: Styles specific to text-level stuff
+                                    (`<small>`, `<kbd>`, etc.).
+* **`_forms.scss`**: Form-related elements such as `input`, `button`,
+                     `textarea`.
+* **`_interactive.scss`**: Interactive elements like `details` and `summary`.
+* **`_scripting.scss`**: For scripting-related elements like `<template>` and
+                         `<canvas>`.
+
+> NOTE: Not all stylesheets will probably be defined at this time. This is more
+  to give an orientation of where what should go.
 
 ### 2. src/style/components/
 
