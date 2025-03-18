@@ -1,0 +1,49 @@
+@use '../components/icon' as icons;
+
+ul.nav-tree {
+    list-style: none;
+    margin: 0;
+
+    &.is-root {
+    }
+
+    &.is-subtree {
+    }
+
+    > li.nav-item {
+        &:hover {
+            background: grey;
+        }
+
+        &.has-children {
+            input[type="checkbox"].toggle-button {
+                display: none;
+
+                & + label.toggle {
+                    font-family: icons.$font-family;
+                    text-align: right;
+
+                    &::before {
+                        content: icons.$glyph-chevron-left;
+                    }
+                }
+
+                &:checked {
+                    & + label.toggle {
+                        &::before {
+                            content: icons.$glyph-chevron-down;
+                        }
+
+                        & + .nav-tree.is-subtree {
+                            background: white;
+                        }
+                    }
+                }
+            }
+        }
+
+        > a.nav-link {
+            text-decoration: none;
+        }
+    }
+}

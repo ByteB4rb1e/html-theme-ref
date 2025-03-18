@@ -5,6 +5,8 @@ $line-height: 1;
 $glyph-search: boxicons.$search-alt-2;
 $glyph-menu: boxicons.$menu;
 $glyph-cog: boxicons.$cog;
+$glyph-chevron-left: boxicons.$chevron-left;
+$glyph-chevron-down: boxicons.$chevron-down;
 
 .icon {
     font-family: $font-family;
@@ -29,6 +31,14 @@ $glyph-cog: boxicons.$cog;
 
     &search::before {
         content: $glyph-search;
+    }
+
+    &chevron-left::before {
+        content: $glyph-chevron-left;
+    }
+
+    &chevron-down::before {
+        content: $glyph-chevron-down;
     }
 
     &menu::before {
