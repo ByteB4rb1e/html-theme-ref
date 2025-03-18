@@ -7,6 +7,9 @@
 @forward 'base/typography';
 @forward 'base/animations';
 @forward 'components/global-options';
-@forward 'layout/top-header';
-@forward 'layout/top-footer';
+@forward 'components/nav-tree';
+@forward 'components/site-header';
+@forward 'layout/nav-tree';
+@forward 'layout/site-footer';
+@forward 'layout/site-header';
 @forward 'layout/top-sidebar';

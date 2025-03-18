@@ -1,0 +1,52 @@
+ul.nav-tree {
+    &.is-root {
+        padding: 0;
+    }
+
+    &.is-subtree {
+        height: 0;
+        overflow: hidden;
+        flex-basis: 100%
+    }
+
+    > li.nav-item {
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+
+        > label.toggle {
+            flex-grow: 1;
+        }
+
+        &.has-children {
+            &.is-section {
+                > a.nav-link {
+                    pointer-events: none;
+                }
+            }
+
+            input[type="checkbox"].toggle-button {
+                & + label.toggle {
+                    &::before {
+                    }
+                }
+
+                &:checked {
+                    & + label.toggle {
+                        &::before {
+                        }
+
+                        & + .nav-tree.is-subtree {
+                            height: auto;
+                            overflow: visible;
+                        }
+                    }
+                }
+            }
+        }
+
+        > .nav-link {
+
+        }
+    }
+}

@@ -1,105 +1,101 @@
-@use '../abstracts/variables/breakpoints' as breakpoints;
+@use 'sass:math' as math;
 @use '../abstracts/variables/spacings' as spacings;
-@use '../abstracts/variables/colors' as colors;
-@use '../abstracts/variables/typography' as typography;
+@use '../abstracts/variables/layout' as layout;
+@use '../components/site-header' as component;
 
-/*
- * The very top of the site, element that usually includes
- * the site navigation and search for example.
- */
 .site-header {
-    align-items: flex-start;
-    column-gap: spacings.$grid-gap;
-    display: flex;
-    justify-content: space-between;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: breakpoints.$width-grid-base;
-    padding: spacings.$site-header-padding-block 
-             20px
-             spacings.$site-header-padding-block
-             20px;
-    position: relative;
-    z-index: 15;
-}
+    // CSS variables for dynamic spacing, since using em unit
+    --icon-width: #{component.$icon-size};
+    --icon-height: #{component.$icon-size};
+    --icon-container-horizontal-spacing: calc(var(--icon-width)/2);
+    --icon-container-vertical-spacing: calc(var(--icon-height)/2);
+    --icon-container-width: calc(
+        var(--icon-width) + 
+        var(--icon-container-horizontal-spacing) * 2
+    );
+    --icon-container-height: calc(
+        var(--icon-height) +
+        var(--icon-container-vertical-spacing) * 2
+    );
 
-.site-title {
-    line-height: 0;
-    margin: 0;
+    > details.panel,
+    > details.panel > summary > details.options {
+        position: relative;
 
-    a {
-        align-items: center;
-        display: flex;
+        &:not([open]) {
+            max-height: 0;
+        }
+
+        & > summary::before, form::before {
+            line-height: 1;
+            padding: calc(var(--icon-container-vertical-spacing)/2)
+                     calc(var(--icon-container-horizontal-spacing)/2);
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 1;
+        }
+
+        > summary {
+            height: var(--icon-container-height);
+            position: relative;
+        }
     }
-}
 
-/*
- * Delete the following styles when you start! (marked with --clip--)
- * This is just dummy content and should be removed the instant you start!
- * --clip--
- */
-.site-main {
-    display: grid;
-}
+    > details.panel {
 
-.site-main::after {
-    align-items: center;
-    background-position: 0 0, 100% 0;
-    background-repeat: no-repeat;
-    background-size: 3px 100%;
-    border: 6px solid colors.$black;
-    color: colors.$black;
-    content: 'Build your website here!';
-    display: flex;
-    font-size: clamp(2rem, 3.4vw, 3rem);
-    font-weight: typography.$font-weight-bold;
-    justify-content: center;
-    margin: spacings.$container-padding-block * 2
-            auto
-            spacings.$container-padding-block
-            auto;
-    max-width: breakpoints.$width-grid-base - 40px;
-    order: -1;
-    padding: 40px;
-    position: relative;
-    text-align: center;
-    white-space: nowrap;
-    width: calc(100% - 40px);
-}
+        > summary {
+            align-items: center;
+            justify-content: space-between;
+            line-height: 1;
+        }
 
-.site-branding .site-title {
-    display: none;
-}
+        > summary > details.options {
+            &[open] > summary > form.search input.search-input {
+                float: none;
+                width: 100%;
+            }
 
-.site-branding::after {
-    border: 4px solid colors.$black;
-    color: colors.$black;
-    content: 'Your logo here';
-    font-size: 16px;
-    font-weight: typography.$font-weight-bold;
-    padding: 10px 20px;
-    white-space: nowrap;
+            > summary {
+                margin-right: var(--icon-container-width);
+                padding-right: var(--icon-container-width);
 
-    @media (max-width: breakpoints.$width-max-mobile) {
-        border-color: colors.$white;
-        color: colors.$white;
+                > form.search {
+                    position: relative;
+                    height: var(--icon-container-height);
+                    display: block;
+
+                    input.search-input {
+                        border: none;
+                        box-sizing: border-box;
+                        float:right;
+                        height: var(--icon-container-height);
+                        padding: 0;
+                        vertical-align: top;
+                        width: var(--icon-container-width);
+                        position: relative;
+                        z-index: 1;
+
+                        &:focus {
+                            float: none;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+
+        a.brand {
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            padding: var(--icon-container-vertical-spacing)
+                     spacings.$sidebar-item-horizontal;
+            position: relative;
+
+            > .brand-text {
+                overflow-wrap: break-word;
+            }
+        }
     }
-}
-
-.menu-items-wrapper:not(:has(.menu-items)) {
-    display: flex;
-
-    &::before {
-        align-self: center;
-        color: colors.$black;
-        content: 'Your nav here \00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0 About\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0Services\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0\00A0Pricing\00A0\00A0\00A0\00A0\00A0\00A0\00A0 Contact';
-        display: block;
-        font-weight: typography.$font-weight-semibold;
-        opacity: .2;
-        padding: 15px 0;
-    }
-}
-
-.site-footer {
-    display: none;
 }
