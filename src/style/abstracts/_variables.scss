@@ -1,0 +1,90 @@
+@use '../vendor/boxicons' as boxicons;
+@use '../vendor/monasansvf' as monasansvf;
+@use '../vendor/inter' as inter;
+
+$breakpoint-width-max-layout: 100%;
+$breakpoint-width-max-article: 800px;
+$breakpoint-width-grid-base: 1440px;
+$breakpoint-width-max-mobile: 1030px;
+$breakpoint-container-ipad: 770px;
+$breakpoint-container-ipad-landscape: 1024px;
+$breakpoint-container-mobile: 600px;
+$breakpoint-container-desktop: 1200px;
+$breakpoint-container-small-mobile: 420px;
+$breakpoint-container-tiny-mobile: 354px;
+$breakpoint-width-wide: 1200px;
+$breakpoint-width-full: 100%;
+$color-black: #000;
+$color-blue-chalk: #ece6f2;
+$color-east-bay: #545773;
+$color-pattens-blue: #eaf1f8;
+$color-science-blue: #0049d1;
+$color-scorpion: #5f5f5f;
+$color-valhalla: #2a2d3e;
+$color-white: #fff;
+$color-main: $valhalla;
+$color-heading: $main;
+$color-paragraph: $east-bay;
+$color-link-text: $science-blue;
+$color-link-text-hover: $black;
+$color-error: #cc2e2e;
+$color-success: #21aa14;
+$color-problematic: #b30000;
+$color-foreground-primary: $black; /* for main text and headings */
+$color-foreground-secondary: #5a5c63; /* for secondary text */
+$color-foreground-tertiary: #f8f9fb; // for navigation + ToC
+$color-foreground-muted: #6b6f76; // for muted text
+$color-foreground-border: #878787; // for content borders
+$color-background-primary: white; // for content
+$color-background-secondary: #f8f9fb; // for navigation + ToC
+$color-background-tertiary: rgb(0 110 199); // brand sidebar header
+$color-background-hover: #efeff4ff; // for navigation-item hover
+$color-background-hover-transparent: #efeff400;
+$color-background-border: #eeebee; // for UI borders
+$color-background-item: #ccc; // for "background" items (eg: copybutton)
+$color-brand-primary: #0a4bff;
+$color-brand-content: #2757dd;
+$color-brand-visited: #872ee0;
+$color-link: $color-brand-content;
+$color-link-underline: $color-background-border;
+$color-link-hover: $color-brand-content;
+$color-link-underline-hover: $color-foreground-border;
+$color-link-visited: $color-brand-visited;
+$color-link-underline-visited: $color-background-border;
+$color-link-visited-hover: $color-brand-visited;
+$color-link-underline-visited-hover: $color-foreground-border;
+$font-family-primary: monasansvf.$font-family, -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+$font-family-secondary: inter.$font-family, sans-serif;
+$font-family-glyph: boxicons.$font-family !important;
+$font-family-monospace: $font-family-primary;
+$font-size-normal: 1em;
+$font-size-large: 2em;
+$font-size-small: 0.8rem;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-paragraph: $font-weight-regular;
+$font-weight-heading: $font-weight-bold;
+$glyph-search: boxicons.$search-alt-2;
+$glyph-menu: boxicons.$menu;
+$glyph-cog: boxicons.$cog;
+$glyph-chevron-left: boxicons.$chevron-left;
+$glyph-chevron-down: boxicons.$chevron-down;
+$layout-content-padding: 3em;
+$layout-content-padding-small: 1em;
+$layout-content-width: 55em;
+$layout-sidebar-width: 16em;
+$layout-content-padded-width: $content-width;
+$layout-content-padded-width-small: $content-width + 2 * $content-padding-small;
+$layout-full-width: $content-padded-width;
+$layout-sidebar-item-height: 100px;
+$layout-sidebar-expander-width: 50px;
+$line-height-normal: 1;
+$line-height-little-extra: 1.25;
+$space-none: 0;
+$space-half: 0.5rem;
+$space-three-quarter: 0.75rem;
+$space-default: 1rem;
+$space-one-and-three-quarter: 1.75rem;
+$space-double: 2rem;

@@ -1,9 +1,8 @@
 @use 'sass:math' as math;
-@use '../abstracts/variables/spacings' as spacings;
-@use '../abstracts/variables/layout' as layout;
+@use '../abstracts/variables' as variables;
 @use '../components/site-header' as component;
 
-.site-header {
+header.site-header {
     // CSS variables for dynamic spacing, since using em unit
     --icon-width: #{component.$icon-size};
     --icon-height: #{component.$icon-size};
@@ -43,17 +42,50 @@
     }
 
     > details.panel {
-
         > summary {
             align-items: center;
             justify-content: space-between;
             line-height: 1;
+
+            a.heading {
+                display: flex;
+                flex-direction: column;
+                flex-shrink: 0;
+                padding: var(--icon-container-vertical-spacing)
+                         variables.$space-sidebar-item-horizontal;
+                position: relative;
+
+                > .content {
+                    overflow-wrap: break-word;
+                }
+            }
         }
 
         > summary > details.options {
-            &[open] > summary > form.search input.search-input {
-                float: none;
+            &[open] > summary {
+                display: flex;
+
+                & > form.search {
+                    display: none;
+                }
+            }
+
+            &:not([open]) > summary > a.heading {
+                display: none;
+            }
+
+            // anchor is required to stop click event propagation to the
+            // encapsulating details summary
+            > summary > a.heading {
+                flex-grow: 1;
+                padding: var(--icon-container-vertical-spacing)
+                         variables.$spacing-sidebar-item-horizontal;
                 width: 100%;
+                z-index: 5;
+
+                > .text {
+                    overflow-wrap: break-word;
+                }
             }
 
             > summary {
@@ -61,9 +93,9 @@
                 padding-right: var(--icon-container-width);
 
                 > form.search {
-                    position: relative;
-                    height: var(--icon-container-height);
                     display: block;
+                    height: var(--icon-container-height);
+                    position: relative;
 
                     input.search-input {
                         border: none;
@@ -71,9 +103,9 @@
                         float:right;
                         height: var(--icon-container-height);
                         padding: 0;
+                        position: relative;
                         vertical-align: top;
                         width: var(--icon-container-width);
-                        position: relative;
                         z-index: 1;
 
                         &:focus {
@@ -83,18 +115,10 @@
                     }
                 }
             }
-        }
 
-        a.brand {
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            padding: var(--icon-container-vertical-spacing)
-                     spacings.$sidebar-item-horizontal;
-            position: relative;
-
-            > .brand-text {
-                overflow-wrap: break-word;
+            .options-content {
+                z-index: 4;
+                position: relative;
             }
         }
     }

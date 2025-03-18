@@ -1,22 +1,11 @@
-@use '../abstracts/mixins/font' as *;
+@use '../abstracts/mixins' as mixins;
 
-@include font('boxicons', '../../node_modules/boxicons/fonts/boxicons', 1 999);
+$font-family: 'boxicons';
 
-//@font-face {
-//    font-family: 'boxicons';
-//    font-weight: normal;
-//    font-style: normal;
-//
-//    src: url('../../node_modules/boxicons/fonts/boxicons.eot');
-//    src: url('../../node_modules/boxicons/fonts/boxicons.eot') format('embedded-opentype'),
-//         url('../../node_modules/boxicons/fonts/boxicons.woff2') format('woff2'),
-//         url('../../node_modules/boxicons/fonts/boxicons.woff') format('woff'),
-//         url('../../node_modules/boxicons/fonts/boxicons.ttf') format('truetype'),
-//         url('../../node_modules/boxicons/fonts/boxicons.svg?#boxicons') format('svg');
-//}
+@include mixins.font($font-family, '../../node_modules/boxicons/fonts/boxicons', 1 999);
 
 .bx {
-    font-family: 'boxicons' !important;
+    font-family: $font-family !important;
     font-weight: normal;
     font-style: normal;
     font-variant: normal;

@@ -1,19 +1,11 @@
-@use '../vendor/boxicons' as boxicons;
-
-$font-family: 'boxicons' !important;
-$line-height: 1;
-$glyph-search: boxicons.$search-alt-2;
-$glyph-menu: boxicons.$menu;
-$glyph-cog: boxicons.$cog;
-$glyph-chevron-left: boxicons.$chevron-left;
-$glyph-chevron-down: boxicons.$chevron-down;
+@use '../abstracts/variables' as variables;
 
 .icon {
-    font-family: $font-family;
+    font-family: variables.$font-family-glyph !important;
     font-weight: normal;
     font-style: normal;
     font-variant: normal;
-    line-height: $line-height;
+    line-height: variables.$line-height-normal;
     text-rendering: auto;
     display: inline-block;
     text-transform: none;
@@ -26,23 +18,23 @@ $glyph-chevron-down: boxicons.$chevron-down;
 /* stylelint-disable selector-class-pattern */
 .icon .icon- {
     &cog::before {
-        content: $glyph-cog;
+        content: variables.$glyph-cog;
     }
 
     &search::before {
-        content: $glyph-search;
+        content: variables.$glyph-search;
     }
 
     &chevron-left::before {
-        content: $glyph-chevron-left;
+        content: variables.$glyph-chevron-left;
     }
 
     &chevron-down::before {
-        content: $glyph-chevron-down;
+        content: variables.$glyph-chevron-down;
     }
 
     &menu::before {
-        content: $glyph-menu;
+        content: variables.$glyph-menu;
     }
 
     &xs {

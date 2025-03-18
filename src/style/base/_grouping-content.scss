@@ -1,0 +1,16 @@
+
+// base/_root.scss
+// https://html.spec.whatwg.org/multipage/semantics.html#grouping-content
+@use "../abstracts/variables" as variables;
+
+pre {
+    font-family: variables.$font-family-monospace;
+}
+
+p {
+    font-family: variables.$font-family-primary;
+    font-size: variables.$font-size-normal;
+    line-height: variables.$line-height-normal;
+    margin-top: variables.$space-half;
+    margin-bottom: variables.$space-three-quarter;
+}

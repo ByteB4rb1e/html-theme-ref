@@ -1,4 +1,26 @@
-@charset "UTF-8";
+@use 'sass:math';
+
+@mixin font($family, $src, $weight: normal, $style: normal) {
+    @font-face {
+        font-display: auto;
+        font-family: $family;
+        font-style: $style;
+        font-weight: $weight;
+        src: url('#{$src}.woff2') format('woff2'), url('#{$src}.woff') format('woff');
+    }
+}
+
+@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
+  @if $inset {
+    -webkit-box-shadow:inset $top $left $blur $color;
+    -moz-box-shadow:inset $top $left $blur $color;
+    box-shadow:inset $top $left $blur $color;
+  } @else {
+    -webkit-box-shadow: $top $left $blur $color;
+    -moz-box-shadow: $top $left $blur $color;
+    box-shadow: $top $left $blur $color;
+  }
+}
 
 $map-for-positions: (
   "top": at top,

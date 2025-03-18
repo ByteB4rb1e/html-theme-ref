@@ -1,3 +1,5 @@
+@use '../abstracts/variables' as variables;
+
 ul.nav-tree {
     &.is-root {
         padding: 0;
@@ -16,6 +18,12 @@ ul.nav-tree {
 
         > label.toggle {
             flex-grow: 1;
+            display: flex;
+            align-items: center;
+
+            &::before {
+                flex-grow: 1;
+            }
         }
 
         &.has-children {
@@ -46,7 +54,10 @@ ul.nav-tree {
         }
 
         > .nav-link {
-
+            padding: variables.$space-half
+                     0
+                     variables.$space-half
+                     variables.$space-double;
         }
     }
 }

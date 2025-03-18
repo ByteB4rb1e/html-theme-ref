@@ -1,0 +1,22 @@
+@use "../abstracts/variables" as variables;
+
+footer.site-footer {
+    font-size: variables.$font-size-normal;
+    color: variables.$color-foreground-secondary;
+    background-color: variables.$color-background-secondary;
+
+    @media (max-width: variables.$layout-content-width) {
+        text-align: center;
+    }
+
+    .left-details {
+        font-size: variables.$color-font-size-small;
+    }
+
+    .right-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        text-align: right;
+    }
+}

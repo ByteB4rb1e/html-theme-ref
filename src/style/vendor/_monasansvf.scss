@@ -1,3 +1,5 @@
-@use '../abstracts/mixins/font' as *;
+@use '../abstracts/mixins' as mixins;
 
-@include font('Mona Sans', '../../vendor/Mona\ Sans/monasansvf', 1 999);
+$font-family: 'Mona Sans';
+
+@include mixins.font($font-family, '../../vendor/Mona\ Sans/monasansvf', 1 999);

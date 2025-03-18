@@ -1,0 +1,38 @@
+// base/_text-level-semantics.scss
+// https://html.spec.whatwg.org/multipage/semantics.html#the-root-element
+@use "../abstracts/variables" as variables;
+
+small {
+    opacity: 0.75;
+    font-size: variables.$font-size-small;
+}
+
+a {
+    text-decoration: underline;
+    color: variables.$color-link;
+    text-decoration-color: variables.$color-link-underline;
+
+    &:visited {
+        color: colors.$link-visited;
+        text-decoration-color: variables.$color-link-underline-visited;
+
+        &:hover {
+            color: colors.$link-visited-hover;
+            text-decoration-color: variables.$color-link-underline-visited-hover;
+        }
+    }
+
+    &.muted-link {
+        color: inherit;
+    }
+}
+
+code,
+kbd,
+samp {
+    font-family: variables.$font-family-monospace;
+}
+
+.centered {
+    text-align: center;
+}

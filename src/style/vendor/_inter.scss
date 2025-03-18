@@ -1,0 +1,5 @@
+@use '../abstracts/mixins' as mixins;
+
+$font-family: 'Inter';
+
+@include mixins.font($font-family, '../../vendor/Inter', 1 999);

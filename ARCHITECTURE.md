@@ -74,7 +74,6 @@ defined in the HTML5 specification.
 }
 ```
 
-
 #### Semantic Stylesheets:
 
 For logical grouping based on HTML5 specifications:

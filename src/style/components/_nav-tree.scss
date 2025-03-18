@@ -1,18 +1,20 @@
-@use '../components/icon' as icons;
+@use '../abstracts/variables' as variables;
 
 ul.nav-tree {
     list-style: none;
     margin: 0;
 
-    &.is-root {
-    }
+    //TODO
+    //&.is-root {
+    //}
 
-    &.is-subtree {
-    }
+    //TODO
+    //&.is-subtree {
+    //}
 
     > li.nav-item {
         &:hover {
-            background: grey;
+            background: variables.$color-background-hover;
         }
 
         &.has-children {
@@ -20,22 +22,23 @@ ul.nav-tree {
                 display: none;
 
                 & + label.toggle {
-                    font-family: icons.$font-family;
+                    font-family: variables.$font-family-glyph;
                     text-align: right;
 
                     &::before {
-                        content: icons.$glyph-chevron-left;
+                        content: variables.$glyph-chevron-left;
+                        font-size: variables.$font-size-large;
                     }
                 }
 
                 &:checked {
                     & + label.toggle {
                         &::before {
-                            content: icons.$glyph-chevron-down;
+                            content: variables.$glyph-chevron-down;
                         }
 
                         & + .nav-tree.is-subtree {
-                            background: white;
+                            background: variables.$color-background-primary;
                         }
                     }
                 }

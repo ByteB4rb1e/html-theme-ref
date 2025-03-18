@@ -1,15 +1,12 @@
-@use '../abstracts/variables/colors' as colors;
-@use '../abstracts/variables/typography' as typography;
-@use '../abstracts/mixins/gradient' as *;
-@use '../abstracts/mixins/animations' as *;
-@use '../components/icon' as icons;
+@use '../abstracts/variables' as variables;
+@use '../abstracts/mixins' as mixins;
 
-$icon-size: typography.$font-size-large;
+$icon-size: variables.$font-size-large;
 
-.site-header {
+header.site-header {
     summary::before {
-        color: colors.$sidebar-search-icon;
-        font-family: icons.$font-family;
+        color: variables.$color-sidebar-search-icon;
+        font-family: variables.$font-family-glyph;
         font-size: $icon-size;
         font-weight: normal;
         font-style: normal;
@@ -30,30 +27,34 @@ $icon-size: typography.$font-size-large;
 
     > details.panel {
         > summary:before {
-            content: icons.$glyph-menu;
+            content: variables.$glyph-menu;
         }
 
         > summary {
             @include radial-gradient(
                 circle, 
                 top-right,
-                colors.$sidebar-search-background grey
+                variables.$color-sidebar-search-background grey
             );
             color: #30353b;
         }
 
         > summary > details.options {
+
             > summary::before {
-                content: icons.$glyph-cog;
+                content: variables.$glyph-cog;
             }
 
             > summary {
-                > form.search {
+                > a.heading {
+                    cursor: default;
+                }
 
+                > form.search {
                     &::before {
-                        color: colors.$sidebar-search-icon;
-                        content: icons.$glyph-search;
-                        font-family: icons.$font-family;
+                        color: variables.$color-sidebar-search-icon;
+                        content: variables.$glyph-search;
+                        font-family: variables.$font-family-glyph;
                         font-size: $icon-size;
                         font-weight: 900;
                         pointer-events: none;
@@ -65,7 +66,7 @@ $icon-size: typography.$font-size-large;
                             animation-iteration-count: infinite;
                             animation-name: animation_blink;
                             animation-timing-function: ease-in;
-                            color: colors.$sidebar-search-icon-active;
+                            color: variables.$color-sidebar-search-icon-active;
                             z-index: 2;
                         }
                     }
@@ -77,8 +78,8 @@ $icon-size: typography.$font-size-large;
                         font-size: inherit;
 
                         &:focus {
-                            background: colors.$sidebar-search-background-focus;
-                            color: colors.$sidebar-search-text-active;
+                            background: variables.$color-sidebar-search-background-focus;
+                            color: variables.$color-sidebar-search-text-active;
                             outline: none;
 
                             &::placeholder {
@@ -94,15 +95,17 @@ $icon-size: typography.$font-size-large;
             }
 
             .options-content {
-                background: white;
+                background: variables.$color-background-primary;
+                @include box-shadow(0, 10px, 5px, rgba(0,0,0,0.31));
             }
         }
 
-        a.brand {
+        > summary > details.options > summary > a.heading,
+        a.heading {
             text-decoration: none;
 
-            > .brand-text {
-                color: colors.$sidebar-brand-text;
+            > .content {
+                color: variables.$color-foreground-tertiary;
                 font-size: 1.75rem;
                 font-weight: 600;
             }
