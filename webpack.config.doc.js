@@ -63,6 +63,7 @@ for (var i = 0; i < DOC_PARTIALS.length; i += 1) {
     let c = {
         title: 'Documentation',
         filename: filename,
+        inject: false,
         template: 'docs/template/sandbox.html',
         templateParameters: {
             partial: fs.readFileSync(DOC_PARTIALS[i])
