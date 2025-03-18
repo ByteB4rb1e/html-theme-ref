@@ -33,7 +33,7 @@ module.exports = {
                     loader: 'sass-loader',
                     options: {
                         sassOptions: {
-                            silenceDeprecations: ['import', 'global-builtin'],
+                            silenceDeprecations: ['global-builtin'],
                         },
                     },
                 },
