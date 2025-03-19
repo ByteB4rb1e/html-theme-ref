@@ -4,6 +4,10 @@
 > Heads, up: I'm still working backwards. The abstract in this README might
   point to non-existing (but also irrelevant) resources. 
 
+> a11y... Accessibility somehow always falls short. I've already incorporated a
+  more focused mindset for it, when I define a workflow for creating a color system,
+  but this definetly needs to be incorporated as a core principle.
+
 > Ditching BEM methodology in favor of SMACSS. BEM doesn't align
   with the principles of this reference implementation, since it doesn't really
   consider scoping to avoid the reuse of components that aren't supposed to be
