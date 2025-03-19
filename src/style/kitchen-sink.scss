@@ -1,0 +1,87 @@
+// kitchen-sink.scss
+// custom definitions for kitchen-sink (demo page)
+@use './abstracts/variables' as variables;
+
+@forward './main';
+
+.color- {
+    &primary {
+        &.colored {
+            color: variables.$color-primary;
+        }
+
+        &.colored-background {
+            background-color: variables.$color-primary;
+        }
+
+        &-contrast {
+            &.colored {
+                color: variables.$color-primary-contrast;
+            }
+
+            &.colored-background {
+                background-color: variables.$color-primary-contrast;
+            }
+        }
+    }
+
+    &secondary {
+        &.colored {
+            color: variables.$color-secondary;
+        }
+
+        &.colored-background {
+            background-color: variables.$color-secondary;
+        }
+
+        &-contrast {
+            &.colored {
+                color: variables.$color-secondary-contrast;
+            }
+
+            &.colored-background {
+                background-color: variables.$color-secondary-contrast;
+            }
+        }
+    }
+
+    &tertiary {
+        &.colored {
+            color: variables.$color-tertiary;
+        }
+
+        &.colored-background {
+            background-color: variables.$color-tertiary;
+        }
+
+        &-contrast {
+            &.colored {
+                color: variables.$color-tertiary-contrast;
+            }
+
+            &.colored-background {
+                background-color: variables.$color-tertiary-contrast;
+            }
+        }
+    }
+}
+
+.placeholder {
+    &.square {
+        display: block;
+        height: variables.$font-size-normal;
+        width: variables.$font-size-normal;
+    }
+}
+
+.font-family- {
+    &primary * {
+        font-family: variables.$font-family-primary;
+    }
+    &secondary * {
+        font-family: variables.$font-family-secondary;
+    }
+    &monospace * {
+        font-family: variables.$font-family-monospace;
+    }
+}

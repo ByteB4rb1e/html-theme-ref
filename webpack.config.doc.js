@@ -98,6 +98,12 @@ config.entry['dev-server'] = [
 
 module.exports = {
     ...config,
+    entry: {
+        'kitchen-sink': [
+            "./src/script/main.ts",
+            "./src/style/kitchen-sink.scss"
+        ]
+    },
     devServer: {
         compress: true,
         open: true,
