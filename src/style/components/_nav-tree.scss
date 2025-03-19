@@ -14,7 +14,7 @@ ul.nav-tree {
 
     > li.nav-item {
         &:hover {
-            background: variables.$color-background-hover;
+            background: variables.$color-accent;
         }
 
         &.has-children {
@@ -38,7 +38,7 @@ ul.nav-tree {
                         }
 
                         & + .nav-tree.is-subtree {
-                            background: variables.$color-background-primary;
+                            background: variables.$color-primary;
                         }
                     }
                 }

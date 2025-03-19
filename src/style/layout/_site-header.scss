@@ -52,7 +52,7 @@ header.site-header {
                 flex-direction: column;
                 flex-shrink: 0;
                 padding: var(--icon-container-vertical-spacing)
-                         variables.$space-sidebar-item-horizontal;
+                         variables.$space-three-quarter;
                 position: relative;
 
                 > .content {
@@ -79,7 +79,7 @@ header.site-header {
             > summary > a.heading {
                 flex-grow: 1;
                 padding: var(--icon-container-vertical-spacing)
-                         variables.$spacing-sidebar-item-horizontal;
+                         variables.$space-three-quarter;
                 width: 100%;
                 z-index: 5;
 

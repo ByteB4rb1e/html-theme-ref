@@ -35,38 +35,38 @@ function findFilesBySuffix(root, suffix) {
 
 const BUILDTARGET = 'doc';
 const BUILDDIR = 'build';
-const DOC_PARTIAL_EXT = '.htm';
-const DOC_PARTIAL_PATH = ['docs', 'partial'];
+const DOC_STYLE_EXT = '.htm';
+const DOC_STYLE_PATH = ['docs', 'style'];
 const DOC_SANDBOX_BASEDIR = '';
-const DOC_PARTIALS = findFilesBySuffix(path.join(...DOC_PARTIAL_PATH), DOC_PARTIAL_EXT);
+const DOC_STYLE_PARTIALS = findFilesBySuffix(path.join(...DOC_STYLE_PATH), DOC_STYLE_EXT);
 
 config.output.path = path.resolve(__dirname, path.join(BUILDDIR, BUILDTARGET));
 
 var out = {};
 
-for (var i = 0; i < DOC_PARTIALS.length; i += 1) {
+for (var i = 0; i < DOC_STYLE_PARTIALS.length; i += 1) {
 
-    let dirname = DOC_PARTIALS[i].split(path.sep);
+    let dirname = DOC_STYLE_PARTIALS[i].split(path.sep);
     let basename = dirname.splice(dirname.length - 1, 1);
 
-    let removed = dirname.splice(0, DOC_PARTIAL_PATH.length);
-    if (path.join(...removed) !== path.join(...DOC_PARTIAL_PATH)) {
-        throw new Error(`${removed} != ${DOC_PARTIAL_PATH}`);
+    let removed = dirname.splice(0, DOC_STYLE_PATH.length);
+    if (path.join(...removed) !== path.join(...DOC_STYLE_PATH)) {
+        throw new Error(`${removed} != ${DOC_STYLE_PATH}`);
     }
 
     let filename = path.join(
         DOC_SANDBOX_BASEDIR,
         path.join(...dirname),
-        `${path.basename(path.join(...basename), DOC_PARTIAL_EXT)}.html`
+        `${path.basename(path.join(...basename), DOC_STYLE_EXT)}.html`
     );
 
     let c = {
         title: 'Documentation',
         filename: filename,
         inject: false,
-        template: 'docs/template/sandbox.html',
+        template: 'docs/style/_templates/sandbox.html',
         templateParameters: {
-            partial: fs.readFileSync(DOC_PARTIALS[i])
+            partial: fs.readFileSync(DOC_STYLE_PARTIALS[i])
         },
     };
 
@@ -74,7 +74,7 @@ for (var i = 0; i < DOC_PARTIALS.length; i += 1) {
 
     if (out[outDir] === undefined) { out[outDir] = [] }
 
-    let raw = fs.readFileSync(DOC_PARTIALS[i]);
+    let raw = fs.readFileSync(DOC_STYLE_PARTIALS[i]);
 
     out[outDir].push([filename, escapeHtml(raw)]);
 
@@ -83,7 +83,7 @@ for (var i = 0; i < DOC_PARTIALS.length; i += 1) {
 
 config.plugins.push(new HtmlWebpackPlugin({
     title: "Demo (Kitchen-Sink)",
-    template: "docs/template/index.html",
+    template: "docs/style/_templates/index.html",
     inject: false,
     templateParameters: {
         sandboxes: out,

@@ -2,15 +2,15 @@
 
 footer.site-footer {
     font-size: variables.$font-size-normal;
-    color: variables.$color-foreground-secondary;
-    background-color: variables.$color-background-secondary;
+    color: variables.$color-secondary-contrast;
+    background-color: variables.$color-secondary;
 
     @media (max-width: variables.$layout-content-width) {
         text-align: center;
     }
 
     .left-details {
-        font-size: variables.$color-font-size-small;
+        font-size: variables.$font-size-small;
     }
 
     .right-details {

@@ -1,6 +1,7 @@
-@use '../vendor/boxicons' as boxicons;
-@use '../vendor/monasansvf' as monasansvf;
-@use '../vendor/inter' as inter;
+@use '../vendors/Boxicons/variables' as boxicons;
+@use '../vendors/MonaSans/variables' as monasans;
+@use '../vendors/JetBrainsMono/variables' as jetbrainsmono;
+@use '../vendors/Inter/variables' as inter;
 
 $breakpoint-width-max-layout: 100%;
 $breakpoint-width-max-article: 800px;
@@ -14,49 +15,22 @@ $breakpoint-container-small-mobile: 420px;
 $breakpoint-container-tiny-mobile: 354px;
 $breakpoint-width-wide: 1200px;
 $breakpoint-width-full: 100%;
-$color-black: #000;
-$color-blue-chalk: #ece6f2;
-$color-east-bay: #545773;
-$color-pattens-blue: #eaf1f8;
-$color-science-blue: #0049d1;
-$color-scorpion: #5f5f5f;
-$color-valhalla: #2a2d3e;
-$color-white: #fff;
-$color-main: $valhalla;
-$color-heading: $main;
-$color-paragraph: $east-bay;
-$color-link-text: $science-blue;
-$color-link-text-hover: $black;
 $color-error: #cc2e2e;
 $color-success: #21aa14;
 $color-problematic: #b30000;
-$color-foreground-primary: $black; /* for main text and headings */
-$color-foreground-secondary: #5a5c63; /* for secondary text */
-$color-foreground-tertiary: #f8f9fb; // for navigation + ToC
-$color-foreground-muted: #6b6f76; // for muted text
-$color-foreground-border: #878787; // for content borders
-$color-background-primary: white; // for content
-$color-background-secondary: #f8f9fb; // for navigation + ToC
-$color-background-tertiary: rgb(0 110 199); // brand sidebar header
-$color-background-hover: #efeff4ff; // for navigation-item hover
-$color-background-hover-transparent: #efeff400;
-$color-background-border: #eeebee; // for UI borders
-$color-background-item: #ccc; // for "background" items (eg: copybutton)
-$color-brand-primary: #0a4bff;
-$color-brand-content: #2757dd;
-$color-brand-visited: #872ee0;
-$color-link: $color-brand-content;
-$color-link-underline: $color-background-border;
-$color-link-hover: $color-brand-content;
-$color-link-underline-hover: $color-foreground-border;
-$color-link-visited: $color-brand-visited;
-$color-link-underline-visited: $color-background-border;
-$color-link-visited-hover: $color-brand-visited;
-$color-link-underline-visited-hover: $color-foreground-border;
-$font-family-primary: monasansvf.$font-family, -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+$color-primary: white;
+$color-primary-contrast: #000;
+$color-secondary: #f8f9fb;
+$color-secondary-contrast: #5a5c63;
+$color-tertiary: rgb(0 110 199);
+$color-tertiary-contrast: #f8f9fb;
+$color-neutral-light: #eeeeee;
+$color-neutral-light-contrast: #6b6f76;
+$color-accent: #f8f9fb;
+$font-family-primary: monasans.$font-family, -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
 $font-family-secondary: inter.$font-family, sans-serif;
 $font-family-glyph: boxicons.$font-family !important;
-$font-family-monospace: $font-family-primary;
+$font-family-monospace: jetbrainsmono.$font-family;
 $font-size-normal: 1em;
 $font-size-large: 2em;
 $font-size-small: 0.8rem;
@@ -66,6 +40,17 @@ $font-weight-semibold: 600;
 $font-weight-bold: 700;
 $font-weight-paragraph: $font-weight-regular;
 $font-weight-heading: $font-weight-bold;
+$font-weights: (
+    "Thin": 100,
+    "ExtraLight": 200,
+    "Light": 300,
+    "Regular": 400,
+    "Medium": 500,
+    "SemiBold": 600,
+    "Bold": 700,
+    "ExtraBold": 800,
+    "Black": 900
+);
 $glyph-search: boxicons.$search-alt-2;
 $glyph-menu: boxicons.$menu;
 $glyph-cog: boxicons.$cog;
@@ -75,13 +60,25 @@ $layout-content-padding: 3em;
 $layout-content-padding-small: 1em;
 $layout-content-width: 55em;
 $layout-sidebar-width: 16em;
-$layout-content-padded-width: $content-width;
-$layout-content-padded-width-small: $content-width + 2 * $content-padding-small;
-$layout-full-width: $content-padded-width;
+$layout-content-padded-width: $layout-content-width;
+$layout-content-padded-width-small: $layout-content-width + 
+                                    $layout-content-padding-small * 2;
+$layout-full-width: $layout-content-padded-width;
 $layout-sidebar-item-height: 100px;
 $layout-sidebar-expander-width: 50px;
 $line-height-normal: 1;
 $line-height-little-extra: 1.25;
+$positions: (
+  "top": at top,
+  "top-right": at top right,
+  "right": at right,
+  "bottom-right": at bottom right,
+  "bottom": at bottom,
+  "bottom-left": at bottom left,
+  "left": at left,
+  "top-left": at top left,
+  "center": at center,
+) !default;
 $space-none: 0;
 $space-half: 0.5rem;
 $space-three-quarter: 0.75rem;

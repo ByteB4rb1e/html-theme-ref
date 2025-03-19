@@ -1,7 +1,7 @@
 // base/_root.scss
 // https://html.spec.whatwg.org/multipage/semantics.html#the-root-element
 @use "../abstracts/variables" as variables;
-@forward '../vendor/monasansvf';
+@use "../abstracts/mixins" as mixins;
 
 :root {
     --width-max-mobile: #{variables.$breakpoint-width-max-mobile};
@@ -37,11 +37,81 @@
         --spacing-content-padding-block: 3.75rem;
     }
 
-    @media (max-width: $variables.breakpoint-container-mobile) {
+    @media (max-width: variables.$breakpoint-container-mobile) {
         --spacing-container-padding-block: 2.5rem;
     }
 }
 
 * {
     font-family: variables.$font-family-primary;
+}
+
+.color- {
+    &primary {
+        &.colored {
+            color: variables.$color-primary;
+        }
+
+        &.colored-background {
+            background-color: variables.$color-primary;
+        }
+
+        &-contrast {
+            &.colored {
+                color: variables.$color-primary-contrast;
+            }
+
+            &.colored-background {
+                background-color: variables.$color-primary-contrast;
+            }
+        }
+    }
+
+    &secondary {
+        &.colored {
+            color: variables.$color-secondary;
+        }
+
+        &.colored-background {
+            background-color: variables.$color-secondary;
+        }
+
+        &-contrast {
+            &.colored {
+                color: variables.$color-secondary-contrast;
+            }
+
+            &.colored-background {
+                background-color: variables.$color-secondary-contrast;
+            }
+        }
+    }
+
+    &tertiary {
+        &.colored {
+            color: variables.$color-tertiary;
+        }
+
+        &.colored-background {
+            background-color: variables.$color-tertiary;
+        }
+
+        &-contrast {
+            &.colored {
+                color: variables.$color-tertiary-contrast;
+            }
+
+            &.colored-background {
+                background-color: variables.$color-tertiary-contrast;
+            }
+        }
+    }
+}
+
+.placeholder {
+    &.square {
+        display: block;
+        height: variables.$font-size-normal;
+        width: variables.$font-size-normal;
+    }
 }

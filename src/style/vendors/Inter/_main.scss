@@ -1,0 +1,20 @@
+@use '../../abstracts/mixins' as mixins;
+@use './variables' as *;
+
+@include mixins.font(
+    $font-family,
+    $path-prefix,
+    $weights,
+    (normal),
+    false,
+    $path-postfix-italic
+);
+
+@include mixins.font(
+    $font-family,
+    $path-prefix,
+    $weights-italic,
+    (italic),
+    false,
+    $path-postfix-italic
+);

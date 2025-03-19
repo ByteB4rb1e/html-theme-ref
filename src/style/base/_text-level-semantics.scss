@@ -9,16 +9,16 @@ small {
 
 a {
     text-decoration: underline;
-    color: variables.$color-link;
-    text-decoration-color: variables.$color-link-underline;
+    color: variables.$color-tertiary;
+    text-decoration-color: variables.$color-tertiary;
 
     &:visited {
-        color: colors.$link-visited;
-        text-decoration-color: variables.$color-link-underline-visited;
+        color: variables.$color-tertiary-contrast;
+        text-decoration-color: variables.$color-tertiary-contrast;
 
         &:hover {
-            color: colors.$link-visited-hover;
-            text-decoration-color: variables.$color-link-underline-visited-hover;
+            color: variables.$color-tertiary-contrast;
+            text-decoration-color: variables.$color-tertiary-contrast;
         }
     }
 

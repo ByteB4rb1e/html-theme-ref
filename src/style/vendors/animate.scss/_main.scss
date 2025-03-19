@@ -1,5 +1,4 @@
-@use "../../../vendor/animate.scss/properties" as *;
-@use "../../../vendor/animate.scss/_attention-seekers/attention-seekers" as *;
+@forward "../../../vendor/animate.scss/_attention-seekers/attention-seekers" as *;
 @forward "../../../vendor/animate.scss/_bouncing-entrances/bouncing-entrances";
 @forward "../../../vendor/animate.scss/_bouncing-exits/bouncing-exits";
 @forward "../../../vendor/animate.scss/_fading-entrances/fading-entrances";

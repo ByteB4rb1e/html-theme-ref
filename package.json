@@ -33,7 +33,7 @@
     "scripts": {
         "build": "npm run production",
         "watch": "npm run watch:debug",
-        "serve-doc": "webpack serve -c webpack.config.doc.js",
+        "serve:doc": "webpack serve -c webpack.config.doc.js",
         "production": "webpack",
         "debug": "webpack -c webpack.config.debug.js",
         "doc": "webpack -c webpack.config.doc.js",

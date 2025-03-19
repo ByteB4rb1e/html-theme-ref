@@ -1,52 +1,153 @@
 @use 'sass:math';
+@use './variables' as variables;
 
-@mixin font($family, $src, $weight: normal, $style: normal) {
-    @font-face {
-        font-display: auto;
-        font-family: $family;
-        font-style: $style;
-        font-weight: $weight;
-        src: url('#{$src}.woff2') format('woff2'), url('#{$src}.woff') format('woff');
+/**
+ * Retrieves the numeric weight for a given font weight.
+ *
+ * @param {Number|String} $weight - The font weight to map. Can be numeric 
+ *                                  (e.g., 400) or textual (e.g., "Bold", 
+ *                                  "Regular").
+ * @return {Number} - Returns the numeric font weight (e.g., 700 for "Bold").
+ */
+@function map-font-weight($weight) {
+    @if type-of($weight) == "number" {
+        @return $weight;
+    }
+    @return map-get(variables.$font-weights, $weight);
+}
+
+/**
+ * Generates @font-face rules for a given font family, supporting multiple
+ * weights, styles, and file extensions, as well as single-file or multi-file configurations.
+ *
+ * @param {String} $family - The name of the font-family.
+ * @param {String} $src - The base source path for the font files.
+ * @param {List} $weights - A list of font weights (e.g., 400, 700 or "Bold",
+ *                          "Regular").
+ * @param {List} $styles - A list of font styles (e.g., normal, italic)
+ *                         [Default: (normal)].
+ * @param {Boolean} $bundled - Whether all weights and styles are in a
+ *                             single file [Default: false].
+ * @param {String} $italic-postfix - The postfix for italic font styles
+ *                                   [Default: "-Italic"].
+ * @param {List} $extensions - A list of file extensions (e.g., '.woff', '.woff2')
+ *                             [Default: ('.woff', '.woff2')].
+ * @output Generates @font-face rules for the specified weights, styles, and extensions.
+ */
+@mixin font(
+    $family,
+    $src,
+    $weights,
+    $styles: (normal),
+    $bundled: false,
+    $italic-postfix: "-Italic",
+    $extensions: ('.woff2', '.woff')
+) {
+    @if $bundled {
+        // Handle single-file fonts
+        @each $style in $styles {
+
+@font-face {
+    font-display: auto;
+    font-family: $family;
+    font-style: $style;
+    font-weight: #{join($weights, ", ")};
+
+            $src-list: ();
+            @each $extension in $extensions {
+              $src-list: append(
+                $src-list,
+                url('#{$src}#{if($style == "italic", $italic-postfix, "")}#{$extension}') format(unquote($extension)),
+                comma
+              );
+            }
+
+    src: #{$src-list};
+}
+
+        }
+    } @else {
+        // Handle fonts with separate files for weights and styles
+        @each $style in $styles {
+            @each $weight in $weights {
+
+@font-face {
+    font-display: auto;
+    font-family: $family;
+    font-style: $style;
+    font-weight: map-font-weight($weight);
+
+                $src-list: ();
+                @each $extension in $extensions {
+                  $src-list: append(
+                    $src-list,
+                    url('#{$src}#{$weight}#{if($style == "italic", $italic-postfix, "")}#{$extension}') format(unquote($extension)),
+                    comma
+                  );
+                }
+
+    src: #{$src-list};
+}
+
+            }
+        }
     }
 }
 
+/**
+ * Creates a box-shadow for an element, with an optional inset effect.
+ *
+ * @param {Length} $top - The vertical offset of the shadow.
+ * @param {Length} $left - The horizontal offset of the shadow.
+ * @param {Length} $blur - The blur radius of the shadow.
+ * @param {Color} $color - The color of the shadow.
+ * @param {Boolean} $inset - Whether the shadow is inset [Default: false].
+ * @output Applies box-shadow styles with cross-browser compatibility.
+ */
 @mixin box-shadow($top, $left, $blur, $color, $inset: false) {
-  @if $inset {
-    -webkit-box-shadow:inset $top $left $blur $color;
-    -moz-box-shadow:inset $top $left $blur $color;
-    box-shadow:inset $top $left $blur $color;
-  } @else {
-    -webkit-box-shadow: $top $left $blur $color;
-    -moz-box-shadow: $top $left $blur $color;
-    box-shadow: $top $left $blur $color;
-  }
+    @if $inset {
+
+-webkit-box-shadow:inset $top $left $blur $color;
+-moz-box-shadow:inset $top $left $blur $color;
+box-shadow:inset $top $left $blur $color;
+
+    } @else {
+
+-webkit-box-shadow: $top $left $blur $color;
+-moz-box-shadow: $top $left $blur $color;
+box-shadow: $top $left $blur $color;
+
+    }
 }
 
-$map-for-positions: (
-  "top": at top,
-  "top-right": at top right,
-  "right": at right,
-  "bottom-right": at bottom right,
-  "bottom": at bottom,
-  "bottom-left": at bottom left,
-  "left": at left,
-  "top-left": at top left,
-  "center": at center,
-) !default;
-
+/**
+ * Generates a radial gradient background with a specified shape, position,
+ * and color stops.
+ *
+ * @param {String} $shape - The shape of the gradient (e.g., "circle",
+ *                          "ellipse").
+ * @param {String} $position - The position of the gradient (e.g., "center").
+ *                             Can also be a key from variables.$positions.
+ * @param {List} $colors - A list of color stops for the gradient.
+ * @output Applies a radial gradient background using the specified parameters.
+ */
 @mixin radial-gradient($shape, $position, $colors) {
-  $list: ();
-  $shape: unquote($shape);
-  $position: unquote($position);
-  @for $i from 1 through length($colors) {
-    $list: append($list, nth($colors, $i), comma);
-  }
-  @if map-has-key($map-for-positions, $position) {
-    background: radial-gradient(
-      $shape map-get($map-for-positions, $position),
-      $list
-    );
-  } @else if not map-has-key($map-for-positions, $position) {
-    background: radial-gradient($shape $position, $list);
-  }
+    $list: ();
+    $shape: unquote($shape);
+    $position: unquote($position);
+    @for $i from 1 through length($colors) {
+        $list: append($list, nth($colors, $i), comma);
+    }
+    @if map-has-key(variables.$positions, $position) {
+
+background: radial-gradient(
+    $shape map-get(variables.$positions, $position),
+    $list
+);
+
+    } @else if not map-has-key(variables.$positions, $position) {
+
+background: radial-gradient($shape $position, $list);
+
+    }
 }
