@@ -115,3 +115,15 @@
         width: variables.$font-size-normal;
     }
 }
+
+.font-family- {
+    &primary * {
+        font-family: variables.$font-family-primary;
+    }
+    &secondary * {
+        font-family: variables.$font-family-secondary;
+    }
+    &monospace * {
+        font-family: variables.$font-family-monospace;
+    }
+}

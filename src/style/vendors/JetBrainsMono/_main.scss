@@ -8,7 +8,7 @@
     $styles,
     false,
     $path-postfix-italic,
-    $extensions
+    $formats
 );
 
 // Regular Italic font file doesn't follow convention, hence it's required to
@@ -20,7 +20,7 @@
     (normal),
     false,
     $path-postfix-italic,
-    $extensions
+    $formats
 );
 
 @include mixins.font(
@@ -30,5 +30,5 @@
     (italic),
     false,
     $path-postfix-italic,
-    $extensions
+    $formats
 );

@@ -4,7 +4,7 @@
 @include mixins.font(
     $font-family,
     $font-path-prefix,
-    (),
+    ("Regular"),
     (normal),
     true
 );

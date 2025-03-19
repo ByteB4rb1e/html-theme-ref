@@ -30,18 +30,18 @@
  *                             single file [Default: false].
  * @param {String} $italic-postfix - The postfix for italic font styles
  *                                   [Default: "-Italic"].
- * @param {List} $extensions - A list of file extensions (e.g., '.woff', '.woff2')
- *                             [Default: ('.woff', '.woff2')].
+ * @param {List} $extensions - A list of file extensions (e.g., 'woff', 'woff2')
+ *                             [Default: ('woff', 'woff2')].
  * @output Generates @font-face rules for the specified weights, styles, and extensions.
  */
 @mixin font(
     $family,
     $src,
-    $weights,
+    $weights: (100, 200, 300, 400, 500, 600, 700, 800, 900),
     $styles: (normal),
     $bundled: false,
     $italic-postfix: "-Italic",
-    $extensions: ('.woff2', '.woff')
+    $extensions: ('woff2', 'woff')
 ) {
     @if $bundled {
         // Handle single-file fonts
@@ -49,17 +49,17 @@
 
 @font-face {
     font-display: auto;
-    font-family: $family;
+    font-family: '#{$family}';
     font-style: $style;
     font-weight: #{join($weights, ", ")};
 
             $src-list: ();
             @each $extension in $extensions {
-              $src-list: append(
-                $src-list,
-                url('#{$src}#{if($style == "italic", $italic-postfix, "")}#{$extension}') format(unquote($extension)),
-                comma
-              );
+                $src-list: append(
+                    $src-list,
+                    url('#{$src}#{if($style == "italic", $italic-postfix, "")}.#{$extension}') format(unquote($extension)),
+                    comma
+                );
             }
 
     src: #{$src-list};
@@ -73,17 +73,17 @@
 
 @font-face {
     font-display: auto;
-    font-family: $family;
+    font-family: '#{$family}';
     font-style: $style;
     font-weight: map-font-weight($weight);
 
                 $src-list: ();
                 @each $extension in $extensions {
-                  $src-list: append(
-                    $src-list,
-                    url('#{$src}#{$weight}#{if($style == "italic", $italic-postfix, "")}#{$extension}') format(unquote($extension)),
-                    comma
-                  );
+                    $src-list: append(
+                        $src-list,
+                        url('#{$src}#{$weight}#{if($style == "italic", $italic-postfix, "")}.#{$extension}') format(unquote($extension)),
+                        comma
+                    );
                 }
 
     src: #{$src-list};

@@ -2,7 +2,7 @@ $font-family: 'JetBrains Mono';
 $path-prefix: '../../vendor/JetBrainsMono/fonts/webfonts/JetBrainsMono-';
 $path-postfix-italic: 'Italic';
 $styles: (normal, italic);
-$extensions: ('.woff2');
+$formats: ('woff2');
 $weights: (
     "Bold",
     "ExtraBold",
