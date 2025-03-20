@@ -9,6 +9,9 @@ module.exports = {
         maxEntrypointSize: 512000,
         maxAssetSize: 512000
     },
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js']
+    },
     entry: {
         tiara: [
             "./src/script/main.ts",

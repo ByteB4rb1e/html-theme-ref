@@ -4,7 +4,7 @@
         "sourceMap": true,
         "noEmit": false,
         "incremental": true,
-        "outDir": "build/debug"
+        "outDir": "build/debug/script"
     },
     "watchOptions": {
       "watchFile": "useFsEvents",

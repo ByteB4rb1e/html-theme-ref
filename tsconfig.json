@@ -9,8 +9,8 @@
         "allowJs": false,
         "declaration": true,
         "declarationMap": true,
-        "outDir": "build/production",
         "baseUrl": "./",
+        "outDir": "build/production/script",
         "paths": { "*": ["node/modules/*"] },
         "lib": ["dom"]
     },
