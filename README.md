@@ -32,7 +32,7 @@
 * [Contribution guidelines](CONTRIBUTING.md)
 
 This project is a reference implementation designed to explore and discuss ways
-to standardize HTML5 theme development using CSS3 and ECMAScript 2017. It’s not
+to standardize HTML5 theme development using CSS3 and ECMAScript 2020+. It’s not
 a finished product for public consumption—think of it as a starting point for
 developers to dig into, critique, and build upon as we figure out practices to 
 standardize together. It combines modern frontend techniques with DevOps
@@ -72,9 +72,11 @@ definetly is conviction.
 Here’s what this reference is aiming to achieve — let’s discuss how these align
 with your standardization ideas:
 
-* **Strict Standards Compliance**: Following W3C guidelines, UNIX philosophy, and KISS to keep it robust and universal.
+* **Strict Standards Compliance**: Following W3C guidelines, UNIX philosophy,
+  and KISS to keep it robust and universal.
 
-* **Modularity**: Loose coupling and strict separation of concerns for maintainable, standardized workflows.
+* **Modularity**: Loose coupling and strict separation of concerns for
+  maintainable, standardized workflows.
 
 * **CSS-First Approach**: Prioritizing CSS over JavaScript to stay lean and
   standards-focused. Prioritizing CSS ensures smaller payloads, better
@@ -87,15 +89,18 @@ with your standardization ideas:
 
 * **Universal Integration**: Fits into CMS, static site generators, and more to demonstrate standardization across contexts.
 
-* **SMACSS Methodology**: Logical DOM grouping for consistent structure
+* **SMACSS Methodology**: Logical DOM grouping for consistent structure. Old but
+  gold
 
-* **Sass & 7-1 Pattern**: Modular SCSS stylesheets as a potential standard for styling.
+* **Sass & 7-1 Pattern**: Modular SCSS stylesheets as a potential standard for
+  styling.
 
 * **Type-Safe JS**: Using TypeScript for reliable, consistent scripting.
 
 * **Lean Webpack Setup**: Minimal dependencies for a standardized build process.
 
-* **Baseline Resources**: Includes fonts, icons, and CSS animations as a starting point—should we tweak these?
+* **Baseline Resources**: Includes fonts, icons, and CSS animations as a
+  starting point—should we tweak these?
 
 This is stable but not static—updates will be minimal to keep it consistent as a
 reference. What do you think about these goals? Anything you’d add or change?
@@ -119,7 +124,7 @@ Key commands:
 
 * `npm run build`: Produces production assets.
 * `npm run watch`: Auto-rebuilds for experimentation.
-* `npm run serve-doc`: Previews the kitchen-sink example — great for discussing implementation.
+* `npm run serve:doc`: usability demo and text — great for discussing implementation.
 * `npm run lint:style`: Checks style standards.
 * `npm run test:script`: Validates JS behavior.
 * `npm run dist`: Packages it up — how should we share standardized themes?
@@ -135,11 +140,11 @@ developers can engage:
 * **Clone It**: `git clone https://bitbucket.org/tiaracodes/html-theme-ref.git`
 * **Set Up**: Run `sh ./configure` (POSIX) or `git submodule update --init --remote --recursive && npm install` (PowerShell).
 
-* **Experiment**: Run `npm run serve-doc`, tweak `src/` and test ideas.
+* **Experiment**: Run `npm run serve:doc`, tweak `src/` and test ideas.
 * **Discuss**: Check out [CONTRIBUTING.md](CONTRIBUTING.md) and share your thoughts in [GitHub Discussions](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions)!
 
-To preview the example and docs: `npm run serve-doc`. It’s a kitchen-sink demo to
-spark ideas — let me know what you think!
+To preview the example and docs: `npm run serve:doc`. It’s a usability
+demonstrator to spark ideas — let me know what you think!
 
 > **A Note on Hosting**: Source code is hosted on Bitbucket, as it prioritizes
   development over gamification. Discussions take place on GitHub to benefit
@@ -162,7 +167,7 @@ variables to align with your design needs. Here's an example of updating fonts:
 To replace the default fonts:
 
 1. Add new font files to `vendor/` and reference them in `src/style/vendors/`
-2. Update the font family variables in `src/style/base/_typography.scss`.
+2. Update the font family variables in `src/style/base/_variables.scss`.
 
 How would you adapt it? You can find more examples in the [Contribution
 guidelines](CONTRIBUTING.md).
