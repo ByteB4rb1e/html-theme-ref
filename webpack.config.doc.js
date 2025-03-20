@@ -1,6 +1,5 @@
 const chokidar = require('chokidar');
 const escapeHtml = require('escape-html');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const fs = require('fs');
@@ -93,8 +92,6 @@ config.plugins.push(new HtmlWebpackPlugin({
         description: "This usability demonstration serves both as a a showcase, as well as a usability test. It mirrors the Sass 7:1 pattern of the style's source code, in order to have a structured approach for maintaing coverage. To use hot-reloading during development, open each iframe in a seperate window."
     }
 }));
-
-config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
 module.exports = {
     ...config,
