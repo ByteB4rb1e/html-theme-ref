@@ -25,7 +25,9 @@
 * [Build environment](#build-environment)
 * [Getting started](#getting-started)
 * [Customizing It](#customizing-it)
+* [Color System]()
 * [Let's talk!](#lets-talk)
+* [Licensing](#licensing)
 * [Architecture overview](ARCHITECTURE.md)
 * [Contribution guidelines](CONTRIBUTING.md)
 
@@ -63,13 +65,6 @@ and standardization, not something I’m babysitting. This reference
 implementation is the basis for my personal HTML theming though, so there
 definetly is conviction.
 
-This project is licensed under WTFPL. For more information, see
-[LICENSE](LICENSE). I'm focused on advancing a collaborative standardization
-effort, rather than getting bogged down by licensing politics. The beauty of
-WTFPL is that it aligns perfectly with this project's ethos: unrestricted
-freedom for you to build and collaborate upon without imposing unnecessary
-constraints. And if someone maintains their own fork or even improves upon it,
-that just contributes to the ecosystem around this project.
 
 <a name="goals"></a>
 ## Goals
@@ -179,3 +174,11 @@ This is all about engaging you and other developers in a discussion. Does this
 setup work as a starting point for standardizing HTML theme development? What’s
 missing? Too heavy? Too light? Hit me up with your feedback — [I’m all ears](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions)!
 
+<a name="licensing"></a>
+## Licensing
+
+Tiar's HTML Theming Reference is licensed under a Creative Commons Attribution
+4.0 International License.
+
+You should have received a copy of the license along with this
+work. If not, see <https://creativecommons.org/licenses/by/4.0/>.
