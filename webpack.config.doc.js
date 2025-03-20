@@ -82,12 +82,12 @@ for (var i = 0; i < DOC_STYLE_PARTIALS.length; i += 1) {
 }
 
 config.plugins.push(new HtmlWebpackPlugin({
-    title: "Demo (Kitchen-Sink)",
+    title: "Tiara's HTML Theming Reference (Usability Demonstration)",
     template: "docs/style/_templates/index.html",
     inject: false,
     templateParameters: {
         sandboxes: out,
-        description: "This page includes every single element so that we can make sure things work together smoothly."
+        description: "This usability demonstration serves both as a a showcase, as well as a usability test. It mirrors the Sass 7:1 pattern of the style's source code, in order to have a structured approach for maintaing coverage."
     }
 }));
 
@@ -99,9 +99,9 @@ config.entry['dev-server'] = [
 module.exports = {
     ...config,
     entry: {
-        'kitchen-sink': [
+        'demo': [
             "./src/script/main.ts",
-            "./src/style/kitchen-sink.scss"
+            "./src/style/demo.scss"
         ]
     },
     devServer: {
