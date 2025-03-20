@@ -3,7 +3,7 @@ import * as base from './base';
 /**
  * Theme script entry point
  */
-class Theme {
+export class Theme {
     public root: base.Root | null = null;
 
     /**
@@ -57,3 +57,8 @@ class Theme {
 
 const theme = new Theme();
 export default theme;
+
+// Attach to the global window object for browser access
+if (typeof window !== "undefined") {
+    window.theme = theme;
+}

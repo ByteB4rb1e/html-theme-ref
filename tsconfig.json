@@ -15,6 +15,7 @@
         "lib": ["dom"]
     },
     "include": [
-        "src/**/*.ts"
+        "src/script/**/*.ts",
+        "src/script/**/*.d.ts"
     ]
 }
