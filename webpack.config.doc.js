@@ -1,4 +1,6 @@
+const chokidar = require('chokidar');
 const escapeHtml = require('escape-html');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const fs = require('fs');
@@ -61,9 +63,10 @@ for (var i = 0; i < DOC_STYLE_PARTIALS.length; i += 1) {
     );
 
     let c = {
-        title: 'Documentation',
+        title: `Usability test for ${filename}`,
         filename: filename,
-        inject: false,
+        inject: true,
+        isDevServer: process.env.WEBPACK_SERVE,
         template: 'docs/style/_templates/sandbox.html',
         templateParameters: {
             partial: fs.readFileSync(DOC_STYLE_PARTIALS[i])
@@ -87,14 +90,11 @@ config.plugins.push(new HtmlWebpackPlugin({
     inject: false,
     templateParameters: {
         sandboxes: out,
-        description: "This usability demonstration serves both as a a showcase, as well as a usability test. It mirrors the Sass 7:1 pattern of the style's source code, in order to have a structured approach for maintaing coverage."
+        description: "This usability demonstration serves both as a a showcase, as well as a usability test. It mirrors the Sass 7:1 pattern of the style's source code, in order to have a structured approach for maintaing coverage. To use hot-reloading during development, open each iframe in a seperate window."
     }
 }));
 
-config.entry['dev-server'] = [
-   'webpack/hot/dev-server.js',
-   'webpack-dev-server/client/index.js?hot=true&live-reload=true',
-]
+config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
 module.exports = {
     ...config,
@@ -102,11 +102,38 @@ module.exports = {
         'demo': [
             "./src/script/main.ts",
             "./src/style/demo.scss"
-        ]
+        ],
     },
     devServer: {
+        setupMiddlewares: (middlewares, devServer) => {
+            if (!devServer) {
+                throw new Error('webpack-dev-server is not defined');
+            }
+
+            // TODO: Fix this. chokidar is not functioning correctly in MSYS2
+            // alread filled a bug report:
+            // https://github.com/paulmillr/chokidar/issues/1419
+
+            // Watch .htm files manually, since they're not part of the
+            // dependency graph (and shouldn't be)
+            chokidar.watch(
+                path.resolve(__dirname, './docs/**/*.htm'),
+                // TODO: Improve environment detection for MinGW and Cygwin
+                // polling is pretty inefficient...
+                {
+                    usePolling: true,
+                }
+            ).on('change', (filePath) => {
+                console.log(`${filePath} changed. Reloading...`);
+                devServer.sendMessage(devServer.webSocketServer.clients, 'content-changed');
+            });
+
+            return middlewares;
+        },
         compress: true,
         open: true,
+        hot: true,
+        liveReload: true,
         watchFiles: ['docs/**/*.htm', 'src/**/*.scss', 'src/**/*.ts']
     },
 };
