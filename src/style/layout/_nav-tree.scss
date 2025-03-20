@@ -54,10 +54,9 @@ ul.nav-tree {
         }
 
         > .nav-link {
-            padding: variables.$space-half
-                     0
-                     variables.$space-half
-                     variables.$space-double;
+            padding: variables.$space-half 0;
+            padding-left: variables.$space-default;
+            flex-grow: 1;
         }
     }
 }

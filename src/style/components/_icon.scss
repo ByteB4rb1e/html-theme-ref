@@ -1,7 +1,7 @@
 @use '../abstracts/variables' as variables;
 
 .icon {
-    font-family: variables.$font-family-glyph !important;
+    font-family: variables.$font-family-glyph;
     font-weight: normal;
     font-style: normal;
     font-variant: normal;

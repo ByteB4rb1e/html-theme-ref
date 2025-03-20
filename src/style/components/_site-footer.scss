@@ -2,8 +2,8 @@
 
 footer.site-footer {
     font-size: variables.$font-size-normal;
-    color: variables.$color-secondary-contrast;
-    background-color: variables.$color-secondary;
+    color: var(--color-background);
+    background-color: var(--color-primary);
 
     @media (max-width: variables.$layout-content-width) {
         text-align: center;

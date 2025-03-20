@@ -151,3 +151,97 @@ background: radial-gradient($shape $position, $list);
 
     }
 }
+
+/**
+ * Dynamically applies styles based on the user's preferred color scheme
+ * (light or dark mode), leveraging the `prefers-color-scheme` media feature.
+ *
+ * Light/Dark? We don't call that theming over here... It's (just) color
+ * scheming. Theming is much more involved and includes overrides of the layout,
+ * typography, etc.
+ *
+ * @param {String} $property - The CSS property to be applied (e.g., color,
+ *                             background-color).
+ * @param {String} $key - The key in the $colors map corresponding to the
+ *                        desired color (e.g., text, background, primary).
+ * @param {Boolean} $to-var - If true, treats input as a CSS variable definition
+ *                            instead of a media query-wrapped style. Defaults 
+                              to false.
+ * @output Generates CSS rules for both light and dark color schemes using the
+ *         $colors map.
+ *
+ * Usage:
+ *
+ * .button {
+ *     @include scheme-color(background-color, primary);
+ *     @include scheme-color(color, text);
+ * }
+ *
+ * This will output:
+ *
+ * @media (prefers-color-scheme: light) {
+ *     .button {
+ *         background-color: <color-code>; // Light scheme
+ *         color: <color-code; // Light scheme
+ *     }
+ * }
+ *
+ * @media (prefers-color-scheme: dark) {
+ *     .button {
+ *         background-color: #4da6ff; // Dark scheme
+ *         color: #ffffff; // Dark scheme
+ *     }
+ * }
+ *
+ * Usage (as-var):
+ *
+ * :root {
+ *     @include scheme-color(--color-background, primary, true);
+ *     @include scheme-color(--color-text, text, true);
+ * }
+ *
+ * This will output:
+ *
+ * :root {
+ *     --color-background-primary-light: <light-color-code>;
+ *     --color-background-primary-dark: <dark-color-code>;
+ *     --color-background-text-light: <light-color-code>;
+ *     --color-background-text-dark: <dark-color-code>;
+   }
+ *
+ * @media (prefers-color-scheme: light) {
+ *     :root {
+ *         --color-background: <light-color-code>;
+ *         --color-text: <light-color-code;
+ *     }
+ * }
+ *
+ * @media (prefers-color-scheme: dark) {
+ *     :root {
+ *         --color-background: <dark-color-code>;
+ *         --color-text: <dark-color-code;
+ *     }
+ * }
+ *
+ * This mixin ensures consistency and efficiency by centralizing the logic
+ * for light/dark mode color scheming, minimizing duplication and simplifying
+ * maintenance.
+ */
+@mixin scheme-color($property, $key, $as-var: false) {
+    @if $as-var {
+        & {
+
+#{$property}-#{$key}-light: map-get(map-get(variables.$colors, light), $key);
+#{$property}-#{$key}-dark: map-get(map-get(variables.$colors, dark), $key);
+
+        }
+    }
+
+@media (prefers-color-scheme: light) {
+  #{$property}: map-get(map-get(variables.$colors, light), $key);
+}
+@media (prefers-color-scheme: dark) {
+  #{$property}: map-get(map-get(variables.$colors, dark), $key);
+}
+
+}

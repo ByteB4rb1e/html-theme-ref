@@ -1,67 +1,100 @@
 // kitchen-sink.scss
-// custom definitions for kitchen-sink (demo page)
+// custom definitions for kitchen-sink (demo page), in use by the `doc` build
+// target
 @use './abstracts/variables' as variables;
 
 @forward './main';
 
-.color- {
-    &primary {
-        &.colored {
-            color: variables.$color-primary;
+body > div > dl > dt {
+    font-family: monospace;
+
+    @media (prefers-color-scheme: light) {
+        background-color: #eee;
+        color: #333;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        background-color: #333;
+        color: #eee;
+    }
+
+    & {
+        padding: 5px;
+    }
+}
+
+.scheme-background-color- {
+    &light- {
+        &accent {
+            background-color: map-get(
+                map-get(variables.$colors, light),
+                accent
+            );
         }
 
-        &.colored-background {
-            background-color: variables.$color-primary;
+        &background {
+            background-color: map-get(
+                map-get(variables.$colors, light),
+                background
+            );
         }
 
-        &-contrast {
-            &.colored {
-                color: variables.$color-primary-contrast;
-            }
+        &primary {
+            background-color: map-get(
+                map-get(variables.$colors, light),
+                primary
+            );
+        }
 
-            &.colored-background {
-                background-color: variables.$color-primary-contrast;
-            }
+        &secondary {
+            background-color: map-get(
+                map-get(variables.$colors, light),
+                secondary
+            );
+        }
+
+        &text {
+            background-color: map-get(
+                map-get(variables.$colors, light),
+                text
+            );
         }
     }
 
-    &secondary {
-        &.colored {
-            color: variables.$color-secondary;
+    &dark- {
+        &accent {
+            background-color: map-get(
+                map-get(variables.$colors, dark),
+                accent
+            );
         }
 
-        &.colored-background {
-            background-color: variables.$color-secondary;
+        &background {
+            background-color: map-get(
+                map-get(variables.$colors, dark),
+                background
+            );
         }
 
-        &-contrast {
-            &.colored {
-                color: variables.$color-secondary-contrast;
-            }
-
-            &.colored-background {
-                background-color: variables.$color-secondary-contrast;
-            }
-        }
-    }
-
-    &tertiary {
-        &.colored {
-            color: variables.$color-tertiary;
+        &primary {
+            background-color: map-get(
+                map-get(variables.$colors, dark),
+                primary
+            );
         }
 
-        &.colored-background {
-            background-color: variables.$color-tertiary;
+        &secondary {
+            background-color: map-get(
+                map-get(variables.$colors, dark),
+                secondary
+            );
         }
 
-        &-contrast {
-            &.colored {
-                color: variables.$color-tertiary-contrast;
-            }
-
-            &.colored-background {
-                background-color: variables.$color-tertiary-contrast;
-            }
+        &text {
+            background-color: map-get(
+                map-get(variables.$colors, dark),
+                text
+            );
         }
     }
 }

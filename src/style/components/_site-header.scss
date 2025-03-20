@@ -5,7 +5,7 @@ $icon-size: variables.$font-size-large;
 
 header.site-header {
     summary::before {
-        color: variables.$color-tertiary-contrast;
+        color: var(--color-text);
         font-family: variables.$font-family-glyph;
         font-size: $icon-size;
         font-weight: normal;
@@ -20,7 +20,8 @@ header.site-header {
     > details.panel > summary > details.options {
         &[open] {
             & > summary::before {
-                background: grey;
+                background-color: var(--color-primary);
+                color: var(--color-background);
             }
         }
     }
@@ -31,12 +32,8 @@ header.site-header {
         }
 
         > summary {
-            @include mixins.radial-gradient(
-                circle, 
-                top-right,
-                variables.$color-tertiary grey
-            );
-            color: #30353b;
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
         }
 
         > summary > details.options {
@@ -52,7 +49,7 @@ header.site-header {
 
                 > form.search {
                     &::before {
-                        color: variables.$color-tertiary-contrast;
+                        color: var(--color-text);
                         content: variables.$glyph-search;
                         font-family: variables.$font-family-glyph;
                         font-size: $icon-size;
@@ -66,7 +63,7 @@ header.site-header {
                             animation-iteration-count: infinite;
                             animation-name: animation_blink;
                             animation-timing-function: ease-in;
-                            color: variables.$color-neutral-light-contrast;
+                            color: var(--color-background);
                             z-index: 2;
                         }
                     }
@@ -78,12 +75,11 @@ header.site-header {
                         font-size: inherit;
 
                         &:focus {
-                            background: variables.$color-neutral-light;
-                            color: variables.$color-neutral-light-contrast;
+                            background-color: var(--color-accent);
+                            color: var(--color-background);
                             outline: none;
 
                             &::placeholder {
-                                color: black;
                             }
                         }
 
@@ -95,7 +91,7 @@ header.site-header {
             }
 
             .options-content {
-                background: variables.$color-primary;
+                background: var(--color-background);
                 @include mixins.box-shadow(0, 10px, 5px, rgba(0,0,0,0.31));
             }
         }
@@ -105,7 +101,7 @@ header.site-header {
             text-decoration: none;
 
             > .content {
-                color: variables.$color-tertiary-contrast;
+                color: var(--color-text);
                 font-size: 1.75rem;
                 font-weight: 600;
             }

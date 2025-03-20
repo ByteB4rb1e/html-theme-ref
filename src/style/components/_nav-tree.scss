@@ -12,9 +12,19 @@ ul.nav-tree {
     //&.is-subtree {
     //}
 
+    a.nav-link {
+        color: inherit;
+    }
+
     > li.nav-item {
         &:hover {
-            background: variables.$color-accent;
+            background-color: var(--color-primary);
+            color: var(--color-background);
+        }
+
+        label.toggle {
+            color: var(--color-accent);
+            cursor: pointer;
         }
 
         &.has-children {
@@ -38,7 +48,8 @@ ul.nav-tree {
                         }
 
                         & + .nav-tree.is-subtree {
-                            background: variables.$color-primary;
+                            background-color: var(--color-background);
+                            color: var(--color-text);
                         }
                     }
                 }

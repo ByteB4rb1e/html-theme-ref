@@ -3,6 +3,7 @@
 @use "../abstracts/variables" as variables;
 
 p {
+    color: var(--color-text);
     font-family: variables.$font-family-primary;
     font-size: variables.$font-size-normal;
     line-height: variables.$line-height-normal;
@@ -14,3 +15,9 @@ pre {
     font-family: variables.$font-family-monospace;
 }
 
+hr {
+    border: none;
+    border-color: var(--color-secondary);
+    border-top: 1px solid;
+    margin: 1rem 0;
+}

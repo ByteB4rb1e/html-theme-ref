@@ -8,22 +8,11 @@ small {
 }
 
 a {
-    text-decoration: underline;
-    color: variables.$color-tertiary;
-    text-decoration-color: variables.$color-tertiary;
+    text-decoration: none;
+    color: var(--color-primary);
 
-    &:visited {
-        color: variables.$color-tertiary-contrast;
-        text-decoration-color: variables.$color-tertiary-contrast;
-
-        &:hover {
-            color: variables.$color-tertiary-contrast;
-            text-decoration-color: variables.$color-tertiary-contrast;
-        }
-    }
-
-    &.muted-link {
-        color: inherit;
+    &:hover {
+        color: var(--color-accent);
     }
 }
 
@@ -33,6 +22,11 @@ samp {
     font-family: variables.$font-family-monospace;
 }
 
-.centered {
-    text-align: center;
+em {
+    font-style: italic;
+    color: var(--color-accent);
+}
+
+strong {
+    color: var(--color-primary);
 }

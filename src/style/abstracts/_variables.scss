@@ -15,18 +15,22 @@ $breakpoint-container-small-mobile: 420px;
 $breakpoint-container-tiny-mobile: 354px;
 $breakpoint-width-wide: 1200px;
 $breakpoint-width-full: 100%;
-$color-error: #cc2e2e;
-$color-success: #21aa14;
-$color-problematic: #b30000;
-$color-primary: white;
-$color-primary-contrast: #000;
-$color-secondary: #f8f9fb;
-$color-secondary-contrast: #5a5c63;
-$color-tertiary: rgb(0 110 199);
-$color-tertiary-contrast: #f8f9fb;
-$color-neutral-light: #eeeeee;
-$color-neutral-light-contrast: #6b6f76;
-$color-accent: #f8f9fb;
+$colors: (
+    light: (
+        accent: #77db61,
+        background: #fcf3f3,
+        primary: #d0322f,
+        secondary: #c1e382,
+        text: #190607,
+    ),
+    dark: (
+        accent: #3a9e24,
+        background: #0c0303,
+        primary: #d0322f,
+        secondary: #5b7d1c,
+        text: #f9e6e7,
+    )
+);
 $font-family-primary: monasans.$font-family, sans-serif;
 $font-family-secondary: inter.$font-family, sans-serif;
 $font-family-glyph: boxicons.$font-family !important;
@@ -34,12 +38,6 @@ $font-family-monospace: jetbrainsmono.$font-family, monospace;
 $font-size-normal: 1em;
 $font-size-large: 2em;
 $font-size-small: 0.8rem;
-$font-weight-regular: 400;
-$font-weight-medium: 500;
-$font-weight-semibold: 600;
-$font-weight-bold: 700;
-$font-weight-paragraph: $font-weight-regular;
-$font-weight-heading: $font-weight-bold;
 $font-weights: (
     "Thin": 100,
     "ExtraLight": 200,

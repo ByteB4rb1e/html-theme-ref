@@ -8,11 +8,15 @@ article {
 }
 
 body {
+    font-family: variables.$font-family-primary;
+    background-color: var(--color-background);
+    color: var(--color-text);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text);
     font-family: variables.$font-family-secondary;
     font-weight: bold;
     line-height: variables.$line-height-little-extra;
