@@ -231,8 +231,8 @@ background: radial-gradient($shape $position, $list);
     @if $as-var {
         & {
 
-#{$property}-#{$key}-light: map-get(map-get(variables.$colors, light), $key);
-#{$property}-#{$key}-dark: map-get(map-get(variables.$colors, dark), $key);
+#{$property}-light: map-get(map-get(variables.$colors, light), $key);
+#{$property}-dark: map-get(map-get(variables.$colors, dark), $key);
 
         }
     }

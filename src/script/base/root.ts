@@ -113,11 +113,11 @@ function applyColorScheme(
     Object.keys(sourceMap).forEach((baseName) => {
         if (targetMap[baseName]) {
             console.log(
-                `preferred-color-scheme: ${sourceMap[baseName]} -> ${targetMap[baseName]}`
+                `setting preferred-color-scheme: ${baseName} -> ${targetMap[baseName]}`
             );
             root.style.setProperty(
-                targetMap[baseName],
-                computedStyles[sourceMap[baseName]]
+                baseName,
+                computedStyles[targetMap[baseName]]
             );
         }
 
