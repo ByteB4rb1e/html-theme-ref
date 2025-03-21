@@ -1,4 +1,4 @@
-import { Theme } from './main';
+import { Theme } from '../main';
 
 /**
  * Extends the global `Window` interface to include custom properties
