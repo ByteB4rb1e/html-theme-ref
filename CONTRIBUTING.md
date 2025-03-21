@@ -104,6 +104,63 @@ npx stylelint src/style/<path-to-stylesheet>
 
 ## Maintenance
 
+### npm Lockfile
+
+I use a [Verdaccio](https://verdaccio.org/) instance as pull-through mirror to reduce reliance on the
+public npm registry and the *npm cache* to minimize external traffic and be able
+to back up all packages in a structured way. While the intention behind this
+setup was to create a smooth and efficient workflow, it comes with some
+significant caveats that make maintenance more complicated than it should be:
+
+When using Verdaccio, the resolved fields in package-lock.json will reference
+the local Verdaccio instance (e.g., `http://localhost:xxxx`). While this works
+fine locally, it becomes a problem when:
+
+* Sharing the repository with others who don’t have access to your Verdaccio
+  instance.
+* Running builds or deployments in environments that cannot access localhost.
+
+If you’re working with a local pull-through mirror (which I'd recommend), you
+need to reset the resolved fields in the `package-lock.json` to point back to
+the public npm registry. 
+#### Broken Assumptions about Package Resolution
+
+One would assume the checksums in `package-lock.json` are there to ensure file
+integrity—so why does npm care where the file is downloaded from? This setup
+enforces fidelity to the original source, adding unnecessary hurdles to
+otherwise straightforward workflows. The checksum isn't used as a checksum,
+instead it's being used as a salt for a checksum, which is the URL to the
+file...
+
+#### Registry Rewrites
+
+If you switch registries between Verdaccio and the public npm registry, you’ll
+have to regenerate package-lock.json or rewrite the resolved URLs manually. 
+
+Do so by updating your registry configuration first:
+
+To be safe (it's always surprising what "features" npm maintainers come up
+with), delete the lockfile and modules directory (`rm -rf package-lock.json
+node_modules`). Then, install the modules again and commit the
+changes to the lockfile. 
+
+```
+npm install --registry=https://registry.npmjs.org
+```
+
+This effectively turns maintaining the lock file into a chore and goes against
+the very idea of reproducibility that npm claims to promote.
+
+To ease the pain, there's a `package-lock.json` target for GNU Make. Use `make
+package-lock.json`.
+
+#### Verdaccio's Purpose vs Reality
+
+The goal was simple: reduce external traffic, streamline dependencies, and own
+our assets without relying on npm’s cache. Instead, we’re stuck with a system
+that prioritizes inflexible conventions over practical needs. What should have
+been a clean optimization has turned into a maintenance headache.
+
 ## Issue tracking
 
 Currently via e-mail, see `package.json` for an address.
