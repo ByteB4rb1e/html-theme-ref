@@ -146,7 +146,7 @@ function applyColorScheme(
  * behavior across privacy-first environments without relying solely on media
  * queries.
  */
-class PreferredColorScheme {
+export class PreferredColorScheme {
     /**
      * The current color scheme being applied.
      */
@@ -196,32 +196,5 @@ class PreferredColorScheme {
         ) ? ColorScheme.Light : ColorScheme.Dark;
 
         applyColorScheme(this.root, this.currentScheme);
-    }
-}
-
-/**
- * Facilities for the pseudo `:root` context.
- *
- * Provides an abstraction layer for managing root-level facilities like the
- * preferred color scheme.
- */
-export class Root {
-    private element: HTMLElement;
-    public preferredColorScheme: PreferredColorScheme;
-
-    /**
-     * Initializes facilities in the context of the pseudo `:root` element.
-     *
-     * @param {HTMLElement} root - The root element (`document.documentElement`) to manage.
-     */
-    constructor(element: HTMLElement) {
-        this.element = element;
-        this.preferredColorScheme = new PreferredColorScheme(element);
-        this.reset();
-    }
-
-    public reset() {
-        if (this.element) { this.element.style.cssText = "" }
-        this.preferredColorScheme = new PreferredColorScheme(this.element);
     }
 }
