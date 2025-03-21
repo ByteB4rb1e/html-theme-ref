@@ -81,3 +81,17 @@ may have this functionality disabled for privacy reason (like Mullvad Browser)
 as it can be used for fingerprinting browser-sessions.
 
 * toggling the color scheme: `window.theme.root.preferredColorScheme.toggle()`
+
+#### DiscoMode
+
+The `DiscoMode` class serves as a kitchen-sink for implementation specifics that
+may not otherwise arise throughout the implementation of this reference. It's a
+little easter egg with no real purpose, but to demonstrate.
+
+> NOTICE: The first argument passed to the `enable()` method is meant as an
+  acknowledgment, that enabling disco mode can be seizure inducing. Don't share
+  this code snippet with the first argument already defined and make users aware
+  of it.
+
+* enabling disco mode: `window.theme.root.discoMode.enable('IKNOWITSFLASHY')`
+* disabling disco mode: `window.theme.root.discoMode.disable();`
