@@ -3,6 +3,142 @@
 This project adheres to [IETF RFC2119](https://www.rfc-editor.org/rfc/rfc2119)
 for identifying requirement levels.
 
+## Repository Structure
+
+This section provides an overview of the repository's structure, detailing the
+purpose of each top-level file and directory. The goal is to help collaborators
+and contributors navigate the codebase effectively.
+
+### **ARCHITECTURE.md**
+
+This document, describing the layout and purpose of the project structure.
+
+### **autom4te.cache/**
+
+Automatically generated cache directory used during `autotools` builds.
+
+Typically includes temporary files that assist with the configuration process.
+
+### **build/**
+
+Directory for build artifacts and outputs. Contains compiled or generated files
+from the build process.
+
+Should be excluded from version control (see `.gitignore`).
+
+### **config.log, config.status**
+
+Logs and metadata files generated during the execution of `configure`.
+
+Provides debugging details about the system configuration process.
+
+### **configure, configure.ac**
+
+Scripts and files for initializing the project's configuration using
+`autotools`.
+
+`configure.ac` defines macros and instructions for generating the `configure`
+script.
+
+### **CONTRIBUTING.md**
+
+Guidelines for contributing to the project, including best practices, coding
+standards, and submission processes.
+
+### **docs/**
+
+Contains documentation files and resources related to the project, as well as
+the source files for usability tests.
+
+### **jest.config.js**
+
+Configuration file for the Jest testing framework. Specifies settings for
+running tests in the project.
+
+### **LICENSE**
+
+The license file for the project, describing the terms under which the code can
+be used and distributed. It is currently licensed under Creative Commons BY 4.0.
+
+### **Makefile**
+
+Defines targets and rules for the build system.
+
+Provides a common interface (to i.e. CI/CD service) for common tasks like
+building, cleaning, or testing.
+
+### **node_modules/**
+
+Directory for installed Node.js dependencies. Managed by `npm` and should not be
+manually modified.
+
+### **package.json, package-lock.json**
+
+`package.json`: Defines project metadata, dependencies, and scripts.
+
+`package-lock.json`: Ensures consistent dependency resolution across
+environments.
+
+### **postcss.config.ts**
+
+Configuration file for PostCSS, a tool for transforming CSS with plugins. Used
+for preprocessing and optimizing CSS stylesheets.
+
+### **README.md**
+
+The primary introductory document for the repository. Provides an overview,
+setup instructions, and usage examples.
+
+### **scripts/**
+
+Contains utility scripts for managing or automating tasks within the project.
+
+### **src/**
+
+Source code directory for the project's implementation. Includes the main
+logic, components, and modules, which are seperated into `style` and `script`.
+
+### **tests/**
+
+Contains unit and integration tests for the project's scripting. Ensures the
+correctness and reliability of the implementation.
+
+### **tsconfig.debug.json, tsconfig.json, tsconfig.node.json**
+
+TypeScript configuration files for different environments or purposes:
+
+* `tsconfig.json`: The base configuration for the project.
+* `tsconfig.debug.json`: Additional settings for debugging.
+* `tsconfig.node.json`: Configurations specific to Node.js environments, mainly
+  for project scripts under `scripts/` executed with `ts-node`.
+
+### **typedoc.json**
+
+Configuration file for TypeDoc, a documentation generator for TypeScript
+projects.  Specifies how TypeScript source files should be converted to
+documentation.
+
+### **vendor/**
+
+Directory for third-party libraries or dependencies not installed via package
+managers. Used for static assets or vendored code. Crucial to let other people
+quickly identify third-party assets and their licensing implications.
+
+### **webpack.config.*.js**
+
+Webpack configuration files for bundling the project's assets.
+
+* `webpack.config.debug.js`: Configuration for debugging builds.
+* `webpack.config.doc.js`: Configuration for generating documentation builds.
+* `webpack.config.js`: The main configuration for production builds.
+
+### **.vimrc**
+
+Configuration file for `vim` text editor. This is to illustrate on what type of
+workflow this project is optimized for. Whenever the personal working directory
+is set to the root of the repository, or a descendant directory, this
+configuration is automatically loaded by `vim`.
+
 ## Styling
 
 This project adopts the [SMACSS (Scalable and Modular Architecture for
@@ -234,3 +370,11 @@ or CSS frameworks such as Normalize or external dependencies.
 @forward "../../../vendor/animate.scss/_zooming-entrances/zooming-entrances";
 @forward "../../../vendor/animate.scss/_zooming-exits/zooming-exits";
 ```
+
+## Notes
+
+Files and directories listed in `.gitignore` are intentionally excluded from
+version control to avoid cluttering the repository with unnecessary or generated
+files. Lines starting with `/` indicate that only files at the root of the
+repository should be excluded. Lines ending with `/` indicate that a directory
+is to be excluded.
