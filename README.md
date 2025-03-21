@@ -19,6 +19,13 @@
   coconut won't. Though it's the same behavior, describing it is different...
   Let's discuss this [here](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions/2)
 
+> Wow... Modern browsers are relentless... Currently having issues (mainly just
+  warnings) with unmodified web font files. Will have to investigate if it's an
+  issue with my font-face definitions, or the web fonts actually being
+  non-compliant. It's just 2 out of 4, so I assume it's actually the web fonts
+  themselves. Also, maybe I should move discussions like this to the
+  CHANGELOG...
+
 ## Table of Contents
 * [Tiara's HTML Theming Reference](#tiaras-html-theming-reference)
 * [Goals](#goals)
@@ -64,7 +71,6 @@ requests, you’re in the wrong place. Think of it as a launchpad for discussion
 and standardization, not something I’m babysitting. This reference
 implementation is the basis for my personal HTML theming though, so there
 definetly is conviction.
-
 
 <a name="goals"></a>
 ## Goals
