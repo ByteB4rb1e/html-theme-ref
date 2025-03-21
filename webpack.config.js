@@ -97,11 +97,19 @@ module.exports = {
             }
         },
         {
-            test: /\.(mp3|wav|ogg)$/,
+            test: /\.(mp3)$/,
             include: /vendor/,
             type: 'asset/resource',
             generator: {
                 filename: 'audio/[name][ext]',
+            },
+        },
+        {
+            test: /\.(gif)$/,
+            include: /vendor/,
+            type: 'asset/resource',
+            generator: {
+                filename: 'image/[name][ext]',
             },
         },
     ],
