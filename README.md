@@ -1,194 +1,132 @@
 <a name="tiaras-html-theming-reference"></a>
 # Tiara's HTML Theming Reference
 
-> Heads, up: I'm still working backwards. The abstract in this README might
-  point to non-existing (but also irrelevant) resources. 
+> **Heads up**: This is a work-in-progress! Some references may not yet exist,
+  but the core ideas are fully in motion.
 
-> a11y... Accessibility somehow always falls short. I've already incorporated a
-  more focused mindset for it, when I define a workflow for creating a color system,
-  but this definetly needs to be incorporated as a core principle.
+Welcome to *Tiara's HTML Theming Reference*—a modular, standards-driven approach
+to HTML5 theming. This project champions accessibility, frugality, and the
+timeless beauty of the UNIX philosophy. Think of it as a launchpad for
+developers to explore better, cleaner ways of building scalable, reusable web
+themes without vendor lock-in and framework-fatigue.
 
-> Ditching BEM methodology in favor of SMACSS. BEM doesn't align
-  with the principles of this reference implementation, since it doesn't really
-  consider scoping to avoid the reuse of components that aren't supposed to be
-  reused. There's one thing that I'm afraid of and that is CSS spaghetti...
-  Though I can also see some challenges with SMACSS coming up in regards to
-  universal state definitions and context-specific styling... Let me make
-  analogy: Let's take a tomato and a coconut and we want to describe the
-  behavior of them rotting. Tomato visibly rots from the outside, the
-  coconut won't. Though it's the same behavior, describing it is different...
-  Let's discuss this [here](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions/2)
+> **Why UNIX philosophy?** Because simplicity, modularity, and clarity stand the
+  test of time. This reference aims to introduce a younger generation to these
+  principles while addressing modern web development challenges.
 
-> Wow... Modern browsers are relentless... Currently having issues (mainly just
-  warnings) with unmodified web font files. Will have to investigate if it's an
-  issue with my font-face definitions, or the web fonts actually being
-  non-compliant. It's just 2 out of 4, so I assume it's actually the web fonts
-  themselves. Also, maybe I should move discussions like this to the
-  CHANGELOG...
+**What This Is**  
+- A reference implementation: flexible, modular, and a discussion starter for
+  standards.
+- A proof of concept: showcasing best practices and exploring new methodologies
+  for not relying on frameworks.
 
-## Table of Contents
-* [Tiara's HTML Theming Reference](#tiaras-html-theming-reference)
-* [Goals](#goals)
-* [Build environment](#build-environment)
-* [Getting started](#getting-started)
-* [Customizing It](#customizing-it)
-* [Color System]()
-* [Let's talk!](#lets-talk)
-* [Licensing](#licensing)
-* [Architecture overview](ARCHITECTURE.md)
-* [Contribution guidelines](CONTRIBUTING.md)
+**What This Is NOT**  
+- A plug-and-play framework or service.
+- A product with guaranteed updates or support.
 
-This project is a reference implementation designed to explore and discuss ways
-to standardize HTML5 theme development using CSS3 and ECMAScript 2020+. It’s not
-a finished product for public consumption—think of it as a starting point for
-developers to dig into, critique, and build upon as we figure out practices to 
-standardize together. It combines modern frontend techniques with DevOps
-principles to create a scalable, standards-driven theme that generates HTML
-assets for static documents or dynamic web applications.
+**Quick Links**  
+- [Architecture Overview](ARCHITECTURE.md)  
+- [Contribution Guidelines](CONTRIBUTING.md)  
+- [Discussion Board](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions)  
 
-The focus is on:
+Check out [Disco Mode](https://www.youtube.com/watch?v=hS-JhioS5Hk) to see how
+much fun frugal development can be with little to no technical debt.
 
-* **Standardization**: Adhering to W3C standards, UNIX philosophy, and KISS
-  principles to create a universal foundation.
-* **Collaboration**: Providing a practical example to discuss how HTML theming
-  can be consistent across platforms and teams.
-* **Separation of Concerns**: Keeping things modular and maintainable to support
-  stable automation workflows.
+---
 
-This reference implementation is a solid starting point for developers working
-on HTML theme development. It plays nice with all sorts of systems — think CMS
-platforms (WordPress, Typo3), static site generators (Sphinx, Hugo), or even
-micro-blogging setups (Blogger.com) — showing how standardized themes can cut
-down on vendor lock-in and make migrations less of a nightmare. The guidelines
-of the various build subsystems are prioritized over any other practices, UNIX
-philosophy is just the glue to stick it together. Sticky, but not to sticky, so
-that build subsystems also don't cause vendor lock-in.
+## Key Principles
 
-**Heads-Up**: This is a foundation, not a framework, product, or service. It’s
-here for developers to mess with, build on, and kick around ideas — not a
-polished, plug-and-play solution. If you’re expecting bug fixes, or feature
-requests, you’re in the wrong place. Think of it as a launchpad for discussion
-and standardization, not something I’m babysitting. This reference
-implementation is the basis for my personal HTML theming though, so there
-definetly is conviction.
+1. **Accessibility First (a11y)**  
+   Accessibility is non-negotiable. From color systems to workflows, this
+   project is designed with inclusion at its core.  
 
-<a name="goals"></a>
+2. **Simplicity is King**
+   Adopts SMACSS methodology over BEM for clarity and control, avoiding the
+   dreaded “CSS spaghetti.”
+
+3. **CSS Overload, Not Frameworks**  
+   No heavy frameworks—just clean, modular CSS and sensible JavaScript.  
+
+4. **Frugal Engineering**  
+   Small, efficient, and modular systems to avoid vendor lock-in and promote seamless integrations.  
+
+5. **Collaboration by Design**  
+   Engage in discussions, propose standards, and share feedback. Every voice matters.
+
+---
+
 ## Goals
 
-Here’s what this reference is aiming to achieve — let’s discuss how these align
-with your standardization ideas:
+- **Standards Compliance**: Strict adherence to W3C and accessibility standards.  
+- **Modularity**: Strong separation of concerns for maintainability.  
+- **CLI-Driven Builds**: Automation for consistency and reproducibility.  
+- **Resource Efficiency**: Designed to thrive in constrained environments.  
 
-* **Strict Standards Compliance**: Following W3C guidelines, UNIX philosophy,
-  and KISS to keep it robust and universal.
+For a full breakdown, check the [Goals section in `ARCHITECTURE.md`](ARCHITECTURE.md#goals).
 
-* **Modularity**: Loose coupling and strict separation of concerns for
-  maintainable, standardized workflows.
+---
 
-* **CSS-First Approach**: Prioritizing CSS over JavaScript to stay lean and
-  standards-focused. Prioritizing CSS ensures smaller payloads, better
-  performance, and enhanced maintainability, focusing on declarative styling
-  over excessive scripting.
+## Getting Started
 
-* **CLI-Driven Builds**: Command-line tools for automation and reproducibility—core to standardized processes.
+1. **Clone the Repo**
 
-* **Resource Efficiency**: Works in constrained setups, making it a practical baseline.
+```sh
+git clone https://bitbucket.org/tiaracodes/html-theme-ref.git
+```
 
-* **Universal Integration**: Fits into CMS, static site generators, and more to demonstrate standardization across contexts.
+2. **Install dependencies (POSIX-ish shells)**
 
-* **SMACSS Methodology**: Logical DOM grouping for consistent structure. Old but
-  gold
+```sh
+sh ./configure
+```
 
-* **Sass & 7-1 Pattern**: Modular SCSS stylesheets as a potential standard for
-  styling.
+2. **Install dependencies (Microsoft PowerShell)**
 
-* **Type-Safe JS**: Using TypeScript for reliable, consistent scripting.
+```powershell
+git submodule update --init --remote && npm install
+```
 
-* **Lean Webpack Setup**: Minimal dependencies for a standardized build process.
+3. **Preview and experiment**
 
-* **Baseline Resources**: Includes fonts, icons, and CSS animations as a
-  starting point—should we tweak these?
+```sh
+npm run serve:doc
+```
 
-This is stable but not static—updates will be minimal to keep it consistent as a
-reference. What do you think about these goals? Anything you’d add or change?
+Modify `src/` and `docs/` and see real-time changes.
 
-<a name="build-environment"></a>
-## Build environment
+> NOTE: There's currently an issue I'm facing in MinGW with file watching
+  through [chokidar](https://github.com/paulmillr/chokidar), defined in
+  `webpack.config.doc.js`. I've already opened a
+  [bug report](https://github.com/paulmillr/chokidar/issues/1419), but haven't
+  verified if the issue also affects other POSIX-ish environments.
 
-The build setup is designed to show how a standardized HTML theme development
-process could look. It’s technical, reproducible, and open for discussion:
 
-* **npm**: Drives the build via package.json for consistency across environments.
-* **GNU make**: Drives CI/CD for a consistent interface to the build driver
-* **Webpack**: Bundles assets with a lean config — better alternatives?
-* **TypeScript**: Ensures script consistency — overkill or essential?
-* **Sass**: Compiles SCSS with Dart 3 for modular styles.
-* **Jest**: Tests JS to maintain quality — TDD for the win?
-* **Stylelint**: Enforces style consistency — standard config is enough?
-* **PostCSS & NanoCSS**: Optimizes styles post - build—standard-worthy?
+4. **Share your thoughts**
 
-Key commands:
+Check out [CONTRIBUTING.md](CONTRIBUTING.md) for information on how to get
+involved.
 
-* `npm run build`: Produces production assets.
-* `npm run watch`: Auto-rebuilds for experimentation.
-* `npm run serve:doc`: usability demo and text — great for discussing implementation.
-* `npm run lint:style`: Checks style standards.
-* `npm run test:script`: Validates JS behavior.
-* `npm run dist`: Packages it up — how should we share standardized themes?
+---
 
-This setup is a proposal—let’s refine it together!
+## Why this matters
 
-<a name="getting-started"></a>
-## Getting started
+This is more than just a reference — it’s a call to arms. Together, we can make
+HTML theming more approachable, efficient, and standardized across platforms.
+Join me in defending the bastion of frugality, conviction, and simplicity — the
+very ideals of the UNIX philosophy.
 
-Want to jump in and shape this standardization effort? Here’s how
-developers can engage:
+---
 
-* **Clone It**: `git clone https://bitbucket.org/tiaracodes/html-theme-ref.git`
-* **Set Up**: Run `sh ./configure` (POSIX) or `git submodule update --init --remote --recursive && npm install` (PowerShell).
+## Let's talk
 
-* **Experiment**: Run `npm run serve:doc`, tweak `src/` and test ideas.
-* **Discuss**: Check out [CONTRIBUTING.md](CONTRIBUTING.md) and share your thoughts in [GitHub Discussions](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions)!
-
-To preview the example and docs: `npm run serve:doc`. It’s a usability
-demonstrator to spark ideas — let me know what you think!
-
-> **A Note on Hosting**: Source code is hosted on Bitbucket, as it prioritizes
-  development over gamification. Discussions take place on GitHub to benefit
-  from its collaborative features and wider community reach.
-
-<a name="customizing-it"></a>
-## Customizing it
-
-Use it as a foundation:
-
-* Update `package.json` (`name`, `version`).
-* Update `LICENSE`
-* Point to your repo: `git remote set-url origin <your-url>`.
-
-To customize the theme, you can replace resources (e.g., fonts, icons) or modify
-variables to align with your design needs. Here's an example of updating fonts:
-
-### Example: Updating fonts
-
-To replace the default fonts:
-
-1. Add new font files to `vendor/` and reference them in `src/style/vendors/`
-2. Update the font family variables in `src/style/base/_variables.scss`.
-
-How would you adapt it? You can find more examples in the [Contribution
-guidelines](CONTRIBUTING.md).
-
-<a name="lets-talk"></a>
-## Let’s talk!
-
-This is all about engaging you and other developers in a discussion. Does this
-setup work as a starting point for standardizing HTML theme development? What’s
-missing? Too heavy? Too light? Hit me up with your feedback — [I’m all ears](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions)!
+Head over to the [GitHub discussisons](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions) to
+join the conversation. Feedback, ideas, and critiques are all welcome! Let’s
+shape the future of web theming together.
 
 <a name="licensing"></a>
 ## Licensing
 
-Tiar's HTML Theming Reference is licensed under a Creative Commons Attribution
+Tiara's HTML Theming Reference is licensed under a Creative Commons Attribution
 4.0 International License.
 
 You should have received a copy of the license along with this
