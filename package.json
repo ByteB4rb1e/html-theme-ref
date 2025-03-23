@@ -31,20 +31,13 @@
         "yargs": "^17.7.2"
     },
     "scripts": {
-        "build": "npm run production",
-        "build:doc": "webpack -c webpack.config.doc.js",
-        "build:script": "tsc",
+        "doc": "webpack -c webpack.config.doc.js",
         "debug": "webpack -c webpack.config.debug.js",
-        "debug:script": "npm run build:script -- -p tsconfig.debug.json",
         "dist": "ts-node -P tsconfig.node.json scripts/pack.ts build/production dist",
-        "lint:style": "stylelint -c .stylelintrc.json src/style",
         "production": "webpack",
-        "serve:doc": "webpack serve -c webpack.config.doc.js",
-        "watch": "npm run watch:debug",
-        "watch:production": "npm run build:production -- --watch",
-        "watch:debug": "npm run build:debug -- --watch",
-        "watch:doc": "npm run build:doc -- --watch",
-        "test:script": "jest",
+        "uat": "webpack serve -c webpack.config.doc.js",
+        "watch": "webpack -c webpack.config.debug.js --watch",
+        "test": "jest",
         "mypublish": "ts-node -P tsconfig.node.json scripts/publish.ts"
     },
     "dependencies": {

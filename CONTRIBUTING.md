@@ -164,3 +164,28 @@ been a clean optimization has turned into a maintenance headache.
 ## Issue tracking
 
 Currently via e-mail, see `package.json` for an address.
+
+## Development Commands
+
+Development targets are no longer part of the `package.json` scripts, as to
+declutter it.
+
+### Style Linting
+
+```
+npx stylelint -c stylelintrc.json src/style
+```
+
+### Standalone script compilation
+
+Production:
+
+```
+tsc
+```
+
+Debug:
+
+```
+tsc -P tsconfig.debug.json
+```
