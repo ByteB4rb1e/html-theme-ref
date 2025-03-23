@@ -1,0 +1,9 @@
+# this .gitignore serves the purpose of allowing wrapping projects, that
+# generate this project's assets dynamically, not having to worry about
+# auxiliary debugging assets polution. The file is supposed to be copied by
+# webpack into the output directory, so the globbing patterns shouldn't match
+# the current directory. That's why it's called `gitignore` instead of
+# `.gitignore` so that it isn't actually being picked up by git. webpack should
+# rewrite the basename.
+*.ts
+*.map

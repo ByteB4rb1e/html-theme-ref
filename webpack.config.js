@@ -1,4 +1,13 @@
-const { resolve } = require("path");
+const path = require("path");
+/*
+ * DISREGARD: just a vent in German
+ *
+ * Haben wir noch Namespaces dabei? Keins mehr? Keine mehr? Zwei noch?  Hast du
+ * die Namespaces noch genommen? Hallo? Der ist ein bisschen ein Otto
+ * geworden... Aber ich hab' Respekt vor dem. Ich hät jetzt Bock auf Namespaces.
+ * Boah, wir würden so namespacen... `@webpackcontrib/css-minimizer-plugin`,
+ * `webpack-css-minimizer-plugin`...
+ */
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
@@ -55,9 +64,11 @@ module.exports = {
     },
     output: {
         filename: "script/[name].js",
-        path: resolve(__dirname, "build/production"),
+        path: path.resolve(__dirname, "build/production"),
     },
-    plugins: [new MiniCssExtractPlugin({ filename: "style/[name].css" })],
+    plugins: [
+        new MiniCssExtractPlugin({ filename: "style/[name].css" }),
+    ],
     optimization: { minimizer: [`...`, new CssMinimizerPlugin()] },
     module: {
         rules: [
