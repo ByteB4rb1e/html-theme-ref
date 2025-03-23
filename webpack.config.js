@@ -57,7 +57,7 @@ module.exports = {
         extensions: ['.ts', '.tsx', '.js']
     },
     entry: {
-        tiara: [
+        theme: [
             "./src/script/main.ts",
             "./src/style/main.scss"
         ]
