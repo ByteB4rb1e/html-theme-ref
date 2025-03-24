@@ -17,7 +17,7 @@ themes without vendor lock-in and framework-fatigue.
 **What This Is**  
 - A reference implementation: flexible, modular, and a discussion starter for
   standards.
-- A proof of concept: showcasing best practices and exploring new methodologies
+- A proof of concept: showcasing matured practices and exploring new methodologies
   for not relying on frameworks.
 
 **What This Is NOT**  
