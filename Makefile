@@ -6,11 +6,11 @@ build/doc:
 # overriding the output path allows for wrapping by another project
 # it can be used like `make build/production OUTPUT_PATH=<path-override>`
 build/production:
-	test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
+	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
 	npm run production $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 
 build/debug:
-	test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
+	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
 	npm run debug $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 
 publish:
@@ -31,5 +31,5 @@ package-lock.json:
 	npm install --registry=https://registry.npmjs.org
 
 watch:
-	test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
+	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
 	npm run watch $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
