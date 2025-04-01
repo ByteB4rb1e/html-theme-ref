@@ -4,65 +4,49 @@
 > **Heads up**: This is a work-in-progress! Some references may not yet exist,
   but the core ideas are fully in motion.
 
+> I'm rethinking the approach of this project. I was hoping on fostering an
+entrypoint for discussions, but I figured I should focus on making this **my**
+reference implementation, not **our** reference implementation. Therefore I'm
+reworking the documentation as well, so it'll remain spotty for now. 
+
 Welcome to *Tiara's HTML Theming Reference*—a modular, standards-driven approach
 to HTML5 theming. This project champions accessibility, frugality, and the
 timeless beauty of the UNIX philosophy. Think of it as a launchpad for
 developers to explore better, cleaner ways of building scalable, reusable web
 themes without vendor lock-in and framework-fatigue.
 
-> **Why UNIX philosophy?** Because simplicity, modularity, and clarity stand the
-  test of time. This reference aims to introduce a younger generation to these
-  principles while addressing modern web development challenges.
-
-**What This Is**  
-- A reference implementation: flexible, modular, and a discussion starter for
-  standards.
-- A proof of concept: showcasing matured practices and exploring new methodologies
-  for not relying on frameworks.
-
-**What This Is NOT**  
-- A plug-and-play framework or service.
-- A product with guaranteed updates or support.
-
-**Quick Links**  
-- [Architecture Overview](ARCHITECTURE.md)  
-- [Contribution Guidelines](CONTRIBUTING.md)  
-- [Discussion Board](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions)  
-
-Check out [Disco Mode](https://www.youtube.com/watch?v=hS-JhioS5Hk) to see how
-much fun frugal development can be with little to no technical debt.
-
 ---
 
-## Key Principles
+For the time being, here's a UNIX koan yet to be found in the archives.
 
-1. **Accessibility First (a11y)**  
-   Accessibility is non-negotiable. From color systems to workflows, this
-   project is designed with inclusion at its core.  
+## Master Foo on web design
 
-2. **Simplicity is King**
-   Adopts SMACSS methodology over BEM for clarity and control, avoiding the
-   dreaded “CSS spaghetti.”
+A student once asked Master Foo, "What is the greatest sin of web design?"
 
-3. **CSS Overload, Not Frameworks**  
-   No heavy frameworks—just clean, modular CSS and sensible JavaScript.  
+Master Foo replied, "It is to forget the user."
 
-4. **Frugal Engineering**  
-   Small, efficient, and modular systems to avoid vendor lock-in and promote seamless integrations.  
+The student, puzzled, said, “But the overly optimized lazy-loading, awry
+infinite scroll and endless cookie banners are greater sins?”
 
-5. **Collaboration by Design**  
-   Engage in discussions, propose standards, and share feedback. Every voice matters.
+Master Foo shook his head. "The lazy-loading blinds the user, the infinite
+scroll disorients them, and the cookie banners drives them away. But these are
+merely symptoms. The true sin lies in forgetting that the web is not for the
+designer, but for the one who visits."
 
----
+The student nodded slowly. "And what of those who use divs and JavaScript for
+vanity?"
 
-## Goals
+Master Foo smiled. "They are like the baker who builds a cake of sawdust. It may
+look impressive, but it is inedible and forgotten by those who hunger."
 
-- **Standards Compliance**: Strict adherence to W3C and accessibility standards.  
-- **Modularity**: Strong separation of concerns for maintainability.  
-- **CLI-Driven Builds**: Automation for consistency and reproducibility.  
-- **Resource Efficiency**: Designed to thrive in constrained environments.  
+The student bowed and began to design a page. It had sensible lazy-loading, no
+infinite scroll, and an opt-in cookie banner. Its links were clear, its cookies
+honest, and its text readable to all.
 
-For a full breakdown, check the [Goals section in `ARCHITECTURE.md`](ARCHITECTURE.md#goals).
+As the student finished his page, Master Foo said, "Now you understand the Great
+Way. Simplicity is not an absence of design but the presence of purpose."
+
+Upon hearing this, the student was enlightened.
 
 ---
 
@@ -100,28 +84,7 @@ Modify `src/` and `docs/` and see real-time changes.
   [bug report](https://github.com/paulmillr/chokidar/issues/1419), but haven't
   verified if the issue also affects other POSIX-ish environments.
 
-
-4. **Share your thoughts**
-
-Check out [CONTRIBUTING.md](CONTRIBUTING.md) for information on how to get
-involved.
-
 ---
-
-## Why this matters
-
-This is more than just a reference — it’s a call to arms. Together, we can make
-HTML theming more approachable, efficient, and standardized across platforms.
-Join me in defending the bastion of frugality, conviction, and simplicity — the
-very ideals of the UNIX philosophy.
-
----
-
-## Let's talk
-
-Head over to the [GitHub discussisons](https://github.com/oxbqkwwxfrqccwtg/html-theme-ref/discussions) to
-join the conversation. Feedback, ideas, and critiques are all welcome! Let’s
-shape the future of web theming together.
 
 <a name="licensing"></a>
 ## Licensing
