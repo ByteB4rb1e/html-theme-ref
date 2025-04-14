@@ -36,8 +36,9 @@ uat:
 configure:
 	autoconf
 
+# necessary when using a local npm mirror/proxy
 package-lock.json:
-	rm -rf package-lock.json node_modules
+	rm -rf package-lock.json
 	npm install --registry=https://registry.npmjs.org
 
 watch:
