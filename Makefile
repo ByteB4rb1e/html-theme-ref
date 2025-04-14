@@ -1,4 +1,4 @@
-.PHONY: dist publish test lint build/debug build/release build/doc build \
+.PHONY: dist publish test lint build/debug build/release build/doc \
 		package-lock.json tags clean
 
 all: build/release
