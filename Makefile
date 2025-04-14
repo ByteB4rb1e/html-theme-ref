@@ -24,7 +24,7 @@ build/debug:
 	npm run build:debug $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 
 publish:
-	npm run mypublish
+	npm run publish_
 
 dist:
 	npm run dist

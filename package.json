@@ -39,7 +39,7 @@
         "uat": "webpack serve -c webpack.config.doc.js",
         "watch": "webpack -c webpack.config.debug.js --watch",
         "test": "jest",
-        "mypublish": "ts-node -P tsconfig.node.json scripts/publish.ts"
+        "publish_": "ts-node -P tsconfig.node.json scripts/publish.ts"
     },
     "dependencies": {
         "boxicons": "^2.1.4"
