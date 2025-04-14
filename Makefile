@@ -1,9 +1,12 @@
 .PHONY: dist publish test lint build/debug build/production build/doc build \
-		package-lock.json tags
+		package-lock.json tags clean
 
 tags:
 	ctags -R --exclude=node_modules --exclude=vendor --exclude=docs \
 	--exclude=*.js --exclude=*.htm* --exclude=*.json --exclude=src/style
+
+clean:
+	rm -rvf tags build/ autom4te.cache/
 
 build/doc:
 	npm run doc
