@@ -1,4 +1,9 @@
-.PHONY: dist publish test lint build/debug build/production build/doc build package-lock.json
+.PHONY: dist publish test lint build/debug build/production build/doc build \
+		package-lock.json tags
+
+tags:
+	ctags -R --exclude=node_modules --exclude=vendor --exclude=docs \
+	--exclude=*.js --exclude=*.htm* --exclude=*.json --exclude=src/style
 
 build/doc:
 	npm run doc
