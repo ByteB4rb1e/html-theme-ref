@@ -33,9 +33,9 @@
     },
     "scripts": {
         "doc": "webpack -c webpack.config.doc.js",
-        "debug": "webpack -c webpack.config.debug.js",
+        "build:debug": "webpack -c webpack.config.debug.js",
+        "build:release": "webpack",
         "dist": "ts-node -P tsconfig.node.json scripts/pack.ts build/release dist",
-        "release": "webpack",
         "uat": "webpack serve -c webpack.config.doc.js",
         "watch": "webpack -c webpack.config.debug.js --watch",
         "test": "jest",

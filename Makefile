@@ -17,11 +17,11 @@ build/doc:
 # it can be used like `make build/release OUTPUT_PATH=<path-override>`
 build/release:
 	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
-	npm run production $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
+	npm run build:release $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 
 build/debug:
 	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
-	npm run debug $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
+	npm run build:debug $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 
 publish:
 	npm run mypublish
