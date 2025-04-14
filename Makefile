@@ -1,7 +1,7 @@
-.PHONY: dist publish test lint build/debug build/production build/doc build \
+.PHONY: dist publish test lint build/debug build/release build/doc build \
 		package-lock.json tags clean
 
-all: build/production
+all: build/release
 
 tags:
 	ctags -R --exclude=node_modules --exclude=vendor --exclude=docs \
@@ -14,8 +14,8 @@ build/doc:
 	npm run doc
 
 # overriding the output path allows for wrapping by another project
-# it can be used like `make build/production OUTPUT_PATH=<path-override>`
-build/production:
+# it can be used like `make build/release OUTPUT_PATH=<path-override>`
+build/release:
 	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
 	npm run production $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 

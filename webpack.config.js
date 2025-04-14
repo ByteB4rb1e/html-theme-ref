@@ -64,7 +64,7 @@ module.exports = {
     },
     output: {
         filename: "script/[name].js",
-        path: path.resolve(__dirname, "build/production"),
+        path: path.resolve(__dirname, "build/release"),
     },
     plugins: [
         new MiniCssExtractPlugin({ filename: "style/[name].css" }),

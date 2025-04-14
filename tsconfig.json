@@ -10,7 +10,7 @@
         "declaration": true,
         "declarationMap": true,
         "baseUrl": "./",
-        "outDir": "build/production/script",
+        "outDir": "build/release/script",
         "paths": { "*": ["node/modules/*"] },
         "lib": ["dom"]
     },
