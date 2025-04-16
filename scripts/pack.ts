@@ -20,16 +20,21 @@ how the \`npm pack\` workflow expects it. I don't like the isolation between
 build artifacts and sources that come with it.`
 
 const argv = require('yargs')
-    .usage('$0 [args] inputDir outputDir', usage)
+    .usage('$0 [args] inputDir outputDir docsDir', usage)
     .positional('inputDir', {
             type: 'string',
-            default: 'build/production',
+            default: 'build/release',
             describe: 'path to package build'
     })
     .positional('outputDir', {
             type: 'string',
             default: 'dist',
             describe: 'path to dist directory'
+    })
+    .positional('docsDir', {
+            type: 'string',
+            default: null,
+            describe: 'path to docs build'
     })
     .demandOption(['inputDir', 'outputDir'])
     .help()
@@ -45,28 +50,17 @@ if ([path.sep, '.'].includes(argv.inputDir[0])) {
     throw new Error(`inputDir must be a relative path inside of '${cwd}'`)
 }
 
-const buildDir = path.join(cwd, 'build', 'pack');
-const nodeModulesDir = path.join(cwd, 'node_modules');
-const gitDir = path.join(cwd, '.git/');
-
 const tempDir = fs.mkdtempSync(path.join(
     os.tmpdir(),
     `${path.basename(cwd)}-`
 ));
-const tempBuildPath = path.join(tempDir, argv.inputDir)
-const tempBuildDir = path.join(tempDir, path.dirname(argv.inputDir))
-const tempDistDir = path.join(tempDir, 'dist');
 
-console.log(`cp: ${process.cwd()} > ${tempDir}`);
 fs.cpSync(
-    process.cwd(),
+    argv.inputDir,
     tempDir,
     {
         recursive: true,
         filter: (src: string, dest: string) => {
-            if (src.startsWith(nodeModulesDir)) { return false }
-            if (src.startsWith(gitDir)) { return false }
-            if (src.startsWith(buildDir)) { return false }
             console.log(
                 `cp: ${path.relative(cwd, src)} > ${path.relative(cwd, dest)}`
             );
@@ -75,50 +69,51 @@ fs.cpSync(
     }
 );
 
-console.log(`cp: ${tempBuildPath} > ${tempDir}`);
-fs.cpSync(
-    tempBuildPath,
-    tempDir,
-    {
-        recursive: true,
-        filter: (src: string, dest: string) => {
-            console.log(
-                `cp (tmp): ${path.relative(tempDir, src)} > ${path.relative(tempDir, dest)}`
-            );
-            return true;
+[
+    'README.md',
+    'package.json',
+].forEach((target) => {
+    fs.cpSync(
+        path.join(cwd, target),
+        path.join(tempDir, target),
+        {
+            recursive: true,
+            filter: (src: string, dest: string) => {
+                console.log(
+                    `cp: ${path.relative(cwd, src)} > ${path.relative(cwd, dest)}`
+                );
+                return true;
+            }
         }
-    }
-);
+    );
+});
 
-console.log(`rm: ${tempBuildDir}`);
-fs.rmSync(tempBuildDir, { recursive: true, force: true });
+if (argv.docsDir) {
+    fs.cpSync(
+        path.join(cwd, argv.docsDir),
+        path.join(tempDir, `_docs`),
+        {
+            recursive: true,
+            filter: (src: string, dest: string) => {
+                console.log(
+                    `cp: ${path.relative(cwd, src)} > ${path.relative(cwd, dest)}`
+                );
+                return true;
+            }
+        }
+    );
+}
 
-console.log(`mkdir: ${tempDistDir}`);
-fs.mkdirSync(tempDistDir, { recursive: true });
+var outputDir = path.resolve(path.join(cwd, argv.outputDir));
 
-console.log(`npm: pack --pack-destination ${argv.outputDir}`);
+console.log(`mkdir: ${outputDir}`);
+fs.mkdirSync(outputDir, { recursive: true });
+
+console.log(`npm: pack --pack-destination ${outputDir}`);
 child_process.execSync(
-    `npm pack --pack-destination ${argv.outputDir}`,
+    `npm pack --pack-destination ${outputDir}`,
     {
         cwd: tempDir,
         stdio: "inherit"
-    }
-);
-
-console.log(`mkdir: ${argv.outputDir}`);
-fs.mkdirSync(argv.outputDir, {recursive: true});
-
-console.log(`cp: ${tempDistDir} > ${argv.outputDir}`);
-fs.cpSync(
-    tempDistDir,
-    argv.outputDir,
-    {
-        recursive: true,
-        filter: (src: string, dest: string) => {
-            console.log(
-                `cp (tmp): ${path.relative(tempDir, src)} > ${path.relative(tempDir, dest)}`
-            );
-            return true;
-        }
     }
 );
