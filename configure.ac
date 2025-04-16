@@ -8,7 +8,7 @@ AC_CHECK_PROGS([NODE], [node], [no])
 AS_IF([test "$NODE" == "no"], 
       [AC_MSG_ERROR([install Node.js (node), before continuing.])])
 
-AC_CHECK_PROGS([NPM], [npm])
+AC_CHECK_PROGS([NPM], [npm], [no])
 AS_IF([test "$NPM" == "no"], 
       [AC_MSG_ERROR([install npm, before continuing.])])
 

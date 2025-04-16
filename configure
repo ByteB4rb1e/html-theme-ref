@@ -1865,6 +1865,7 @@ fi
 
   test -n "$NPM" && break
 done
+test -n "$NPM" || NPM="no"
 
 if test "$NPM" == "no"
 then :
