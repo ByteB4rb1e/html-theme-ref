@@ -1756,6 +1756,10 @@ fi
   test -n "$NPM" && break
 done
 
+if test "$NPM" == "no"
+then :
+  as_fn_error $? "install npm, before continuing." "$LINENO" 5
+fi
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: initializing npm project..." >&5
 printf "%s\n" "$as_me: initializing npm project..." >&6;}
