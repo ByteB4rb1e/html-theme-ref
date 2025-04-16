@@ -38,7 +38,8 @@
         "dist": "ts-node -P tsconfig.node.json scripts/pack.ts build/release dist",
         "uat": "webpack serve -c webpack.config.doc.js",
         "watch": "webpack -c webpack.config.debug.js --watch",
-        "test": "jest",
+        "test:script": "jest",
+        "lint:style": "stylelint -c .stylelintrc.json src/style -o test-reports/style",
         "publish_": "ts-node -P tsconfig.node.json scripts/publish.ts"
     },
     "dependencies": {

@@ -1,25 +1,31 @@
-.PHONY: dist publish test lint build/debug \
-		package-lock.json tags clean
+.PHONY: dist publish build/debug package-lock.json tags clean \
+		test-reports/script test-reports/style
 
-all: dist
+all: test-reports/script test-reports/style dist
 
 tags:
 	ctags -R --exclude=node_modules --exclude=vendor --exclude=docs \
 	--exclude=*.js --exclude=*.htm* --exclude=*.json --exclude=src/style
 
-clean:
-	rm -rvf tags build/ autom4te.cache/ dist
+test-reports/script:
+	npm run test:script || exit 0
 
-build/doc: package.json webpack.config.doc.js
+test-reports/style:
+	npm run lint:style || exit 0
+
+clean:
+	rm -rvf tags build/ autom4te.cache/ dist test-reports
+
+build/doc: package.json webpack.config.doc.js src/
 	npm run doc
 
 # overriding the output path allows for wrapping by another project
 # it can be used like `make build/release OUTPUT_PATH=<path-override>`
-build/release: package.json webpack.config.js
+build/release: package.json webpack.config.js src/
 	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
 	npm run build:release $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 
-build/debug: package.json webpack.config.debug.js
+build/debug: package.json webpack.config.debug.js src/
 	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
 	npm run build:debug $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 
@@ -33,7 +39,7 @@ dist: package.json build/release build/doc
 	npm run dist -- build/doc
 
 # user acceptance testing
-uat: package.json webpack.config.doc.js
+uat: package.json webpack.config.doc.js src/
 	npm run uat
 
 configure: configure.ac
@@ -44,6 +50,8 @@ package-lock.json: package.json
 	rm -rf package-lock.json
 	npm install --registry=https://registry.npmjs.org
 
-watch:
+# can be used for a cascaded development environment, e.g. having a Sphinx theme
+# with sphinx-autobuild running in parallel with this target
+watch: src/ package.json webpack.config.debug.js
 	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
 	npm run watch $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
