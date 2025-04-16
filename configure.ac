@@ -1,5 +1,9 @@
 AC_INIT
 
+AC_CHECK_PROGS([GIT], [git], [no])
+AS_IF([test "$GIT" == "no"], 
+      [AC_MSG_ERROR([install Git, before continuing.])])
+
 AC_CHECK_PROGS([NODE], [node], [no])
 AS_IF([test "$NODE" == "no"], 
       [AC_MSG_ERROR([install Node.js (node), before continuing.])])
