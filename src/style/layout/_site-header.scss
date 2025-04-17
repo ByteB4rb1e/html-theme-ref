@@ -6,14 +6,14 @@ header.site-header {
     // CSS variables for dynamic spacing, since using em unit
     --icon-width: #{component.$icon-size};
     --icon-height: #{component.$icon-size};
-    --icon-container-horizontal-spacing: calc(var(--icon-width)/2);
-    --icon-container-vertical-spacing: calc(var(--icon-height)/2);
+    --icon-container-horizontal-spacing: calc(var(--icon-width) / 2);
+    --icon-container-vertical-spacing: calc(var(--icon-height) / 2);
     --icon-container-width: calc(
-        var(--icon-width) + 
+        var(--icon-width) + \
         var(--icon-container-horizontal-spacing) * 2
     );
     --icon-container-height: calc(
-        var(--icon-height) +
+        var(--icon-height) + \
         var(--icon-container-vertical-spacing) * 2
     );
 
@@ -27,8 +27,8 @@ header.site-header {
 
         & > summary::before, form::before {
             line-height: 1;
-            padding: calc(var(--icon-container-vertical-spacing)/2)
-                     calc(var(--icon-container-horizontal-spacing)/2);
+            padding: calc(var(--icon-container-vertical-spacing) / 2)
+                     calc(var(--icon-container-horizontal-spacing) / 2);
             position: absolute;
             right: 0;
             top: 0;
@@ -62,32 +62,6 @@ header.site-header {
         }
 
         > summary > details.options {
-            &[open] > summary {
-                display: flex;
-
-                & > form.search {
-                    display: none;
-                }
-            }
-
-            &:not([open]) > summary > a.heading {
-                display: none;
-            }
-
-            // anchor is required to stop click event propagation to the
-            // encapsulating details summary
-            > summary > a.heading {
-                flex-grow: 1;
-                padding: var(--icon-container-vertical-spacing)
-                         variables.$space-three-quarter;
-                width: 100%;
-                z-index: 5;
-
-                > .text {
-                    overflow-wrap: break-word;
-                }
-            }
-
             > summary {
                 margin-right: var(--icon-container-width);
                 padding-right: var(--icon-container-width);
@@ -113,6 +87,32 @@ header.site-header {
                             width: 100%;
                         }
                     }
+                }
+            }
+
+            // anchor is required to stop click event propagation to the
+            // encapsulating details summary
+            > summary > a.heading {
+                flex-grow: 1;
+                padding: var(--icon-container-vertical-spacing)
+                         variables.$space-three-quarter;
+                width: 100%;
+                z-index: 5;
+
+                > .text {
+                    overflow-wrap: break-word;
+                }
+            }
+
+            &:not([open]) > summary > a.heading {
+                display: none;
+            }
+
+            &[open] > summary {
+                display: flex;
+
+                & > form.search {
+                    display: none;
                 }
             }
 
