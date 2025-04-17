@@ -7,11 +7,11 @@ tags:
 	ctags -R --exclude=node_modules --exclude=vendor --exclude=docs \
 	--exclude=*.js --exclude=*.htm* --exclude=*.json --exclude=src/style
 
-test-reports/script:
+test-reports/script: eslint.config.mjs jest.config.js
 	npm run lint:script || exit 0
 	npm run test:script || exit 0
 
-test-reports/style:
+test-reports/style: stylelintrc.json
 	npm run lint:style || exit 0
 
 clean:
