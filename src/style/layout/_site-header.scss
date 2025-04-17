@@ -8,14 +8,20 @@ header.site-header {
     --icon-height: #{component.$icon-size};
     --icon-container-horizontal-spacing: calc(var(--icon-width) / 2);
     --icon-container-vertical-spacing: calc(var(--icon-height) / 2);
+    /* stylelint-disable scss/operator-no-newline-after */
+    /* stylelint-disable scss/operator-no-unspaced */
+    /* stylelint-disable function-calc-no-unspaced-operator */
     --icon-container-width: calc(
-        var(--icon-width) + \
+        var(--icon-width) + 
         var(--icon-container-horizontal-spacing) * 2
     );
     --icon-container-height: calc(
-        var(--icon-height) + \
+        var(--icon-height) + 
         var(--icon-container-vertical-spacing) * 2
     );
+    /* stylelint-enable scss/operator-no-newline-after */
+    /* stylelint-enable scss/operator-no-unspaced */
+    /* stylelint-enable function-calc-no-unspaced-operator */
 
     > details.panel,
     > details.panel > summary > details.options {

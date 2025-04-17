@@ -59,8 +59,12 @@ $layout-content-padding-small: 1em;
 $layout-content-width: 55em;
 $layout-sidebar-width: 16em;
 $layout-content-padded-width: $layout-content-width;
-$layout-content-padded-width-small: $layout-content-width + \
+/* stylelint-disable scss/operator-no-newline-after */
+/* stylelint-disable scss/operator-no-unspaced */
+$layout-content-padded-width-small: $layout-content-width + 
                                     $layout-content-padding-small * 2;
+/* stylelint-enable scss/operator-no-newline-after */
+/* stylelint-enable scss/operator-no-unspaced */
 $layout-full-width: $layout-content-padded-width;
 $layout-sidebar-item-height: 100px;
 $layout-sidebar-expander-width: 50px;

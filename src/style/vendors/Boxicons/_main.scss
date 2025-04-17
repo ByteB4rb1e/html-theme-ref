@@ -270,6 +270,7 @@ ul.bx-ul {
 
 /* stylelint-disable selector-class-pattern */
 .bx- {
+/* stylelint-enable selector-class-pattern */
     &spin {
         -webkit-animation: spin 2s linear infinite;
         animation: spin 2s linear infinite;
