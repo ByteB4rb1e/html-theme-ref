@@ -1,7 +1,7 @@
 .PHONY: dist publish build/debug package-lock.json tags clean \
 		test-reports/script test-reports/style
 
-all: test-reports/script test-reports/style dist
+all: dist
 
 tags:
 	ctags -R --exclude=node_modules --exclude=vendor --exclude=docs \
@@ -12,7 +12,9 @@ test-reports/script: eslint.config.mjs jest.config.js
 	npm run test:script || exit 0
 
 test-reports/style: .stylelintrc.json jest.config.sass-true.js
-	npm run lint:style || exit 0
+	npm run lint:style
+
+test-reports: test-reports/script test-reports/style
 
 clean:
 	rm -rvf tags build/ autom4te.cache/ dist test-reports
@@ -22,7 +24,7 @@ build/doc: package.json webpack.config.doc.js src/
 
 # overriding the output path allows for wrapping by another project
 # it can be used like `make build/release OUTPUT_PATH=<path-override>`
-build/release: package.json webpack.config.js src/
+build/release: package.json webpack.config.js src/ test-reports
 	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
 	npm run build:release $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 
