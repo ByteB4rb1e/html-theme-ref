@@ -16,18 +16,8 @@ header.site-header {
         text-transform: none;
     }
 
-    > details.panel,
-    > details.panel > summary > details.options {
-        &[open] {
-            & > summary::before {
-                background-color: var(--color-primary);
-                color: var(--color-background);
-            }
-        }
-    }
-
     > details.panel {
-        > summary:before {
+        > summary::before {
             content: variables.$glyph-menu;
         }
 
@@ -37,7 +27,6 @@ header.site-header {
         }
 
         > summary > details.options {
-
             > summary::before {
                 content: variables.$glyph-cog;
             }
@@ -78,9 +67,6 @@ header.site-header {
                             background-color: var(--color-accent);
                             color: var(--color-background);
                             outline: none;
-
-                            &::placeholder {
-                            }
                         }
 
                         &::placeholder {
@@ -92,6 +78,7 @@ header.site-header {
 
             .options-content {
                 background: var(--color-background);
+
                 @include mixins.box-shadow(0, 10px, 5px, rgba(0,0,0,0.31));
             }
         }
@@ -113,6 +100,16 @@ header.site-header {
 
         summary::marker {
             content: '';
+        }
+    }
+
+    > details.panel,
+    > details.panel > summary > details.options {
+        &[open] {
+            & > summary::before {
+                background-color: var(--color-primary);
+                color: var(--color-background);
+            }
         }
     }
 }

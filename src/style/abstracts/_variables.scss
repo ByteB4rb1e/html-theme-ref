@@ -59,7 +59,7 @@ $layout-content-padding-small: 1em;
 $layout-content-width: 55em;
 $layout-sidebar-width: 16em;
 $layout-content-padded-width: $layout-content-width;
-$layout-content-padded-width-small: $layout-content-width + 
+$layout-content-padded-width-small: $layout-content-width + \
                                     $layout-content-padding-small * 2;
 $layout-full-width: $layout-content-padded-width;
 $layout-sidebar-item-height: 100px;

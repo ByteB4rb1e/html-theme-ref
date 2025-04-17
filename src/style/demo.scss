@@ -2,11 +2,11 @@
 // custom definitions for kitchen-sink (demo page), in use by the `doc` build
 // target
 @use './abstracts/variables' as variables;
-
 @forward './main';
 
 body > div > dl > dt {
     font-family: monospace;
+    padding: 5px;
 
     @media (prefers-color-scheme: light) {
         background-color: #eee;
@@ -17,45 +17,42 @@ body > div > dl > dt {
         background-color: #333;
         color: #eee;
     }
-
-    & {
-        padding: 5px;
-    }
 }
 
+/* stylelint-disable selector-class-pattern */
 .scheme-background-color- {
     &light- {
         &accent {
-            background-color: map-get(
-                map-get(variables.$colors, light),
+            background-color: map.get(
+                map.get(variables.$colors, light),
                 accent
             );
         }
 
         &background {
-            background-color: map-get(
-                map-get(variables.$colors, light),
+            background-color: map.get(
+                map.get(variables.$colors, light),
                 background
             );
         }
 
         &primary {
-            background-color: map-get(
-                map-get(variables.$colors, light),
+            background-color: map.get(
+                map.get(variables.$colors, light),
                 primary
             );
         }
 
         &secondary {
-            background-color: map-get(
-                map-get(variables.$colors, light),
+            background-color: map.get(
+                map.get(variables.$colors, light),
                 secondary
             );
         }
 
         &text {
-            background-color: map-get(
-                map-get(variables.$colors, light),
+            background-color: map.get(
+                map.get(variables.$colors, light),
                 text
             );
         }
@@ -63,36 +60,36 @@ body > div > dl > dt {
 
     &dark- {
         &accent {
-            background-color: map-get(
-                map-get(variables.$colors, dark),
+            background-color: map.get(
+                map.get(variables.$colors, dark),
                 accent
             );
         }
 
         &background {
-            background-color: map-get(
-                map-get(variables.$colors, dark),
+            background-color: map.get(
+                map.get(variables.$colors, dark),
                 background
             );
         }
 
         &primary {
-            background-color: map-get(
-                map-get(variables.$colors, dark),
+            background-color: map.get(
+                map.get(variables.$colors, dark),
                 primary
             );
         }
 
         &secondary {
-            background-color: map-get(
-                map-get(variables.$colors, dark),
+            background-color: map.get(
+                map.get(variables.$colors, dark),
                 secondary
             );
         }
 
         &text {
-            background-color: map-get(
-                map-get(variables.$colors, dark),
+            background-color: map.get(
+                map.get(variables.$colors, dark),
                 text
             );
         }
@@ -111,9 +108,11 @@ body > div > dl > dt {
     &primary * {
         font-family: variables.$font-family-primary;
     }
+
     &secondary * {
         font-family: variables.$font-family-secondary;
     }
+
     &monospace * {
         font-family: variables.$font-family-monospace;
     }

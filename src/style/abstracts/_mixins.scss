@@ -10,10 +10,11 @@
  * @return {Number} - Returns the numeric font weight (e.g., 700 for "Bold").
  */
 @function map-font-weight($weight) {
-    @if type-of($weight) == "number" {
+    @if meta.type-of($weight) == "number" {
         @return $weight;
     }
-    @return map-get(variables.$font-weights, $weight);
+
+    @return map.get(variables.$font-weights, $weight);
 }
 
 /**
@@ -46,18 +47,18 @@
     @if $bundled {
         // Handle single-file fonts
         @each $style in $styles {
-
 @font-face {
     font-display: auto;
     font-family: '#{$family}';
     font-style: $style;
-    font-weight: #{join($weights, ", ")};
+    font-weight: #{list.join($weights, ", ")};
 
             $src-list: ();
+
             @each $extension in $extensions {
-                $src-list: append(
+                $src-list: list.append(
                     $src-list,
-                    url('#{$src}#{if($style == "italic", $italic-postfix, "")}.#{$extension}') format(unquote($extension)),
+                    url('#{$src}#{if($style == "italic", $italic-postfix, "")}.#{$extension}') format(string.unquote($extension)),
                     comma
                 );
             }
@@ -70,7 +71,6 @@
         // Handle fonts with separate files for weights and styles
         @each $style in $styles {
             @each $weight in $weights {
-
 @font-face {
     font-display: auto;
     font-family: '#{$family}';
@@ -78,10 +78,11 @@
     font-weight: map-font-weight($weight);
 
                 $src-list: ();
+
                 @each $extension in $extensions {
-                    $src-list: append(
+                    $src-list: list.append(
                         $src-list,
-                        url('#{$src}#{$weight}#{if($style == "italic", $italic-postfix, "")}.#{$extension}') format(unquote($extension)),
+                        url('#{$src}#{$weight}#{if($style == "italic", $italic-postfix, "")}.#{$extension}') format(string.unquote($extension)),
                         comma
                     );
                 }
@@ -106,13 +107,11 @@
  */
 @mixin box-shadow($top, $left, $blur, $color, $inset: false) {
     @if $inset {
-
 -webkit-box-shadow:inset $top $left $blur $color;
 -moz-box-shadow:inset $top $left $blur $color;
 box-shadow:inset $top $left $blur $color;
 
     } @else {
-
 -webkit-box-shadow: $top $left $blur $color;
 -moz-box-shadow: $top $left $blur $color;
 box-shadow: $top $left $blur $color;
@@ -133,20 +132,20 @@ box-shadow: $top $left $blur $color;
  */
 @mixin radial-gradient($shape, $position, $colors) {
     $list: ();
-    $shape: unquote($shape);
-    $position: unquote($position);
-    @for $i from 1 through length($colors) {
-        $list: append($list, nth($colors, $i), comma);
-    }
-    @if map-has-key(variables.$positions, $position) {
+    $shape: string.unquote($shape);
+    $position: string.unquote($position);
 
+    @for $i from 1 through list.length($colors) {
+        $list: list.append($list, list.nth($colors, $i), comma);
+    }
+
+    @if map.has-key(variables.$positions, $position) {
 background: radial-gradient(
-    $shape map-get(variables.$positions, $position),
+    $shape map.get(variables.$positions, $position),
     $list
 );
 
-    } @else if not map-has-key(variables.$positions, $position) {
-
+    } @else if not map.has-key(variables.$positions, $position) {
 background: radial-gradient($shape $position, $list);
 
     }
@@ -230,18 +229,18 @@ background: radial-gradient($shape $position, $list);
 @mixin scheme-color($property, $key, $as-var: false) {
     @if $as-var {
         & {
-
-#{$property}-light: map-get(map-get(variables.$colors, light), $key);
-#{$property}-dark: map-get(map-get(variables.$colors, dark), $key);
+#{$property}-light: map.get(map.get(variables.$colors, light), $key);
+#{$property}-dark: map.get(map.get(variables.$colors, dark), $key);
 
         }
     }
 
 @media (prefers-color-scheme: light) {
-  #{$property}: map-get(map-get(variables.$colors, light), $key);
+  #{$property}: map.get(map.get(variables.$colors, light), $key);
 }
+
 @media (prefers-color-scheme: dark) {
-  #{$property}: map-get(map-get(variables.$colors, dark), $key);
+  #{$property}: map.get(map.get(variables.$colors, dark), $key);
 }
 
 }
