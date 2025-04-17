@@ -1,6 +1,7 @@
 const chokidar = require('chokidar');
 const escapeHtml = require('escape-html');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { globSync } = require('glob');
 
 const fs = require('fs');
 const path = require('path');
@@ -114,7 +115,7 @@ module.exports = {
             // Watch .htm files manually, since they're not part of the
             // dependency graph (and shouldn't be)
             chokidar.watch(
-                path.resolve(__dirname, './docs/**/*.htm'),
+                globSync('./docs/**/*.htm'),
                 // TODO: Improve environment detection for MinGW and Cygwin
                 // polling is pretty inefficient...
                 {
