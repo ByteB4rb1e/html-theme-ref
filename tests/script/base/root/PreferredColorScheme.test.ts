@@ -1,4 +1,4 @@
-import { PreferredColorScheme } from '../../../src/script/base/root';
+import { PreferredColorScheme } from '../../../../src/script/base/root';
 
 beforeAll(() => {
     Object.defineProperty(window, 'matchMedia', {
