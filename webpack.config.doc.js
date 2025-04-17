@@ -108,10 +108,6 @@ module.exports = {
                 throw new Error('webpack-dev-server is not defined');
             }
 
-            // TODO: Fix this. chokidar is not functioning correctly in MSYS2
-            // alread filled a bug report:
-            // https://github.com/paulmillr/chokidar/issues/1419
-
             // Watch .htm files manually, since they're not part of the
             // dependency graph (and shouldn't be)
             chokidar.watch(
@@ -123,7 +119,16 @@ module.exports = {
                 }
             ).on('change', (filePath) => {
                 console.log(`${filePath} changed. Reloading...`);
-                devServer.sendMessage(devServer.webSocketServer.clients, 'content-changed');
+                // documented absolutely nowhere...
+                // luckily (almost) opened a PR for something else, so I still
+                // knew the basic layout of the repository. 'content-changed'
+                // does not work, though 'static-changed' does...
+                //
+                // https://github.com/webpack/webpack-dev-server/blob/fb38571a90c54f01b79fccd5c2b7e5113abef315/lib/Server.js#L3378
+                devServer.sendMessage(
+                    devServer.webSocketServer.clients,
+                    "static-changed"
+                );
             });
 
             return middlewares;
@@ -132,6 +137,6 @@ module.exports = {
         open: true,
         hot: true,
         liveReload: true,
-        watchFiles: ['docs/**/*.htm', 'src/**/*.scss', 'src/**/*.ts']
+        watchFiles: ['src/**/*.scss', 'src/**/*.ts']
     },
 };
