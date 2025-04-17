@@ -1,96 +1,90 @@
 <a name="tiaras-html-theming-reference"></a>
 # Tiara's HTML Theming Reference
 
-> **Heads up**: This is a work-in-progress! Some references may not yet exist,
-  but the core ideas are fully in motion.
+A HTML theming reference implementation for CSS-first, frameworkless, static,
+modular, yet modern and contemporary HTML-theming for traditionalist UNIX & GNU
+enthusiasts.
 
-> I'm rethinking the approach of this project. I was hoping on fostering an
-entrypoint for discussions, but I figured I should focus on making this **my**
-reference implementation, not **our** reference implementation. Therefore I'm
-reworking the documentation as well, so it'll remain spotty for now. 
+This *HTML theme* not a standalone component. Even though it provides a
+functional usability demonstration, its output is meant to be integrated into
+other components, say a [Sphinx](https://www.sphinx-doc.org), or
+[Wordpress](https://wordpress.org) theme.
 
-Welcome to *Tiara's HTML Theming Reference*—a modular, standards-driven approach
-to HTML5 theming. This project champions accessibility, frugality, and the
-timeless beauty of the UNIX philosophy. Think of it as a launchpad for
-developers to explore better, cleaner ways of building scalable, reusable web
-themes without vendor lock-in and framework-fatigue.
+This repository serves as a personal reference implementation and demonstration
+of HTML theming principles. It is shared in the spirit of openness, with no
+immediate plans for external contributions.
 
----
+## Why?
 
-For the time being, here's a UNIX koan yet to be found in the archives.
+It all started with my frustration over setting up my own personal website. I've
+tried so many different options: Self-hosted CMS like Wordpress, micro-blogging
+sites like Blogspot/Blogger, SaaS services. They all were too complicated for
+what I wanted: A couple of multimedia webpages with some easter eggs here and
+there. Easy to manage, robust, light on bandwidth, yet highly customizable and
+contemporary. Ready-made solutions and frameworks just didn't cut it for me.
+Issues such as spaghetti code, intrusive telemetry, and overly complex styling
+and scripting, to name a few... My resolution? Start from scratch. Like really
+from scratch: Open an empty HTML document, then think about what I'm going to do
+next...
 
-## Master Foo on web design
+One thing that came very clear to me was that I wanted an approach that was
+modular, where I could focus on one thing at a time. HTML theming is HTML
+theming, the backend is the backend, and so on...
 
-A student once asked Master Foo, "What is the greatest sin of web design?"
+## Why share?
 
-Master Foo replied, "It is to forget the user."
+The Gurus I look up to have one thing in common: There websites look awful and
+they argue there being no other way, while staying true to UNIX and libertarian
+principles. I want to challenge that assumption and provide a reference for
+upholding said principles, while using modern web design & development
+techniques.
 
-The student, puzzled, said, “But the overly optimized lazy-loading, awry
-infinite scroll and endless cookie banners are greater sins?”
+The reference implementation does no bundling, only transpiles, optimizes and
+minifies sources. Build subsystems are loosely coupled. The build environment is
+unified and only requires a single runtime environment (Node.js). The interface
+to the build environment is tradtional GNU (Make and Autoconf) and (very) easy
+to integrate into CI services, without compromising on facilities of local
+development.
 
-Master Foo shook his head. "The lazy-loading blinds the user, the infinite
-scroll disorients them, and the cookie banners drives them away. But these are
-merely symptoms. The true sin lies in forgetting that the web is not for the
-designer, but for the one who visits."
+The reference implementation adheres to matured web design and development
+principles, such as the Sass 7:1 pattern, W3C Accessibility standard, HTML5
+specification, SMACSS, non-dogmatic test-driven development.
 
-The student nodded slowly. "And what of those who use divs and JavaScript for
-vanity?"
+It tries (very hard) to stay true to UNIX principles. I've chosen each subsystem
+to do just one thing and do it well. But most importantly, it respects the end
+user and ownership of their browser.
 
-Master Foo smiled. "They are like the baker who builds a cake of sawdust. It may
-look impressive, but it is inedible and forgotten by those who hunger."
+The repository seems overwhelming? That's just because I'm not trying to hide
+the complexities of modern web development. Quite the opposite - I'm exposing
+them and just add a very thin abstraction layer on top which is known to
+traditionalist UNIX & GNU enthusiasts.
 
-The student bowed and began to design a page. It had sensible lazy-loading, no
-infinite scroll, and an opt-in cookie banner. Its links were clear, its cookies
-honest, and its text readable to all.
+## Usage
 
-As the student finished his page, Master Foo said, "Now you understand the Great
-Way. Simplicity is not an absence of design but the presence of purpose."
-
-Upon hearing this, the student was enlightened.
-
----
-
-## Getting Started
-
-1. **Clone the Repo**
-
-```sh
-git clone https://bitbucket.org/tiaracodes/html-theme-ref.git
 ```
-
-2. **Install dependencies (POSIX-ish shells)**
-
-```sh
 sh ./configure
 ```
 
-2. **Install dependencies (Microsoft PowerShell)**
+It automatically checks for required programs. If any are missing, the script
+halts and provides guidance on how to resolve the issue
 
-```powershell
-git submodule update --init --remote && npm install
+```
+make
 ```
 
-3. **Preview and experiment**
+That's all. You will find a tarball distribution containing all assets,
+including a usability demonstration under `_docs/` within it.
 
-```sh
-npm run serve:doc
-```
-
-Modify `src/` and `docs/` and see real-time changes.
-
-> NOTE: There's currently an issue I'm facing in MinGW with file watching
-  through [chokidar](https://github.com/paulmillr/chokidar), defined in
-  `webpack.config.doc.js`. I've already opened a
-  [bug report](https://github.com/paulmillr/chokidar/issues/1419), but haven't
-  verified if the issue also affects other POSIX-ish environments.
-
----
+Refer to the Makefile for insights into my development principles and workflows.
+Documentation is scattered throughout the sources and each directory within this
+repository.
 
 <a name="licensing"></a>
 ## Licensing
 
-Tiara's HTML Theming Reference is licensed under a Creative Commons Attribution
-4.0 International License.
+Sharing is caring! This project is licensed under a Creative Commons Attribution
+4.0 International License, as my focus is on providing services rather than
+monetizing products.
 
 You should have received a copy of the license along with this
 work. If not, see <https://creativecommons.org/licenses/by/4.0/>.
