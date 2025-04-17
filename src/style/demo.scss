@@ -2,6 +2,7 @@
 // custom definitions for kitchen-sink (demo page), in use by the `doc` build
 // target
 @use './abstracts/variables' as variables;
+@use 'sass:map';
 @forward './main';
 
 body > div > dl > dt {
