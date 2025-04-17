@@ -32,12 +32,15 @@ modular, where I could focus on one thing at a time. HTML theming is HTML
 theming, the backend is the backend, and so on...
 
 ## Why share?
+<p align=center>
+    <img src="docs/_assets/image/9o6mij.jpg"/>
+</p>
 
-The Gurus I look up to have one thing in common: There websites look awful and
-they argue there being no other way, while staying true to UNIX and libertarian
-principles. I want to challenge that assumption and provide a reference for
-upholding said principles, while using modern web design & development
-techniques.
+The Gurus I look up to have one thing in common: There websites look awful (to
+me) and they argue there being no other way, while staying true to UNIX and
+libertarian principles. I want to challenge that assumption and provide a
+reference for upholding said principles, while using modern web design &
+development techniques.
 
 The reference implementation does no bundling, only transpiles, optimizes and
 minifies sources. Build subsystems are loosely coupled. The build environment is
