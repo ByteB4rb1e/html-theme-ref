@@ -11,7 +11,7 @@ test-reports/script: eslint.config.mjs jest.config.js
 	npm run lint:script || exit 0
 	npm run test:script || exit 0
 
-test-reports/style: stylelintrc.json
+test-reports/style: .stylelintrc.json jest.config.sass-true.js
 	npm run lint:style || exit 0
 
 clean:
