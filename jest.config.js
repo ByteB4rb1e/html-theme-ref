@@ -9,5 +9,5 @@ module.exports = {
             }
         ]
     },
-    roots: ['./tests']
+    roots: ['./tests/script']
 }
