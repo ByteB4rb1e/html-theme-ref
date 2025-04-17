@@ -33,7 +33,7 @@ theming, the backend is the backend, and so on...
 
 ## Why share?
 <p align=center>
-    <img src="docs/_assets/image/9o6mij.jpg"/>
+    <img src="docs/_assets/image/9o6mij.png"/>
 </p>
 
 The Gurus I look up to have one thing in common: There websites look awful (to
