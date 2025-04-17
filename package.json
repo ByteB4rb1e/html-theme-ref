@@ -4,6 +4,7 @@
     "description": "Tiara's HTML Theming Reference",
     "author": "Tiara Rodney <t.rodney@administratrix.de>",
     "devDependencies": {
+        "@eslint/js": "^9.24.0",
         "@types/jest": "^29.5.14",
         "@types/yargs": "^17.0.33",
         "autoprefixer": "^10.4.19",
@@ -12,6 +13,7 @@
         "css-minimizer-webpack-plugin": "^7.0.0",
         "cssnano": "^7.0.6",
         "escape-html": "^1.0.3",
+        "eslint": "^9.24.0",
         "html-webpack-plugin": "^5.6.3",
         "jest": "^29.7.0",
         "mini-css-extract-plugin": "^2.9.0",
@@ -25,7 +27,8 @@
         "ts-loader": "^9.5.2",
         "ts-node": "^10.9.2",
         "typedoc": "^0.27.9",
-        "typescript": "^5.7.3",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.30.1",
         "webpack": "^5.92.1",
         "webpack-cli": "^6.0.0",
         "webpack-dev-server": "^5.2.0",
@@ -39,7 +42,8 @@
         "uat": "webpack serve -c webpack.config.doc.js",
         "watch": "webpack -c webpack.config.debug.js --watch",
         "test:script": "jest",
-        "lint:style": "stylelint -c .stylelintrc.json src/style -o test-reports/style",
+        "lint:style": "stylelint -c .stylelintrc.json src/style --output-file test-reports/style/lint",
+        "lint:script": "eslint src/script --output-file test-reports/script/lint",
         "publish_": "ts-node -P tsconfig.node.json scripts/publish.ts"
     },
     "dependencies": {

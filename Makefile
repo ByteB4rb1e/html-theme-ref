@@ -8,6 +8,7 @@ tags:
 	--exclude=*.js --exclude=*.htm* --exclude=*.json --exclude=src/style
 
 test-reports/script:
+	npm run lint:script || exit 0
 	npm run test:script || exit 0
 
 test-reports/style:
