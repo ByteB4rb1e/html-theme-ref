@@ -1,5 +1,4 @@
 @use './variables' as *;
-
 @forward'./font';
 
 .bx {
@@ -10,9 +9,7 @@
     line-height: 1;
     text-rendering: auto;
     display: inline-block;
-
     text-transform: none;
-
     speak: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -218,7 +215,7 @@ ul.bx-ul {
 }
 
 @-webkit-keyframes tada {
-    from {
+    0% {
         -webkit-transform: scale3d(1, 1, 1);
         transform: scale3d(1, 1, 1);
     }
@@ -238,14 +235,14 @@ ul.bx-ul {
         transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, -10deg);
     }
 
-    to {
+    100% {
         -webkit-transform: scale3d(1, 1, 1);
         transform: scale3d(1, 1, 1);
     }
 }
 
 @keyframes tada {
-    from {
+    0% {
         -webkit-transform: scale3d(1, 1, 1);
         transform: scale3d(1, 1, 1);
     }
@@ -265,7 +262,7 @@ ul.bx-ul {
         transform: rotate3d(0, 0, 1, -10deg);
     }
 
-    to {
+    100% {
         -webkit-transform: scale3d(1, 1, 1);
         transform: scale3d(1, 1, 1);
     }
@@ -352,115 +349,6 @@ ul.bx-ul {
         animation: fade-right 1.5s infinite linear;
     }
 
-    &spin {
-        -webkit-animation: spin 2s linear infinite;
-        animation: spin 2s linear infinite;
-    }
-
-    &spin-hover:hover {
-        -webkit-animation: spin 2s linear infinite;
-        animation: spin 2s linear infinite;
-    }
-
-    &tada {
-        -webkit-animation: tada 1.5s ease infinite;
-        animation: tada 1.5s ease infinite;
-    }
-
-    &tada-hover:hover {
-        -webkit-animation: tada 1.5s ease infinite;
-        animation: tada 1.5s ease infinite;
-    }
-
-    &flashing {
-        -webkit-animation: flashing 1.5s infinite linear;
-        animation: flashing 1.5s infinite linear;
-    }
-
-    &flashing-hover:hover {
-        -webkit-animation: flashing 1.5s infinite linear;
-        animation: flashing 1.5s infinite linear;
-    }
-
-    &burst {
-        -webkit-animation: burst 1.5s infinite linear;
-        animation: burst 1.5s infinite linear;
-    }
-
-    &burst-hover:hover {
-        -webkit-animation: burst 1.5s infinite linear;
-        animation: burst 1.5s infinite linear;
-    }
-
-    &fade-up {
-        -webkit-animation: fade-up 1.5s infinite linear;
-        animation: fade-up 1.5s infinite linear;
-    }
-
-    &fade-up-hover:hover {
-        -webkit-animation: fade-up 1.5s infinite linear;
-        animation: fade-up 1.5s infinite linear;
-    }
-
-    &fade-down {
-        -webkit-animation: fade-down 1.5s infinite linear;
-        animation: fade-down 1.5s infinite linear;
-    }
-
-    &fade-down-hover:hover {
-        -webkit-animation: fade-down 1.5s infinite linear;
-        animation: fade-down 1.5s infinite linear;
-    }
-
-    &fade-left {
-        -webkit-animation: fade-left 1.5s infinite linear;
-        animation: fade-left 1.5s infinite linear;
-    }
-
-    &fade-left-hover:hover {
-        -webkit-animation: fade-left 1.5s infinite linear;
-        animation: fade-left 1.5s infinite linear;
-    }
-
-    &fade-right {
-        -webkit-animation: fade-right 1.5s infinite linear;
-        animation: fade-right 1.5s infinite linear;
-    }
-
-    &fade-right-hover:hover {
-        -webkit-animation: fade-right 1.5s infinite linear;
-        animation: fade-right 1.5s infinite linear;
-    }
-}
-
-.bx- {
-    &xs {
-        font-size: 1rem!important;
-    }
-
-    &sm {
-        font-size: 1.55rem!important;
-    }
-
-    &md {
-        font-size: 2.25rem!important;
-    }
-
-    &lg {
-        font-size: 3.0rem!important;
-    }
-
-    &fw {
-        font-size: 1.2857142857em;
-        line-height: .8em;
-        width: 1.2857142857em;
-        height: .8em;
-        margin-top: -.2em!important;
-        vertical-align: middle;
-    }
-}
-
-.bx- {
     &pull-left {
         float: left;
         margin-right: .3em!important;
@@ -493,14 +381,39 @@ ul.bx-ul {
 
     &border {
         padding: .25em;
-        border: .07em solid rgba(0,0,0,.1);
+        border: .07em solid rgb(0 0 0 / 10%);
         border-radius: .25em;
     }
 
     &border-circle {
         padding: .25em;
-        border: .07em solid rgba(0,0,0,.1);
+        border: .07em solid rgb(0 0 0 / 10%);
         border-radius: 50%;
+    }
+
+    &xs {
+        font-size: 1rem!important;
+    }
+
+    &sm {
+        font-size: 1.55rem!important;
+    }
+
+    &md {
+        font-size: 2.25rem!important;
+    }
+
+    &lg {
+        font-size: 3.0rem!important;
+    }
+
+    &fw {
+        font-size: 1.2857em;
+        line-height: .8em;
+        width: 1.2857em;
+        height: .8em;
+        margin-top: -.2em!important;
+        vertical-align: middle;
     }
 }
 
