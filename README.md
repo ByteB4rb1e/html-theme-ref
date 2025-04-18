@@ -29,16 +29,24 @@ halts and provides guidance on how to resolve the issue.
 make
 ```
 
-That's all. You will find a tarball distribution under `dist/`.
+That's all. You will find a tarball distribution under `dist/`, including a
+usability demonstration under `package/_docs/`.
 
-Refer to the Makefile for insights into my development principles and workflows.
+To exclude the usability demonstration execute the following:
+
+```
+make NO_DOCS=1
+```
+
+Refer to `Makefile` for insights into my development principles and workflows.
 Documentation is scattered throughout the sources and each directory within this
 repository.
 
 ### Use distribution
 
-Download the distribution, untar everything in the archive listed in
-`package/assets.txt`. Keep in mind that the paths are relative to `package/`.
+Acquire the distribution, untar everything in the archive listed in
+`package/assets.txt`. Note that the paths specified in `package/assets.txt` are
+relative to `package/`.
 
 In addition you'll find a usability demonstration under `package/_docs/` within
 it.
@@ -53,8 +61,8 @@ packaging layout, which results in the distribution being nested inside a
 ## Licensing
 
 Sharing is caring! This project is licensed under a Creative Commons Attribution
-4.0 International License, as my focus is on providing services rather than
-monetizing products.
+4.0 International License, as my focus is on monetizing services rather than
+products.
 
 You should have received a copy of the license along with this
 work. If not, see <https://creativecommons.org/licenses/by/4.0/>.

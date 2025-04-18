@@ -38,8 +38,8 @@ publish: package.json dist
 archive: package.json dist
 	npm run archive
 
-dist: package.json build/release build/doc
-	npm run dist -- build/doc
+dist: package.json build/release $(if $(NO_DOCS),, build/doc)
+	npm run dist $(if $(NO_DOCS),, -- build/doc)
 
 # user acceptance testing
 uat: package.json webpack.config.doc.js src/
