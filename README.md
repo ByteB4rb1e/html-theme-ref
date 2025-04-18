@@ -3,16 +3,19 @@
 
 A HTML theming reference implementation for CSS-first, frameworkless, static,
 modular, yet modern and contemporary HTML-theming for traditionalist UNIX & GNU
-enthusiasts.
+enthusiasts. It contains a complete workflow for developing and distributing
+tested, decoupled, optimized and documented assets for theming HTML documents.
+It has minimal build environment requirements and UNIX-principled choices of
+matured build subsystems were made.
 
 This *HTML theme* not a standalone component. Even though it provides a
 functional usability demonstration, its output is meant to be integrated into
 other components, say a [Sphinx](https://www.sphinx-doc.org), or
 [Wordpress](https://wordpress.org) theme.
 
-This repository serves as a personal reference implementation and demonstration
-of HTML theming principles. It is shared in the spirit of openness, with no
-immediate plans for external contributions.
+This project serves as a personal reference implementation and demonstration
+of HTML document theming principles. It is shared in the spirit of openness,
+with no immediate plans for external contributions.
 
 ## Usage
 
