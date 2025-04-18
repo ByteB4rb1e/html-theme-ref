@@ -17,9 +17,9 @@ AS_IF([test "$NPM" == "no"],
       [AC_MSG_ERROR([install GNU Make (make), before continuing.])])
 
 AC_MSG_NOTICE([initializing npm project...])
-npm install
+NPM install
 
 AC_MSG_NOTICE([initializing git submodules...])
-git submodule update --init --remote --recursive
+GIT submodule update --init --remote --recursive
 
 AC_OUTPUT
