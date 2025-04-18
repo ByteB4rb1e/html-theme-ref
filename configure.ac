@@ -12,10 +12,6 @@ AC_CHECK_PROGS([NPM], [npm], [no])
 AS_IF([test "$NPM" == "no"], 
       [AC_MSG_ERROR([install npm, before continuing.])])
 
-AC_CHECK_PROGS([CURL], [curl], [no])
-AS_IF([test "$CURL" == "no"], 
-      [AC_MSG_ERROR([install curl, before continuing.])])
-
 AC_MSG_NOTICE([initializing npm project...])
 npm install
 
