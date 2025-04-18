@@ -9,6 +9,9 @@ tags:
 
 test-reports/script: eslint.config.mjs jest.config.js
 	npm run lint:script || exit 0
+	# patch for eslint redirecting stdout, instead of dedicated write to file
+	# TODO: move this to scripts/
+	@node -p "console.log(require('fs').readFileSync('test-reports/script/lint',{encoding: 'utf-8'}))"
 	npm run test:script || exit 0
 
 test-reports/style: .stylelintrc.json jest.config.sass-true.js
