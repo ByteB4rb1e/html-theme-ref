@@ -28,20 +28,41 @@ build/doc: package.json webpack.config.doc.js src/
 # overriding the output path allows for wrapping by another project
 # it can be used like `make build/release OUTPUT_PATH=<path-override>`
 build/release: package.json webpack.config.js src/ $(if $(CI),,test-reports)
-	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
+ifdef CI
+	$(warning CI set, tests skipped and requiring manual execution)
+endif
+ifdef OUTPUT_PATH
+	$(warning OUTPUT_PATH set, overriding output path)
+endif
 	npm run build:release $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 
 build/debug: package.json webpack.config.debug.js src/
-	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
+ifdef OUTPUT_PATH
+	$(warning OUTPUT_PATH set, overriding output path)
+endif
 	npm run build:debug $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 
 publish: package.json dist
+	$(error publishing not allowed, as the output is not a real npm package)
 	npm run publish_
 
 archive: package.json dist
-	npm run archive
+ifndef BITBUCKET_REPO_SLUG
+	$(error BITBUCKET_REPO_SLUG environment variable not set)
+else ifndef BITBUCKET_WORKSPACE
+	$(error BITBUCKET_WORKSPACE environment variable not set)
+else ifndef BITBUCKET_ACCESS_TOKEN
+	$(error BITBUCKET_ACCESS_TOKEN environment variable not set)
+endif
+	# BITBUCKET_ACCESSS_TOKEN is picked up through the environment
+	npm run archive -- --repo-slug $($BITBUCKET_REPO_SLUG) \
+                       --workspace $(BITBUCKET_WORKSPACE) \
+                       dist/*
 
 dist: package.json build/release $(if $(NO_DOCS),, build/doc)
+ifdef NO_DOCS
+	$(warning NO_DOCS set, docs excluded from distribution)
+endif
 	npm run dist $(if $(NO_DOCS),, -- build/doc)
 
 # user acceptance testing
@@ -59,5 +80,7 @@ package-lock.json: package.json
 # can be used for a cascaded development environment, e.g. having a Sphinx theme
 # with sphinx-autobuild running in parallel with this target
 watch: src/ package.json webpack.config.debug.js
-	@test -z "$(OUTPUT_PATH)" || echo "overriding output path: $(OUTPUT_PATH)"
+ifdef OUTPUT_PATH
+	$(warning OUTPUT_PATH set, overriding output path)
+endif
 	npm run watch $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
