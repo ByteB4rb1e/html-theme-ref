@@ -6,6 +6,7 @@
     "devDependencies": {
         "@eslint/js": "^9.24.0",
         "@types/jest": "^29.5.14",
+        "@types/node": "^22.14.1",
         "@types/yargs": "^17.0.33",
         "autoprefixer": "^10.4.19",
         "copy-webpack-plugin": "^13.0.0",
@@ -45,7 +46,8 @@
         "test:script": "jest",
         "lint:style": "stylelint -c .stylelintrc.json src/style --output-file test-reports/style/lint",
         "lint:script": "eslint src/script --output-file test-reports/script/lint",
-        "publish_": "ts-node -P tsconfig.node.json scripts/publish.ts"
+        "publish_": "ts-node -P tsconfig.node.json scripts/publish.ts",
+        "archive": "ts-node -P tsconfig.node.json scripts/bitbucket-cloud-upload.ts"
     },
     "dependencies": {
         "boxicons": "^2.1.4"
