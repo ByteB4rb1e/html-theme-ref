@@ -141,7 +141,7 @@ function pack(options: PackageOptions): void {
             recursive: true,
             filter: (src: string, dest: string) => {
                 console.log(
-                    `cp: ${path.relative(cwd, src)} > ${path.relative(cwd, dest)}`
+                    `cp: ${path.relative(cwd, src)} > ${path.relative(path.sep, dest)}`
                 );
                 return true;
             }
@@ -259,7 +259,7 @@ if (require.main === module) {
 
     // there's probably a prettier way as to not have to reassign this just to
     // make tsc happy, but I'm a little exhausted...
-    const args: string[] = positionals as string[];
+    const args: string[] = positionals;
 
     if (values.help != undefined) {
         const exec = [
@@ -283,14 +283,14 @@ if (require.main === module) {
         }
     }
 
-    if (args.length < minPosargs) {
-        if (args.length == 1) {
-            args.push(DEFAULT_OUTPUT_DIR);
+    if (positionals.length < minPosargs) {
+        if (positionals.length == 1) {
+            positionals.push(DEFAULT_OUTPUT_DIR);
         }
 
-        else if (args.length == 0) {
-            args.push(DEFAULT_INPUT_DIR);
-            args.push(DEFAULT_OUTPUT_DIR);
+        else if (positionals.length == 0) {
+            positionals.push(DEFAULT_INPUT_DIR);
+            positionals.push(DEFAULT_OUTPUT_DIR);
         }
     }
 
@@ -300,9 +300,9 @@ if (require.main === module) {
     }
 
     pack({
-        inputDir: args[0],
-        outputDir: args[1],
-        docsInputDir: args[2] ?? null,
+        inputDir: positionals[0],
+        outputDir: positionals[1],
+        docsInputDir: positionals[2] ?? null,
         assetsIndexBasename: values['assets-index-basename']!,
         docsOutputDirname: values['docs-dirname']!,
     });
