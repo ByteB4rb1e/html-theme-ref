@@ -40,7 +40,7 @@
         "doc": "webpack -c webpack.config.doc.js",
         "build:debug": "webpack -c webpack.config.debug.js",
         "build:release": "webpack",
-        "dist": "ts-node -P tsconfig.node.json scripts/pack.ts build/release dist",
+        "dist": "ts-node -P tsconfig.node.json scripts/npm-pack.ts build/release dist",
         "uat": "webpack serve -c webpack.config.doc.js",
         "watch": "webpack -c webpack.config.debug.js --watch",
         "test:script": "jest",
