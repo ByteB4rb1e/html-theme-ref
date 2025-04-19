@@ -55,7 +55,7 @@ $ make
 ```
 
 That's all. You will find a tarball distribution under `dist/`, including a
-usability demonstration under `package/_docs/`.
+usability demonstration under `package/_docs/` inside the tarball.
 
 To exclude the usability demonstration, execute the following:
 
