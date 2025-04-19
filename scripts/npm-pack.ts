@@ -4,6 +4,8 @@ import * as os from 'node:os';
 import * as path from 'node:path';
 import * as util from 'node:util';
 
+const SCRIPTNAME = path.basename(__filename);
+
 const DEFAULT_INPUT_DIR: string = path.join('build', 'release');
 const DEFAULT_OUTPUT_DIR: string = 'dist';
 const DEFAULT_ASSETS_INDEX_BASENAME: string = 'assets.txt';
@@ -129,11 +131,13 @@ function pack(options: PackageOptions): void {
         throw new Error(`inputDir must be a relative path inside of '${cwd}'`)
     }
 
+    console.log(`${SCRIPTNAME}: creating temporary directory...`);
     const tempDir = fs.mkdtempSync(path.join(
         os.tmpdir(),
         `${path.basename(cwd)}-`
     ));
 
+    console.log(`${SCRIPTNAME}: copying build output...`);
     fs.cpSync(
         options.inputDir,
         tempDir,
@@ -141,13 +145,14 @@ function pack(options: PackageOptions): void {
             recursive: true,
             filter: (src: string, dest: string) => {
                 console.log(
-                    `cp: ${path.relative(cwd, src)} > ${path.relative(path.sep, dest)}`
+                    `cp: ${path.relative(cwd, src)} > ${dest}`
                 );
                 return true;
             }
         }
     );
 
+    console.log(`${SCRIPTNAME}: copying metadata...`);
     [
         'LICENSE',
         'README.md',
@@ -159,7 +164,7 @@ function pack(options: PackageOptions): void {
             {
                 filter: (src: string, dest: string) => {
                     console.log(
-                        `cp: ${path.relative(cwd, src)} > ${path.relative(cwd, dest)}`
+                        `cp: ${path.relative(cwd, src)} > ${dest}`
                     );
                     return true;
                 }
@@ -168,7 +173,7 @@ function pack(options: PackageOptions): void {
     });
 
     if (options.docsInputDir) {
-        console.log('docs supplied, will copy...')
+        console.log(`${SCRIPTNAME}: docs supplied, will copy...`);
         // TODO: sync file stats
         fs.cpSync(
             path.join(cwd, options.docsInputDir),
@@ -177,7 +182,7 @@ function pack(options: PackageOptions): void {
                 recursive: true,
                 filter: (src: string, dest: string) => {
                     console.log(
-                        `cp: ${path.relative(cwd, src)} > ${path.relative(cwd, dest)}`
+                        `cp: ${path.relative(cwd, src)} > ${dest}`
                     );
                     return true;
                 }
@@ -185,8 +190,12 @@ function pack(options: PackageOptions): void {
         );
     }
 
+    else {
+        console.log(`${SCRIPTNAME}: no docs supplied, will not copy...`);
+    }
+
     console.log(
-        `generating index (\'${options.assetsIndexBasename}\') of assets...`
+        `${SCRIPTNAME}: generating index (\'${options.assetsIndexBasename}\') of assets...`
     );
     // TODO: sync file stats
     var fd: number = fs.openSync(
@@ -198,7 +207,9 @@ function pack(options: PackageOptions): void {
     }
     fs.closeSync(fd);
 
-    console.log('generating npm package specification \'package.json\'...');
+    console.log(
+        `${SCRIPTNAME}: generating npm package specification \'package.json\'...`
+    );
     fs.writeFileSync(
         path.join(tempDir, 'package.json'),
         JSON.stringify(stripPackageSpec('package.json'), null, 4)
