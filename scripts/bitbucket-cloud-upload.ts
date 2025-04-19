@@ -85,6 +85,10 @@ Options:
 
     -h, --help         - display this help message
 
+Environment variables:
+
+    BITBUCKET_ACCESS_TOKEN - same as \`-a\`,\`--access-token\` option
+
 References:
 
     https://developer.atlassian.com/cloud/bitbucket/rest/api-group-downloads/#api-repositories-workspace-repo-slug-downloads-get
@@ -223,6 +227,7 @@ if (require.main === module) {
         workspace: DEFAULT_WORKSPACE,
         'repo-slug': DEFAULT_REPO_SLUG,
         'buffer-size': DEFAULT_BUFFER_SIZE,
+        'access-token': process.env.BITBUCKET_ACCESS_TOKEN,
     }
 
     // required options arguments
