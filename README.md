@@ -91,6 +91,28 @@ Node.js/npm runtime environment. This comes at the cost of having to adhere to
 the npm packaging layout, which results in the distribution being nested inside
 a `package/` directory.
 
+## References
+
+Useful references (in no particular order) that guided this reference implementation.
+This list is not exhaustive and will grow eventually. For explicit references on
+information about the tools used, R(Their)FM.
+
+- [Scalable and Modern Architecture for CSS (SMACSS)](https://web.archive.org/web/20250406210131/https://smacss.com/)
+- [Sass: Syntactically Awesome Style Sheets](https://web.archive.org/web/20250407180942/https://sass-lang.com/)
+- [Sass Guidelines - The 7-1 pattern](https://web.archive.org/web/20250328102753/https://sass-guidelin.es/#the-7-1-pattern)
+- [OddBird True - Unit testing for Sass developers](https://web.archive.org/web/20250125123850/https://www.oddbird.net/true/)
+- [What is TSDoc? | TSDoc](https://web.archive.org/web/20250407162234/https://tsdoc.org/)
+- [GNU Autoconf - Shellology](https://web.archive.org/web/20240813220424/https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/html_node/Shellology.html)
+- [HTML Standard - Semantics, structure, and APIs of HTML documents](https://web.archive.org/web/20250408183205/https://html.spec.whatwg.org/multipage/dom.html#dom)
+- [Concepts | webpack](https://web.archive.org/web/20250408185345/https://webpack.js.org/concepts/)
+- [Rules | stylelint](https://web.archive.org/web/20250406000427/https://stylelint.io/user-guide/rules/)
+- [Rootless Root - The UNIX Koans of Master Foo](https://web.archive.org/web/20250321015423/http://www.catb.org/~esr/writings/unix-koans/)
+- [Accessibility Fundamentals Overview | Web Accessibility Initiative (WAI) | W3C](https://web.archive.org/web/20250328101042/https://www.w3.org/WAI/fundamentals/)
+- [Understanding Success Criterion 1.4.1: Use of Color | WAI | W3C](https://web.archive.org/web/20250307192641/https://www.w3.org/WAI/WCAG22/Understanding/use-of-color)
+- [Realtime Colors](https://web.archive.org/web/20250412001328/https://www.realtimecolors.com/)
+- [WebAIM Contrast Checker](https://web.archive.org/web/20250412085144/https://webaim.org/resources/contrastchecker/)
+- [Browser Fingerprinting: An Introduction and the Challenges Ahead | The Tor Project](https://web.archive.org/web/20250407213105/https://blog.torproject.org/browser-fingerprinting-introduction-and-challenges-ahead/)
+
 <a name="licensing"></a>
 ## Licensing
 
