@@ -63,6 +63,15 @@ To exclude the usability demonstration, execute the following:
 make NO_DOCS=1
 ```
 
+In order for tests not to be run, execute the following:
+
+```
+make CI=1
+```
+
+This asserts, you are executing test targets separetely, such as in the case of
+integrating with CI services.
+
 Refer to `Makefile` for insights into my development principles and workflows.
 Documentation is scattered throughout the sources and each directory within this
 repository.
