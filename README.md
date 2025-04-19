@@ -6,7 +6,8 @@ frameworkless, static, modular, yet modern and contemporary HTML-theming for
 traditionalist UNIX & GNU enthusiasts. It contains a complete workflow for
 developing and distributing tested, decoupled, optimized and documented assets
 for theming HTML documents. It has minimal build environment requirements and
-UNIX-principled choices of matured build subsystems were made.
+UNIX-principled choices of matured build subsystems were made, avoiding
+dependencies wherever possible.
 
 This *HTML theme* is not a standalone component, even though it provides a
 functional usability demonstration. Its output is meant to be integrated into
@@ -16,6 +17,27 @@ other components, say a [Sphinx](https://www.sphinx-doc.org), or
 This project serves as a personal reference implementation and demonstration
 of HTML document theming principles. It is shared in the spirit of openness,
 with no immediate plans for external contributions.
+
+## Requirements
+
+### Build environment
+
+The build environment requires the following programs:
+
+- Git >=2.14
+- GNU Autoconf >=v2.69 (optional, required only for maintenance)
+- GNU Make >=v4.2.1
+- Node.js >=v20.11.0
+- npm (any version supported by Node.js)
+
+### Integration
+
+The web engine/browser displaying HTML documents themed with this reference
+implementation MUST support (at least) the following standards:
+
+- (WHATWG) HTML Living Standard 
+- ECMAScript 2015 (ES6)
+- CSS3 (exhaustive, it's gotten pretty difficult to assess properly)
 
 ## Usage
 
