@@ -260,7 +260,8 @@ if (require.main === module) {
                 type: 'boolean',
                 short: 'h'
             }
-        }
+        },
+        allowPositionals: true,
     });
 
     if (values.help != undefined) {
