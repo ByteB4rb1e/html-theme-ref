@@ -1,5 +1,5 @@
 .PHONY: dist publish build/debug package-lock.json tags clean \
-		test-reports/script test-reports/style
+        test-reports/script test-reports/style
 
 all: dist
 
