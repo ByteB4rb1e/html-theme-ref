@@ -41,8 +41,8 @@
 <% } %>
 <% } %>
 
-<% if (partial) { %>
-<div class="themed theme-tiara"><%= partial%>
+<% if (sourcePath && getContent) { %>
+<div class="themed theme-tiara"><%= getContent(sourcePath) %>
 <% } else { %>
 <p>Error: The .ejs template is expecting a 'partial' template parameter, but
 none was provided.</p>

@@ -1,0 +1,6 @@
+{
+    "extends": "./tsconfig.debug.json",
+    "compilerOptions": {
+        "outDir": "build/doc/script"
+    }
+}

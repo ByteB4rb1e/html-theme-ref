@@ -39,23 +39,23 @@
         <div id="<%= htmlWebpackPlugin.options.appMountIds[index]%>"></div>
     <% } %>
 <% } %>
-<% if (sandboxes) { %>
+<% if (framesMeta) { %>
         <dl>
-    <% for (var sandboxDirname in sandboxes) { %>
-            <dt><h2><%- sandboxDirname%></h2></dt>
+    <% for (const frameGroup in framesMeta) { %>
+            <dt><h2><%- frameGroup %></h2></dt>
             <dd>
-        <% for (var i in sandboxes[sandboxDirname]) { %>
-                <a href="#<%- sandboxes[sandboxDirname][i][0]%>">
-                    <h3><%- sandboxes[sandboxDirname][i][0]%></h3>
+        <% for (var frameMeta of framesMeta[frameGroup]) { %>
+                <a href="#<%- frameMeta.href %>">
+                    <h3><%- frameMeta.href %></h3>
                 </a>
                 <details>
                     <summary><h4 style="display: inline">Markup</h4></summary>
-                    <pre><code><%= sandboxes[sandboxDirname][i][1] %></code></pre>
+                    <pre><code><%= frameMeta.getContent(frameMeta.sourcePath) %></code></pre>
                 </details>
                 <details open="true">
                     <summary><h4 style="display: inline">Render</h4></summary>
-                    <a name="<%- sandboxes[sandboxDirname][i][0]%>"></a>
-                    <iframe width="100%" src="<%- sandboxes[sandboxDirname][i][0]%>"
+                    <a name="<%- frameMeta.href %>"></a>
+                    <iframe width="100%" src="<%- frameMeta.href %>"
                             sandbox="allow-same-origin"
                             onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';">
                     </iframe>
@@ -66,7 +66,7 @@
     <% } %>
         </dl>
 <% } else {%>
-        <p>Error: ejs template expected parameter 'sandboxes' which was not provided.</p>
+        <p>Error: ejs template expected parameter 'framesMeta' which was not provided.</p>
 <% } %>
 <% if (htmlWebpackPlugin.options.window) { %>
         <script>
