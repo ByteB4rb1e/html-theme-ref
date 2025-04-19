@@ -44,14 +44,14 @@ implementation MUST support (at least) the following standards:
 ### Generate distribution
 
 ```
-sh ./configure
+$ sh ./configure
 ```
 
 It automatically checks for required programs. If any are missing, the script
 halts and provides guidance on how to resolve the issue.
 
 ```
-make
+$ make
 ```
 
 That's all. You will find a tarball distribution under `dist/`, including a
@@ -60,13 +60,13 @@ usability demonstration under `package/_docs/`.
 To exclude the usability demonstration, execute the following:
 
 ```
-make NO_DOCS=1
+$ make NO_DOCS=1
 ```
 
 In order for tests not to be run, execute the following:
 
 ```
-make CI=1
+$ make CI=1
 ```
 
 This asserts, you are executing test targets separetely, such as in the case of
