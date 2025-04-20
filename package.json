@@ -36,7 +36,7 @@
         "build:debug": "webpack -c webpack.config.debug.js",
         "build:release": "webpack",
         "dist": "ts-node -P tsconfig.node.json scripts/npm-pack.ts build/release dist",
-        "uat": "webpack serve -c webpack.config.doc.js",
+        "uat": "webpack serve -c webpack.config.doc.js --mode=development",
         "watch": "webpack -c webpack.config.debug.js --watch",
         "test:script": "jest",
         "lint:style": "stylelint -c .stylelintrc.json src/style --output-file test-reports/style/lint",

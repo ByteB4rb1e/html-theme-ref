@@ -4,11 +4,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const escapeHtml = require('escape-html');
 
-const config = require('./webpack.config.debug.js');
-
 /**
  * Webpack plugin for generating usability demonstration frames and and index
  * file for documenting and testing styles of this reference implementation.
+ *
+ * TODO: explain in detail on how the usability demonstration is structured,
+ * meant to be used and implemented by this plugin.
  */
 class StyleDocumentationPlugin {
     /**
@@ -35,16 +36,19 @@ class StyleDocumentationPlugin {
     constructor(options = {}) {
         const pluginName = StyleDocumentationPlugin.name;
 
+        // set defaults
         this.options = {
             ...StyleDocumentationPlugin.defaultOptions,
-            ...options
+            ...options,
         };
 
         this.framesOptions = [];
+        this._plugins = null;
+        this._fileDependencies = null;
         this.indexOptions = null;
         this.logger = null;
 
-        this.onBeforeRun = this.onBeforeRun.bind(this);
+        this.onWatchRun = this.onWatchRun.bind(this);
         this.onAfterCompile = this.onAfterCompile.bind(this);
     }
 
@@ -56,22 +60,40 @@ class StyleDocumentationPlugin {
     apply(compiler) {
         const pluginName = StyleDocumentationPlugin.name;
 
+        const resolvePath = (path, compiler) => {
+            return path.resolve(compiler.config.output.path, path);
+        }
+
+        // normalize paths
+        this.options = {
+            ...this.options,
+            ...{
+                inputBasedir: path.resolve(this.options.inputBasedir),
+                outputBasedir: path.resolve(
+                    compiler.options.output.path,
+                    this.options.outputBasedir
+                ),
+                frameTemplatePath: path.resolve(this.options.frameTemplatePath),
+                indexTemplatePath: path.resolve(this.options.indexTemplatePath)
+            }
+        }
+
         this.logger = compiler.getInfrastructureLogger(pluginName);
 
-        compiler.hooks.beforeRun.tap(pluginName, this.onBeforeRun);
-        compiler.hooks.watchRun.tap(pluginName, this.onBeforeRun);
+        this.logger.info('registering compiler hooks...');
+
+        compiler.hooks.beforeRun.tap(pluginName, this.onWatchRun);
+        compiler.hooks.watchRun.tap(pluginName, this.onWatchRun);
         compiler.hooks.afterCompile.tap(pluginName, this.onAfterCompile);
 
-        for (const frameOptions of StyleDocumentationPlugin.getFrames(
+        this.logger.info('generating plugin options...');
+
+        for (const frameOptions of StyleDocumentationPlugin.getFramesOptions(
             this.options.inputBasedir,
             this.options.outputBasedir,
             this.options.frameTemplatePath
         )) {
             this.framesOptions.push(frameOptions);
-            this.logger.info(
-                'cached frame options for:',
-                frameOptions.templateParameters.sourcePath
-            );
         }
 
         const indexFilename = path.join(this.options.outputBasedir, 'index.html');
@@ -100,9 +122,22 @@ class StyleDocumentationPlugin {
             }
         }
 
+        this.logger.info('applying compiler to plugins...');
+
+        var pluginRegistrationCount = 0;
+        for (const [plugin, fileDependencies] of this.plugins()) {
+            plugin.apply(compiler);
+            pluginRegistrationCount += 1;
+        }
+
         this.logger.info(
-            'cached frame options for:', 
-            this.options.indexTemplatePath
+            'number of files dependent upon:',
+            this._fileDependencies.length
+        );
+
+        this.logger.info(
+            'number of (child) plugins compiler was applied to:',
+            pluginRegistrationCount
         );
     }
 
@@ -111,25 +146,117 @@ class StyleDocumentationPlugin {
      * logic.
      *
      * @param {import('webpack').Compiler} compiler - Webpack compiler instance.
+     *
+     * @remarks
+     * There is a bug in html-webpack-plugin, where it uses the wrong hook for
+     * watch events, therefore file changes aren't emitted properly. Therefore
+     * I'm applying the plugins directly to the compiler for each compilation,
+     * instead of enqueing it as a plugin during initialization.
+     *
+     * {@link https://github.com/webpack/webpack/issues/16312#issuecomment-1262993892
+     * | Issue report and workaround}
      */
-    onBeforeRun(compiler) {
-        new HtmlWebpackPlugin(this.indexOptions).apply(compiler);
+    onWatchRun(compiler) {
+        if (compiler.watchMode) {
+            if (compiler.modifiedFiles) {
+                const cwd = process.cwd();
+                compiler.modifiedFiles.forEach((filePath) => {
+                    if (this._fileDependencies.includes(filePath)) {
+                        const plugins = this.getPluginsForFileDependency(filePath);
 
-        // TODO: refactor to run asynchronously
-        this.framesOptions.forEach(frameOptions => {
-            new HtmlWebpackPlugin(frameOptions).apply(compiler);
-        })
+                        this.logger.info(
+                            `dependendent file of ${plugins.length} plugin(s) modified:`,
+                            path.relative(cwd, filePath)
+                        );
+
+                        //compiler.watching.invalidate();
+                    }
+                });
+            }
+        }
 
         compiler.hooks.initialize.call(compiler);
     }
 
-    onAfterCompile(compilation) {
-        // TODO: figure out why file watching works, assets are being emitted,
-        // but onWatch hook isn't triggered when files changed...
-        this.framesOptions.forEach(frameOptions => {
-            compilation.fileDependencies.add(
+    /**
+     * get an iterator of (child) plugins applied to the compiler. If the
+     * plugins haven't been constructed yet, they will.
+     *
+     * @returns {Generator<[HtmlWebpackPlugin, string[]], void, undefined>} A
+     *          generator that yields a tuple of a plugin and its dependent files
+     */
+    *plugins() {
+        if(this._plugins) {
+            for (const [plugin, fileDependencies] of this._plugins) {
+                yield [ plugin, [...fileDependencies] ];
+            }
+
+            return
+        }
+
+        this._fileDependencies = [];
+        this._plugins =  [];
+
+        const indexPluginData = [
+            new HtmlWebpackPlugin(this.indexOptions),
+            [this.options.indexTemplatePath]
+        ];
+
+        this._fileDependencies.push(this.options.indexTemplatePath);
+        this._plugins.push(indexPluginData);
+        yield [
+            indexPluginData[0],
+            [...indexPluginData[1]]
+        ];
+
+        this._fileDependencies.push(this.options.frameTemplatePath);
+        for (const frameOptions of this.framesOptions) {
+            const framePluginData = [
+                new HtmlWebpackPlugin(frameOptions),
+                [
+                    frameOptions.templateParameters.sourcePath,
+                    this.options.frameTemplatePath,
+                ]
+            ];
+
+            this._fileDependencies.push(
                 frameOptions.templateParameters.sourcePath
             );
+            this._plugins.push(framePluginData);
+            yield [
+                framePluginData[0],
+                [...framePluginData[1]]
+            ];
+        }
+    }
+
+    /**
+     * get plugins dependent upon a source file
+     */
+    getPluginsForFileDependency(filePath) {
+        const matches = [];
+
+        for (const [plugin, fileDependencies] of this.plugins()) {
+            if (fileDependencies.includes(filePath)) matches.push(plugin);
+        }
+
+        return matches;
+    }
+
+    /**
+     * TODO: write JSDOC block comment
+     */
+    onAfterCompile(compilation) {
+        const buildDependencyGroup = path.resolve(this.options.inputBasedir);
+        compilation.buildDependencies.add(buildDependencyGroup);
+
+        this.framesOptions.forEach(frameOptions => {
+            const sourcePath = frameOptions.templateParameters.sourcePath;
+
+            if (!compilation.fileDependencies.has(sourcePath)) {
+                compilation.fileDependencies.add(sourcePath);
+                this.logger.info(`manually added file dependency: ${sourcePath}`);
+            }
         });
     }
 
@@ -225,7 +352,7 @@ class StyleDocumentationPlugin {
      * @param {string} templatePath - Path to the frame template.
      * @returns {Generator<Object, void, undefined>} A generator yielding configuration options for HtmlWebpackPlugin.
      */
-    static *getFrames(
+    static *getFramesOptions(
         inputBasedir,
         outputBasedir,
         templatePath,
@@ -299,41 +426,45 @@ class StyleDocumentationPlugin {
     }
 }
 
-// doc, doc, docs, docs... I know there's there's a lot of doc going on here,
-// but the output path encapsulates everything defined in the plugin, so the
-// paths will be joined.
-// doc is the build target directory and docs the subdirectory under the target
-// directory, since all the other assets will have a directory in there as well.
-// This is so that when I'm merging the release and docs output, all assets are
-// deduplicated. See Makefile and scripts/npm-pack.ts for info on how that
-// works.
-config.output.path = path.resolve(__dirname, 'build', 'doc');
+module.exports = (env, argv) => {
 
-// TODO: search for ts-loader instances, instead of hard-coding...
-config.module.rules[1].use[0].options.configFile = 'tsconfig.doc.json';
-// ensure that generated maps are emitted to the correct directory, in case
-// something different is specified in the tsconfig and I forgot about it
-config.module.rules[1].use[0].options.compilerOptions = {
-    "outDir": path.join(config.output.path, 'script')
-};
+    const configFile = argv.mode === 'development' ? 'webpack.config.debug.js' : 'webpack.config.js';
+    const config = require(`./${configFile}`);
 
-config.plugins.push(new StyleDocumentationPlugin());
+    // doc is the build target (directory) and docs the subdirectory under the target
+    // directory, since all the other assets will have a directory in there as well.
+    // This is so that when I'm merging the release and docs output, all assets are
+    // deduplicated. See Makefile and scripts/npm-pack.ts for info on how that
+    // works.
+    config.output.path = path.resolve('build', 'doc');
+    // TODO: search for ts-loader instances, instead of hard-coding...
+    config.module.rules[1].use[0].options.configFile = 'tsconfig.doc.json';
+    // ensure that generated maps are emitted to the correct directory, in case
+    // something different is specified in the tsconfig and I forgot about it
+    config.module.rules[1].use[0].options.compilerOptions = {
+        "outDir": path.join(config.output.path, 'script')
+    };
 
-module.exports = {
-    ...config,
-    entry: {
-        'demo': [
-            "./src/script/main.ts",
-            "./src/style/demo.scss"
-        ],
-    },
+    config.plugins.push(new StyleDocumentationPlugin());
 
-    devServer: {
-        compress: true,
-        open: true,
-        hot: true,
-        liveReload: true,
-        watchFiles: ['src/**/*.scss', 'src/**/*.ts'],
-        static: 'build/doc/docs/style',
-    },
+    return {
+        ...config,
+        entry: {
+            'demo': [
+                "./src/script/main.ts",
+                "./src/style/demo.scss"
+            ],
+        },
+        devServer: {
+            compress: true,
+            open: false,
+            hot: true,
+            liveReload: true,
+            watchFiles: ['src/**/*.scss', 'src/**/*.ts'],
+            devMiddleware: {
+                writeToDisk: true
+            },
+            static: 'build/doc/docs/style',
+        }
+    }
 };

@@ -9,7 +9,7 @@ const SCRIPTNAME = path.basename(__filename);
 const DEFAULT_INPUT_DIR: string = path.join('build', 'release');
 const DEFAULT_OUTPUT_DIR: string = 'dist';
 const DEFAULT_ASSETS_INDEX_BASENAME: string = 'assets.txt';
-const DEFAULT_DOCS_DIRNAME: string = '_docs';
+const DEFAULT_DOCS_DIRNAME: string = '';
 
 function usage(exec: string): string {
     return `
@@ -31,7 +31,7 @@ directory.
 A \`file-list.txt\` index of all assets to be used by implementors is generated,
 in which each file to be used is listed on a separate line.
 
-Optionally the documentation is copied to a \`_docs/\` sub-directory.
+Optionally INPUT is merged on top of DOCS.
 
 This is necessary, because traditional directory layout of build environments
 isn't compatible with npm pack routine. With npm packages, usually build
@@ -48,7 +48,9 @@ Positional arguments:
              [default:${DEFAULT_OUTPUT_DIR}]
 
     DOCS   - directory containing documentation, which is used as an auxiliary
-             input for packaging alongside INPUT.
+             input for packaging alongside INPUT. It is expected that the
+             directory has the same layout as INPUT. If the directory does not
+             follow the same layout, supply -d/--docs-dirname
 
 Options:
 
@@ -118,7 +120,7 @@ export function stripPackageSpec(specPath: string): object {
 }
 
 /**
- *
+ * TODO: write TSDOC block comment
  */
 function pack(options: PackageOptions): void {
     var cwd = process.cwd();
@@ -136,21 +138,6 @@ function pack(options: PackageOptions): void {
         os.tmpdir(),
         `${path.basename(cwd)}-`
     ));
-
-    console.log(`${SCRIPTNAME}: copying build output...`);
-    fs.cpSync(
-        options.inputDir,
-        tempDir,
-        {
-            recursive: true,
-            filter: (src: string, dest: string) => {
-                console.log(
-                    `cp: ${path.relative(cwd, src)} > ${dest}`
-                );
-                return true;
-            }
-        }
-    );
 
     console.log(`${SCRIPTNAME}: copying metadata...`);
     [
@@ -193,6 +180,21 @@ function pack(options: PackageOptions): void {
     else {
         console.log(`${SCRIPTNAME}: no docs supplied, will not copy...`);
     }
+
+    console.log(`${SCRIPTNAME}: copying build output...`);
+    fs.cpSync(
+        options.inputDir,
+        tempDir,
+        {
+            recursive: true,
+            filter: (src: string, dest: string) => {
+                console.log(
+                    `cp: ${path.relative(cwd, src)} > ${dest}`
+                );
+                return true;
+            }
+        }
+    );
 
     console.log(
         `${SCRIPTNAME}: generating index (\'${options.assetsIndexBasename}\') of assets...`
