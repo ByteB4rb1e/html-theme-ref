@@ -45,6 +45,7 @@ class StyleDocumentationPlugin {
         this.logger = null;
 
         this.onBeforeRun = this.onBeforeRun.bind(this);
+        this.onAfterCompile = this.onAfterCompile.bind(this);
     }
 
     /**
@@ -59,6 +60,7 @@ class StyleDocumentationPlugin {
 
         compiler.hooks.beforeRun.tap(pluginName, this.onBeforeRun);
         compiler.hooks.watchRun.tap(pluginName, this.onBeforeRun);
+        compiler.hooks.afterCompile.tap(pluginName, this.onAfterCompile);
 
         for (const frameOptions of StyleDocumentationPlugin.getFrames(
             this.options.inputBasedir,
@@ -119,6 +121,16 @@ class StyleDocumentationPlugin {
         })
 
         compiler.hooks.initialize.call(compiler);
+    }
+
+    onAfterCompile(compilation) {
+        // TODO: figure out why file watching works, assets are being emitted,
+        // but onWatch hook isn't triggered when files changed...
+        this.framesOptions.forEach(frameOptions => {
+            compilation.fileDependencies.add(
+                frameOptions.templateParameters.sourcePath
+            );
+        });
     }
 
     /**
@@ -290,6 +302,11 @@ class StyleDocumentationPlugin {
 // doc, doc, docs, docs... I know there's there's a lot of doc going on here,
 // but the output path encapsulates everything defined in the plugin, so the
 // paths will be joined.
+// doc is the build target directory and docs the subdirectory under the target
+// directory, since all the other assets will have a directory in there as well.
+// This is so that when I'm merging the release and docs output, all assets are
+// deduplicated. See Makefile and scripts/npm-pack.ts for info on how that
+// works.
 config.output.path = path.resolve(__dirname, 'build', 'doc');
 
 // TODO: search for ts-loader instances, instead of hard-coding...
@@ -310,11 +327,13 @@ module.exports = {
             "./src/style/demo.scss"
         ],
     },
+
     devServer: {
         compress: true,
         open: true,
         hot: true,
         liveReload: true,
-        watchFiles: ['src/**/*.scss', 'src/**/*.ts']
+        watchFiles: ['src/**/*.scss', 'src/**/*.ts'],
+        static: 'build/doc/docs/style',
     },
 };
