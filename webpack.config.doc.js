@@ -437,9 +437,6 @@ module.exports = (env, argv) => {
     // deduplicated. See Makefile and scripts/npm-pack.ts for info on how that
     // works.
     config.output.path = path.resolve('build', 'doc');
-    // TODO: search for ts-loader instances, instead of hard-coding...
-    config.module.rules[1].use[0].options.configFile = 'tsconfig.doc.json';
-    // ensure that generated maps are emitted to the correct directory, in case
     // something different is specified in the tsconfig and I forgot about it
     config.module.rules[1].use[0].options.compilerOptions = {
         "outDir": path.join(config.output.path, 'script')
