@@ -6,11 +6,20 @@ const escapeHtml = require('escape-html');
 
 const config = require('./webpack.config.debug.js');
 
-
 /**
- *
+ * Webpack plugin for generating usability demonstration frames and and index
+ * file for documenting and testing styles of this reference implementation.
  */
 class StyleDocumentationPlugin {
+    /**
+     * Default options for the StyleDocumentationPlugin.
+     *
+     * @type {Object}
+     * @property {string} inputBasedir - Base directory for input files.
+     * @property {string} outputBasedir - Base directory for output files.
+     * @property {string} frameTemplatePath - Path to the HTML template for frames.
+     * @property {string} indexTemplatePath - Path to the HTML template for the index.
+     */
     static defaultOptions = {
         inputBasedir: path.join('docs', 'style'),
         outputBasedir: path.join('docs', 'style'),
@@ -19,7 +28,9 @@ class StyleDocumentationPlugin {
     }
 
     /**
+     * Constructor for the StyleDocumentationPlugin.
      *
+     * @param {Object} [options={}] - Configuration options for the plugin.
      */
     constructor(options = {}) {
         const pluginName = StyleDocumentationPlugin.name;
@@ -37,7 +48,9 @@ class StyleDocumentationPlugin {
     }
 
     /**
+     * Webpack's `apply` method hooks into the compiler to set up the plugin.
      *
+     * @param {import('webpack').Compiler} compiler - Webpack compiler instance.
      */
     apply(compiler) {
         const pluginName = StyleDocumentationPlugin.name;
@@ -92,7 +105,10 @@ class StyleDocumentationPlugin {
     }
 
     /**
+     * Handles Webpack's `beforeRun` and `watchRun` hooks to apply the plugin
+     * logic.
      *
+     * @param {import('webpack').Compiler} compiler - Webpack compiler instance.
      */
     onBeforeRun(compiler) {
         new HtmlWebpackPlugin(this.indexOptions).apply(compiler);
@@ -106,12 +122,11 @@ class StyleDocumentationPlugin {
     }
 
     /**
-     * read a file from the local filesystem and escape special HTML characters,
-     * if required
+     * Reads a file and optionally escapes its HTML content.
      *
-     * @param filePath string - path to a local file
-     * @param escapeHtmlChars boolean - whether to escape HTML special character
-     *                                  or not
+     * @param {string} filePath - Path to the file.
+     * @param {boolean} [escapeHtmlChars=false] - Whether to escape HTML special characters.
+     * @returns {string} The file's content.
      */
     static readFile(filePath, escapeHtmlChars = false) {
         const data = fs.readFileSync(filePath);
@@ -122,10 +137,11 @@ class StyleDocumentationPlugin {
     }
 
     /**
-     * recursively search files by suffix
+     * Recursively searches for files with a specified suffix.
      *
-     * @param root string - path to root directory
-     * @param suffix string - file suffix to filter for
+     * @param {string} root - Root directory to start the search.
+     * @param {string} suffix - File suffix to filter for.
+     * @returns {Generator<string, void, undefined>} A generator that yields file paths.
      */
     static *findFilesBySuffix(root, suffix) {
         if (!fs.existsSync(root)) {
@@ -149,14 +165,12 @@ class StyleDocumentationPlugin {
     }
 
     /**
-     * get basic options of style documentation frame for building through the
-     * html-webpack-plugin
+     * Generates basic options for a style documentation frame.
      *
-     * @param inputFilePath string - path to source file (partial HTML document)
-     * @param inputBaseDir string  - base directory of all partials
-     * @param outputBaseDir string - base directory to output partials to
-     *
-     * @returns partial options object for HtmlWebpackPlugin
+     * @param {string} inputFilePath - Path to the source file (partial HTML document).
+     * @param {string} inputBaseDir - Base directory of input files.
+     * @param {string} outputBaseDir - Base directory for output files.
+     * @returns {Object} Basic options for HtmlWebpackPlugin.
      */
     static getBasicFrameOptions(
         inputFilePath,
@@ -192,15 +206,12 @@ class StyleDocumentationPlugin {
     }
 
     /**
-     * get full configuration options of all style documentation frames for building
-     * through the html-webpack-plugin
+     * Generates full configuration options for all style documentation frames.
      *
-     * @param inputBaseDir string  - base directory of all frame partials
-     * @param outputBaseDir string - base directory to output frame partials to
-     * @param templatePath string - template to expand frame partials with
-     *
-     * @returns generator of configuration options for html-webpack-plugin
-     *          constructor
+     * @param {string} inputBasedir - Base directory of input files.
+     * @param {string} outputBasedir - Base directory for output files.
+     * @param {string} templatePath - Path to the frame template.
+     * @returns {Generator<Object, void, undefined>} A generator yielding configuration options for HtmlWebpackPlugin.
      */
     static *getFrames(
         inputBasedir,
@@ -232,7 +243,11 @@ class StyleDocumentationPlugin {
     }
 
     /**
-     * get metadata of a frame required by index
+     * Extracts metadata for a frame required by the index.
+     *
+     * @param {Object} frameOptions - Frame options object.
+     * @param {string} indexFilename - Path to the index file.
+     * @returns {Object} Metadata for the frame.
      */
     static getFrameMeta(
         frameOptions,
@@ -248,6 +263,13 @@ class StyleDocumentationPlugin {
         }
     }
 
+    /**
+     * Groups frames metadata by relative directory paths.
+     *
+     * @param {Object[]} framesOptions - Array of frame options objects.
+     * @param {string} indexFilename - Path to the index file.
+     * @returns {Object} Grouped metadata.
+     */
     static getGroupedFramesMeta(framesOptions, indexFilename) {
         const groups = {};
 
@@ -265,6 +287,9 @@ class StyleDocumentationPlugin {
     }
 }
 
+// doc, doc, docs, docs... I know there's there's a lot of doc going on here,
+// but the output path encapsulates everything defined in the plugin, so the
+// paths will be joined.
 config.output.path = path.resolve(__dirname, 'build', 'doc');
 
 // TODO: search for ts-loader instances, instead of hard-coding...
