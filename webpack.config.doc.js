@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const escapeHtml = require('escape-html');
 
 /**
  * Webpack plugin for generating usability demonstration frames and and index
@@ -12,6 +11,9 @@ const escapeHtml = require('escape-html');
  * meant to be used and implemented by this plugin.
  */
 class StyleDocumentationPlugin {
+
+    static matchHtmlRegExp = /["'&<>]/;
+
     /**
      * Default options for the StyleDocumentationPlugin.
      *
@@ -270,9 +272,53 @@ class StyleDocumentationPlugin {
     static readFile(filePath, escapeHtmlChars = false) {
         const data = fs.readFileSync(filePath);
 
-        if (escapeHtmlChars) return escapeHtml(data);
+        if (escapeHtmlChars) return StyleDocumentationPlugin.escapeHtml(data);
 
         return data;
+    }
+
+    static  escapeHtml (string) {
+        const str = '' + string; // typecasting to string
+        const match = StyleDocumentationPlugin.matchHtmlRegExp.exec(str);
+
+        if (!match) return str;
+
+        var escape;
+        var html = '';
+        var index = 0;
+        var lastIndex = 0;
+
+        for (index = match.index; index < str.length; index++) {
+            switch (str.charCodeAt(index)) {
+                case 34: // "
+                    escape = '&quot;'
+                    break
+                case 38: // &
+                    escape = '&amp;'
+                    break
+                case 39: // '
+                    escape = '&#39;'
+                    break
+                case 60: // <
+                    escape = '&lt;'
+                    break
+                case 62: // >
+                    escape = '&gt;'
+                    break
+                default:
+                    continue
+            }
+
+            if (lastIndex !== index) html += str.substring(lastIndex, index)
+
+            lastIndex = index + 1;
+
+            html += escape;
+        }
+
+        return lastIndex !== index
+            ? html + str.substring(lastIndex, index)
+            : html
     }
 
     /**
