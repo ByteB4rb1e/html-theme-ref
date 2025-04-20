@@ -205,7 +205,7 @@ function pack(options: PackageOptions): void {
         'w'
     );
     for (const match of listFiles(options.inputDir)) {
-        fs.writeSync(fd, `${match}\n`);
+        fs.writeSync(fd, `${match.replace(path.win32.sep, path.posix.sep)}\n`);
     }
     fs.closeSync(fd);
 
