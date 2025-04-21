@@ -1966,11 +1966,11 @@ fi
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: initializing npm project..." >&5
 printf "%s\n" "$as_me: initializing npm project..." >&6;}
-NPM install
+npm install
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: initializing git submodules..." >&5
 printf "%s\n" "$as_me: initializing git submodules..." >&6;}
-GIT submodule update --init --remote --recursive
+git submodule update --init --remote --recursive
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure

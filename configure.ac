@@ -42,9 +42,9 @@ fi
 
 
 AC_MSG_NOTICE([initializing npm project...])
-NPM install
+npm install
 
 AC_MSG_NOTICE([initializing git submodules...])
-GIT submodule update --init --remote --recursive
+git submodule update --init --remote --recursive
 
 AC_OUTPUT
