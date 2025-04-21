@@ -28,12 +28,12 @@ AC_CHECK_PROGS([MAKE], [make], [no])
 AS_IF([test "$NPM" == "no"], 
       [AC_MSG_ERROR([install GNU Make (make), before continuing.])])
 
-AC_MSG_CHECKING([env for BITBUCKET_USERNAME])
-if ! test -z "$BITBUCKET_USERNAME"; then
+AC_MSG_CHECKING([env for BITBUCKET_WORKSPACE])
+if ! test -z "$BITBUCKET_WORKSPACE"; then
     AC_MSG_RESULT([yes])
 else
     AC_MSG_RESULT([no])
-    AC_MSG_NOTICE([BITBUCKET_USERNAME in env is required for publishing])
+    AC_MSG_NOTICE([BITBUCKET_WORKSPACE in env is required for publishing])
 fi
 
 AC_MSG_CHECKING([env for BITBUCKET_REPO_SLUG])
