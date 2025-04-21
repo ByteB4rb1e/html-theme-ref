@@ -1963,6 +1963,8 @@ printf "%s\n" "no" >&6; }
 printf "%s\n" "$as_me: BITBUCKET_ACCESS_TOKEN in env is required for publishing" >&6;}
 fi
 
+# fail fast
+set -e
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: initializing npm project..." >&5
 printf "%s\n" "$as_me: initializing npm project..." >&6;}

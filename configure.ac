@@ -40,6 +40,8 @@ else
     AC_MSG_NOTICE([BITBUCKET_ACCESS_TOKEN in env is required for publishing])
 fi
 
+# fail fast
+set -e
 
 AC_MSG_NOTICE([initializing npm project...])
 npm install
