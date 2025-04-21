@@ -64,7 +64,7 @@ definitions:
                 - node
                 - vendor
             artifacts:
-                - dist/**/*
+                - dist/*
             script:
                 - make dist CI=1
 pipelines:
