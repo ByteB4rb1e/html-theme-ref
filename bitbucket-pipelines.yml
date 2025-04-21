@@ -9,7 +9,7 @@ definitions:
             caches:
                 - node
             artifacts:
-                - test-reports/*
+                - test-reports/**/*
             script:
                 - *configure
                 - make test-reports
@@ -18,7 +18,7 @@ definitions:
             caches:
                 - node
             artifacts:
-                - build/*
+                - build/**/*
             script:
                 - *configure
                 - make build/debug
@@ -27,7 +27,7 @@ definitions:
             caches:
                 - node
             artifacts:
-                - build/*
+                - build/**/*
             script:
                 - *configure
                 - make build/release CI=1
@@ -36,7 +36,7 @@ definitions:
             caches:
                 - node
             artifacts:
-                - dist/*
+                - dist/**/*
             script:
                 - *configure
                 - make dist CI=1
@@ -45,7 +45,7 @@ definitions:
             caches:
                 - node
             artifacts:
-                - dist/*
+                - dist/**/*
             script:
                 - *configure
                 - make archive CI=1
