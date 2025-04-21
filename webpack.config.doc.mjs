@@ -1,8 +1,11 @@
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const typedoc = require('typedoc');
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import * as typedoc from 'typedoc';
+
+import releaseConfig from './webpack.config.mjs';
+import debugConfig from './webpack.config.mjs';
 
 /**
  * Webpack plugin for generating script documentation through Typedoc
@@ -29,7 +32,7 @@ class ScriptDocumentationPlugin {
      *
      * @type {Object}
      * @property {string} configPath - Path to TypeDoc configuration
-     * @property {require('typedoc').Configuration.TypeDocOptions} - 
+     * @property {import('typedoc').Configuration.TypeDocOptions} - 
      *           configOverrides - Object to override the loaded TypeDoc 
      *           configuration
      */
@@ -61,8 +64,12 @@ class ScriptDocumentationPlugin {
 
         this.logger.info('initializing Typedoc application...');
 
+        const optionsFromFile = JSON.parse(fs.readFileSync(
+            path.resolve(this.options.configPath)
+        ));
+
         this.typedoc = typedoc.Application.bootstrap({
-            ...require(path.resolve(this.options.configPath)),
+            ...optionsFromFile,
             ...this.options.configOverrides
         }).then((application) => {
             this.logger.info('TypeDoc application initialized...');
@@ -632,10 +639,10 @@ class StyleDocumentationPlugin {
     }
 }
 
-module.exports = (env, argv) => {
+export default (env, argv) => {
 
-    const configFile = argv.mode === 'development' ? 'webpack.config.debug.js' : 'webpack.config.js';
-    const config = require(`./${configFile}`);
+    const parentConfig = argv.mode === 'development' ? debugConfig : releaseConfig;
+    const config = parentConfig(env, argv);
 
     // doc is the build target (directory) and docs the subdirectory under the target
     // directory, since all the other assets will have a directory in there as well.

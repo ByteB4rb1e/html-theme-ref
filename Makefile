@@ -7,14 +7,14 @@ tags:
 	ctags -R --exclude=node_modules --exclude=vendor --exclude=docs \
 	--exclude=*.js --exclude=*.htm* --exclude=*.json --exclude=src/style
 
-test-reports/script: eslint.config.mjs jest.config.js
+test-reports/script: eslint.config.mjs jest.config.mjs
 	npm run lint:script || exit 0
 	# patch for eslint redirecting stdout, instead of dedicated write to file
 	# TODO: move this to scripts/
 	@node -p "console.log(require('fs').readFileSync('test-reports/script/lint',{encoding: 'utf-8'}))"
 	npm run test:script || exit 0
 
-test-reports/style: .stylelintrc.json jest.config.sass-true.js
+test-reports/style: .stylelintrc.json jest.config.sass-true.mjs
 	npm run lint:style || exit 0
 
 test-reports: test-reports/script test-reports/style
@@ -22,12 +22,12 @@ test-reports: test-reports/script test-reports/style
 clean:
 	rm -rvf tags build/ autom4te.cache/ dist test-reports
 
-build/doc: package.json webpack.config.doc.js src/
+build/doc: package.json webpack.config.doc.mjs src/
 	npm run doc
 
 # overriding the output path allows for wrapping by another project
 # it can be used like `make build/release OUTPUT_PATH=<path-override>`
-build/release: package.json webpack.config.js src/ $(if $(CI),,test-reports)
+build/release: package.json webpack.config.mjs src/ $(if $(CI),,test-reports)
 ifdef CI
 	$(warning CI set, tests skipped and requiring manual execution)
 endif
@@ -36,7 +36,7 @@ ifdef OUTPUT_PATH
 endif
 	npm run build:release $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 
-build/debug: package.json webpack.config.debug.js src/
+build/debug: package.json webpack.config.debug.mjs src/
 ifdef OUTPUT_PATH
 	$(warning OUTPUT_PATH set, overriding output path)
 endif
@@ -66,7 +66,7 @@ endif
 	npm run dist $(if $(NO_DOCS),, -- build/doc)
 
 # user acceptance testing
-uat: package.json webpack.config.doc.js src/
+uat: package.json webpack.config.doc.mjs src/
 	npm run uat
 
 configure: configure.ac
@@ -79,7 +79,7 @@ package-lock.json: package.json
 
 # can be used for a cascaded development environment, e.g. having a Sphinx theme
 # with sphinx-autobuild running in parallel with this target
-watch: src/ package.json webpack.config.debug.js
+watch: src/ package.json webpack.config.debug.mjs
 ifdef OUTPUT_PATH
 	$(warning OUTPUT_PATH set, overriding output path)
 endif
