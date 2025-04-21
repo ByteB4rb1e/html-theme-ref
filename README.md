@@ -163,8 +163,8 @@ information about the tools used, R(Their)FM.
   by setting `type` in `package.json` to `commonjs`. This is contradictory to
   the entire build environment being authored as ESM, but since I'm explicitly
   defining each module as an ESM module through the `.mjs` extension name
-  (*heehee* 🕺), [this will override the default
-  behavior](https://nodejs.org/download/release/v18.20.8/docs/api/modules.html#enabling)
+  (you've been hit by, you've been struck by a smooooth criminal 🕺), [this will
+  override the default behavior](https://nodejs.org/download/release/v18.20.8/docs/api/modules.html#enabling)
   of the `package.json`
 
 <a name="licensing"></a>
