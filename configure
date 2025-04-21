@@ -653,6 +653,8 @@ SHELL'
 ac_subst_files=''
 ac_user_opts='
 enable_option_checking
+with_force
+with_submodule_deinit
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1269,6 +1271,13 @@ if test -n "$ac_init_help"; then
 
   cat <<\_ACEOF
 
+Optional Packages:
+  --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
+  --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --with-force            apply force wherever necessary [default=]
+  --with-submodule-deinit deinitialize submodules before initializing
+                          [default=no]
+
 Report bugs to the package provider.
 _ACEOF
 ac_status=$?
@@ -1711,6 +1720,28 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+
+# Check whether --with-force was given.
+if test ${with_force+y}
+then :
+  withval=$with_force; ARG_FORCE='--force'
+else case e in #(
+  e) ARG_FORCE='' ;;
+esac
+fi
+
+
+
+# Check whether --with-submodule-deinit was given.
+if test ${with_submodule_deinit+y}
+then :
+  withval=$with_submodule_deinit; ARG_SUBMODULE_DEINIT='yes'
+else case e in #(
+  e) ARG_SUBMODULE_DEINIT='no' ;;
+esac
+fi
+
+
 for ac_prog in git
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
@@ -1975,6 +2006,22 @@ set +x
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: initializing npm project..." >&5
 printf "%s\n" "$as_me: initializing npm project..." >&6;}
 npm install
+
+# this allows for caching the directory. Git is able to determine that the
+# submodule has been initialized through a copy operation, therefore we need to
+# tell Git to drop it. This won't hurt the cache, as we explicitly check out
+# commits, therefore the files are guaranteed to be the same
+if test "$ARG_SUBMODULE_DEINIT" '=' 'yes'; then
+    if ! test -z "$ARG_FORCE"; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: forcefully deinitializing (dangling) git submodules..." >&5
+printf "%s\n" "$as_me: forcefully deinitializing (dangling) git submodules..." >&6;}
+    else
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: deinitializing (dangling) git submodules..." >&5
+printf "%s\n" "$as_me: deinitializing (dangling) git submodules..." >&6;}
+    fi
+
+    git submodule deinit --all $ARG_FORCE
+fi
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: initializing git submodules..." >&5
 printf "%s\n" "$as_me: initializing git submodules..." >&6;}

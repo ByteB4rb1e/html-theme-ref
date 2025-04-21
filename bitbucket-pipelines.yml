@@ -12,7 +12,7 @@ definitions:
                 - config.log
                 - config.status
             script:
-                - sh configure
+                - sh configure --with-submodule-deinit --with-force
         - step: &test-script
             name: Test (Script)
             caches:

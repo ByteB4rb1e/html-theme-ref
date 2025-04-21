@@ -1,5 +1,17 @@
 AC_INIT
 
+AC_ARG_WITH([force],
+            [AS_HELP_STRING([--with-force],
+                            [apply force wherever necessary @<:@default=@:>@])],
+            [ARG_FORCE='--force'],
+            [ARG_FORCE=''])
+
+AC_ARG_WITH([submodule-deinit],
+            [AS_HELP_STRING([--with-submodule-deinit],
+                            [deinitialize submodules before initializing @<:@default=no@:>@])],
+            [ARG_SUBMODULE_DEINIT='yes'],
+            [ARG_SUBMODULE_DEINIT='no'])
+
 AC_CHECK_PROGS([GIT], [git], [no])
 AS_IF([test "$GIT" == "no"], 
       [AC_MSG_ERROR([install Git, before continuing.])])
@@ -51,6 +63,20 @@ set +x
 
 AC_MSG_NOTICE([initializing npm project...])
 npm install
+
+# this allows for caching the directory. Git is able to determine that the
+# submodule has been initialized through a copy operation, therefore we need to
+# tell Git to drop it. This won't hurt the cache, as we explicitly check out
+# commits, therefore the files are guaranteed to be the same
+if test "$ARG_SUBMODULE_DEINIT" '=' 'yes'; then
+    if ! test -z "$ARG_FORCE"; then
+        AC_MSG_NOTICE([forcefully deinitializing (dangling) git submodules...])
+    else
+        AC_MSG_NOTICE([deinitializing (dangling) git submodules...])
+    fi
+
+    git submodule deinit --all $ARG_FORCE
+fi
 
 AC_MSG_NOTICE([initializing git submodules...])
 git submodule update --init --remote --recursive
