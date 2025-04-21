@@ -119,6 +119,27 @@ information about the tools used, R(Their)FM.
 - [WebAIM Contrast Checker](https://web.archive.org/web/20250412085144/https://webaim.org/resources/contrastchecker/)
 - [Browser Fingerprinting: An Introduction and the Challenges Ahead | The Tor Project](https://web.archive.org/web/20250407213105/https://blog.torproject.org/browser-fingerprinting-introduction-and-challenges-ahead/)
 
+## Issues
+
+### Vendor
+
+#### [Node.js|jest - deprecated dependencies](https://github.com/jestjs/jest/issues/15503)
+
+- affects `npm install`.
+- results in deprecation notice during `npm install`.
+- [remediated](https://github.com/ByteB4rb1e/html-theme-ref/blob/cb642ec72b4488ddfc8dfb63fe977e85d9c28506/package.json#L35)
+  by adding override in `package.json` for upgrading child dependencies.
+
+#### [Node.js|html-webpack-plugin - using wrong webpack hooks](https://github.com/jantimon/html-webpack-plugin/issues/1768)
+
+- affects `webpack-dev-server`
+- results in changes applied to watched files not emitting updated outputs
+- likely an issue with incorrect usage of hooks for proper cache handling
+- suggested workaround did not work
+- [remediated](https://github.com/ByteB4rb1e/html-theme-ref/blob/7c15371f6ab72bb1dd69388888d0d8beffc65082/webpack.config.doc.js#L465)
+  by instructing `webpack-dev-middleware` to write to disk, instead of handling
+  changes solely in memory. This was my intended behavior anyway...
+
 <a name="licensing"></a>
 ## Licensing
 
