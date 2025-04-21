@@ -1966,6 +1966,12 @@ fi
 # fail fast
 set -e
 
+set -x
+npm --version
+node --version
+git --version
+set +x
+
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: initializing npm project..." >&5
 printf "%s\n" "$as_me: initializing npm project..." >&6;}
 npm install

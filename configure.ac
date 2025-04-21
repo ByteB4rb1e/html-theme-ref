@@ -43,6 +43,12 @@ fi
 # fail fast
 set -e
 
+set -x
+npm --version
+node --version
+git --version
+set +x
+
 AC_MSG_NOTICE([initializing npm project...])
 npm install
 
