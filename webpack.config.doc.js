@@ -2,6 +2,166 @@ const fs = require('fs');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const typedoc = require('typedoc');
+
+/**
+ * Webpack plugin for generating script documentation through Typedoc
+ *
+ * @remarks
+ *
+ * NOTICE: The plugin currently does not support caching, since it does not use
+ * the dependency graph, therefore when using webpack-dev-server, the
+ * webpack-dev-middleware is required to write to disk.  This is the behavior I
+ * wanted from the get-go, so I doubt I'll be adding support for in-memory
+ * caching. webpack-dev-server is a DEVELOPMENT SERVER!!!! Why the hell would I
+ * want to optimize for production use-cases??
+ *
+ * {@link https://web.archive.org/web/20250421140139/https://typedoc.org/api/}
+ */
+class ScriptDocumentationPlugin {
+
+    /**
+     * Default options for the ScriptDocumentationPlugin.
+     *
+     * This is more to indicate the available options without going full-blown
+     * "I NEED A SCHEMA". They're supposed to be defined in the modules export
+     * directly though
+     *
+     * @type {Object}
+     * @property {string} configPath - Path to TypeDoc configuration
+     * @property {require('typedoc').Configuration.TypeDocOptions} - 
+     *           configOverrides - Object to override the loaded TypeDoc 
+     *           configuration
+     */
+    static defaultOptions = {
+        configPath: './typedoc.json',
+        configOverrides: {}
+    }
+
+    constructor(options = {}) {
+        // set defaults
+        this.options = {
+            ...ScriptDocumentationPlugin.defaultOptions,
+            ...options,
+        };
+
+        this.application = null;
+        this.fileDependencies = [];
+
+        this.onWatchRun = this.onWatchRun.bind(this);
+    }
+
+    /**
+     * TODO: write JSDoc block comment
+     */
+    apply(compiler) {
+        const pluginName = ScriptDocumentationPlugin.name;
+
+        this.logger = compiler.getInfrastructureLogger(pluginName);
+
+        this.logger.info('initializing Typedoc application...');
+
+        this.typedoc = typedoc.Application.bootstrap({
+            ...require(path.resolve(this.options.configPath)),
+            ...this.options.configOverrides
+        }).then((application) => {
+            this.logger.info('TypeDoc application initialized...');
+
+            // TypeDoc enforces POSIX paths, but webpack does (rightfully) not.
+            // Therfore I'm normalizing the paths, so we can do a comparison
+            // later on without having to normalize both the webpack paths and
+            // TypeDoc paths...
+            this.fileDependencies = application.getDefinedEntryPoints().map(
+                entrypoint => path.normalize(entrypoint.sourceFile.fileName)
+            );
+
+            // TODO: figure out how to get the entrypoints deduplicated directly
+            // through the TypeDoc API. Doing filtering myself shouldn't be
+            // necessary...
+            this.fileDependencies = this.fileDependencies.filter((v, i) => {
+                return this.fileDependencies.indexOf(v) == i;
+            });
+
+            this.logger.info(
+                'number of files dependent upon:',
+                this.fileDependencies.length
+            );
+
+            // well, this is a little awkward 🙈.... I resolve the encapsulating
+            // Promise later on, but since the watchRun hook is called multiple
+            // times and the Promise is only resolvable once, I set the instance
+            // explicitly. The resolve() method does not care, that's what it's
+            // there for...
+            this.typedoc = application;
+
+            // need to return application, so we can keep the Promise chain for
+            // later usage alive
+            return application;
+        })
+        .catch((error) => this.logger.error(error));
+
+        this.logger.info('registering compiler hooks...');
+
+        // NOTICE: Defining anonymous functions inside a hook callee just to be
+        // able to access a higher level object (e.g. defining a callee for a
+        // hook providing a compilation object inside a hook providing a
+        // compiler object) is very very bad (imo)... It makes it so hard to
+        // understand the actual lifecycle of the webpack compiler. If I can't
+        // access certain properties, it's a good indication that I'm hooking
+        // into the wrong spot of the lifecycle for defining whatever action I'm
+        // doing... I'm looking at you - MICROSOFT!!!
+        compiler.hooks.beforeRun.tap(pluginName, this.onWatchRun);
+        compiler.hooks.watchRun.tap(pluginName, this.onWatchRun);
+    }
+
+    /**
+     * hook callee, being executed before compilation starts
+     *
+     * if in watch mode, watches for file changes, determines if files
+     * applicable to typedoc have changed and generates documentation through
+     * typedoc, if that's the case
+     *
+     * @param {import('webpack').Compiler} compiler - Webpack compiler instance.
+     */
+    onWatchRun(compiler) {
+        var shouldGenerate = true;
+
+        if (compiler.watchMode) {
+            if (compiler.modifiedFiles) {
+                for (const filePath of compiler.modifiedFiles) {
+                    if (this.fileDependencies.includes(filePath)) {
+                        shouldGenerate = true;
+                        break
+                    }
+                    else {
+                        shouldGenerate = false;
+                    }
+                }
+            }
+        }
+
+        if (shouldGenerate) {
+
+            this.logger.info('dependendent files modified');
+
+            Promise.resolve(this.typedoc)
+            .then(async (application) => {
+
+                return [application, await application.convert()];
+            })
+            .then(async ([application, project]) => {
+                this.logger.info('generating TypeDoc output...');
+
+                await application.generateOutputs(project);
+
+                this.logger.info('TypeDoc output generated...');
+            })
+            .catch((error) => {
+                this.logger.error(error);
+            });
+        }
+    }
+}
 
 /**
  * Webpack plugin for generating usability demonstration frames and and index
@@ -487,6 +647,13 @@ module.exports = (env, argv) => {
     config.module.rules[1].use[0].options.compilerOptions = {
         "outDir": path.join(config.output.path, 'script')
     };
+
+    config.plugins.push(new ScriptDocumentationPlugin({
+        configPath: './typedoc.json',
+        configOverrides: {
+            out: path.join('build', 'doc', 'docs', 'script'),
+        }
+    }));
 
     config.plugins.push(new StyleDocumentationPlugin());
 

@@ -1,4 +1,10 @@
 {
-    "out": "build/doc",
-    "readme": "README.md"
+    "out": "build/doc/docs/script",
+    "readme": "docs/script/README.md",
+    "entryPoints": [
+        "src/script/**/*.ts"
+    ],
+    "entryPointStrategy": "expand",
+    "excludePrivate": false,
+    "excludeNotDocumented": false
 }
