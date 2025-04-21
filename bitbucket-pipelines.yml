@@ -1,60 +1,89 @@
 image: administratrix/cicd:latest
 definitions:
     caches:
-    configure: &configure
-        sh ./configure
+        vendor: vendor
     steps:
-        - step: &test
-            name: Test
+        - step: &configure
+            name: Configure
             caches:
                 - node
+                - vendor
             artifacts:
-                - test-reports/**/*
+                - config.log
+                - config.status
             script:
-                - *configure
-                - make test-reports
+                - sh configure
+        - step: &test-script
+            name: Test (Script)
+            caches:
+                - node
+                - vendor
+            artifacts:
+                - test-reports/script/**/*
+            script:
+                - make test-reports/script
+        - step: &test-style
+            name: Test (Style)
+            caches:
+                - node
+                - vendor
+            artifacts:
+                - test-reports/style/**/*
+            script:
+                - make test-reports/style
         - step: &build-debug
             name: Build (Debug)
             caches:
                 - node
+                - vendor
             artifacts:
-                - build/**/*
+                - build/debug/**/*
             script:
-                - *configure
-                - make build/debug
-        - step: &build
+                - make build/debug CI=1
+        - step: &build-release
             name: Build (Release)
             caches:
                 - node
+                - vendor
             artifacts:
-                - build/**/*
+                - build/release/**/*
             script:
-                - *configure
                 - make build/release CI=1
+        - step: &build-doc
+            name: Build (Doc)
+            caches:
+                - node
+                - vendor
+            artifacts:
+                - build/doc/**/*
+            script:
+                - make build/doc CI=1
         - step: &dist
             name: Package
             caches:
                 - node
+                - vendor
             artifacts:
                 - dist/**/*
             script:
-                - *configure
                 - make dist CI=1
-        - step: &archive
-            name: Archive
-            caches:
-                - node
-            artifacts:
-                - dist/**/*
-            script:
-                - *configure
-                - make archive CI=1
 pipelines:
     default:
-        - step: *build-debug
+        - step: *configure
+        - parallel:
+            steps:
+                - step: *test-script
+                - step: *test-style
+                - step: *build-debug
     branches:
         master:
-            - step: *test
-            - step: *build
+            - step: *configure
+            - parallel:
+                steps:
+                    - step: *test-script
+                    - step: *test-style
+            - parallel:
+                steps:
+                    - step: *build-doc
+                    - step: *build-release
             - step: *dist
-            - step: *archive
