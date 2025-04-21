@@ -135,14 +135,14 @@ information about the tools used, R(Their)FM.
 
 ### Vendor
 
-#### [Node.js|jest - deprecated dependencies](https://github.com/jestjs/jest/issues/15503)
+#### [Node.js | jest - deprecated dependencies](https://github.com/jestjs/jest/issues/15503)
 
 - affects `npm install`.
 - results in deprecation notice during `npm install`.
 - [remediated](https://github.com/ByteB4rb1e/html-theme-ref/blob/cb642ec72b4488ddfc8dfb63fe977e85d9c28506/package.json#L35)
   by adding override in `package.json` for upgrading child dependencies.
 
-#### [Node.js|html-webpack-plugin - using wrong webpack hooks](https://github.com/jantimon/html-webpack-plugin/issues/1768)
+#### [Node.js | html-webpack-plugin - using wrong webpack hooks](https://github.com/jantimon/html-webpack-plugin/issues/1768)
 
 - affects `webpack-dev-server`
 - results in changes applied to watched files not emitting updated outputs
@@ -151,6 +151,21 @@ information about the tools used, R(Their)FM.
 - [remediated](https://github.com/ByteB4rb1e/html-theme-ref/blob/7c15371f6ab72bb1dd69388888d0d8beffc65082/webpack.config.doc.js#L465)
   by instructing `webpack-dev-middleware` to write to disk, instead of handling
   changes solely in memory. This was my intended behavior anyway...
+
+#### [Node.js | ts-node - unable to correctly parse with ESM options](https://github.com/TypeStrong/ts-node/issues/2122)
+
+- affects `npx ts-node scripts/*.ts`
+- results in scripts not being executed with error `TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".ts" for ...`, 
+  if `type` in package.json is set to `module`.
+- suggested workaround does not work
+- (accidentally)
+  [remediated](https://github.com/ByteB4rb1e/html-theme-ref/blob/4a2344e7f1a278063527bbeb2a2ef5281498b633/package.json#L9)
+  by setting `type` in `package.json` to `commonjs`. This is contradictory to
+  the entire build environment being authored as ESM, but since I'm explicitly
+  defining each module as an ESM module through the `.mjs` extension name
+  (*heehee* 🕺), [this will override the default
+  behavior](https://nodejs.org/download/release/v18.20.8/docs/api/modules.html#enabling)
+  of the `package.json`
 
 <a name="licensing"></a>
 ## Licensing
