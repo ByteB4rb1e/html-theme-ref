@@ -26,6 +26,7 @@ const DEFAULT_BUFFER_SIZE: number = 2 * Math.pow(1024, 2);
  */
 const MIME_TYPES: {[key: string]: string} = {
     '.tar': 'application/x-tar',
+    '.tgz': 'application/x-gtar',
 }
 
 export interface UploadOptions {
@@ -110,7 +111,7 @@ References:
     changes every week... https://datatracker.ietf.org/doc/html/rfc1341
  */
 export function writeMultipartData(
-    socket: ClientRequest,
+    stream: ClientRequest,
     boundary: string,
     data: {[key: string]: [number, string]},
     bufferSize?: number,
@@ -122,26 +123,26 @@ export function writeMultipartData(
 
         const buffer = Buffer.alloc(bufferSize);
 
-        socket.write(`--${boundary}`);
-        socket.write('\r\n');
-        socket.write(`Content-Disposition: form-data; name="file";filename="${basename}"`);
-        socket.write('\r\n');
-        socket.write(`Content-Type: ${mimeType}`);
-        socket.write('\r\n\r\n');
+        stream.write(`--${boundary}`);
+        stream.write('\r\n');
+        stream.write(`Content-Disposition: form-data; name="files";filename="${basename}"`);
+        stream.write('\r\n');
+        stream.write(`Content-Type: ${mimeType}`);
+        stream.write('\r\n\r\n');
 
         let bytesRead = 0;
         do {
             bytesRead = fs.readSync(fd, buffer, 0, buffer.length, null);
             // slicing so we make sure not to write any null bytes
-            socket.write(buffer.slice(0, bytesRead));
+            stream.write(buffer.slice(0, bytesRead));
         } while (bytesRead > 0);
 
-        socket.write('\r\n');
-
         fs.close(fd);
+
+        stream.write('\r\n');
     });
 
-    socket.write('\r\n');
+    stream.write('\r\n');
 }
 
 /**
@@ -168,14 +169,14 @@ function upload(options: UploadOptions): void {
     // descriptor for all of them right at the beginning, including their MIME
     // type. Assuming files are encoded...
     const artifacts: {[key: string]: [number, string]} = {};
-    for (const file in options.localArtifacts) {
+    for (const file of options.localArtifacts) {
         const mimeType = MIME_TYPES[path.extname(file)];
 
         if (mimeType === undefined) {
             throw new Error(`unable to determine MIME type: ${file}`);
         }
 
-        artifacts[path.basename(file)] = [fs.openSync(file, 'rb'), mimeType];
+        artifacts[path.basename(file)] = [fs.openSync(file, 'r'), mimeType];
     }
 
     // define a RFC1341 boundary
@@ -185,7 +186,7 @@ function upload(options: UploadOptions): void {
 
     // open the socket and set a callback for the response from the server
     // thank you Bitbucket for keeping your API stable. 🙏
-    const socket = https.request({
+    const stream = https.request({
         hostname: HOSTNAME,
         path: `/2.0/repositories/${options.workspace}/${options.repoSlug}/downloads`,
         method: 'POST',
@@ -199,23 +200,24 @@ function upload(options: UploadOptions): void {
         res.on('data', chunk => responseData += chunk);
 
         res.on('end', () => {
-            console.log(`${HOSTNAME}:`, responseData);
+            if (responseData) console.log(`${HOSTNAME}:`, responseData);
         });
     });
 
     console.log(`sending body to ${HOSTNAME}...`);
 
     try {
-        writeMultipartData(socket, boundary, artifacts, options.bufferSize);
+        writeMultipartData(stream, boundary, artifacts, options.bufferSize);
     }
 
     catch(e: any) {
         console.error('error writing multipart data:', e);
-        socket.abort();
+        stream.abort();
     }
 
-    socket.write(`--${boundary}--`);
-    socket.end();
+    stream.write(`--${boundary}--`);
+
+    stream.end();
 };
 
 if (require.main === module) {
