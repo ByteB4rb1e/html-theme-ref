@@ -55,7 +55,7 @@ else ifndef BITBUCKET_ACCESS_TOKEN
 	$(error BITBUCKET_ACCESS_TOKEN environment variable not set)
 endif
 	# BITBUCKET_ACCESSS_TOKEN is picked up through the environment
-	npm run archive -- --repo-slug $($BITBUCKET_REPO_SLUG) \
+	npm run archive -- --repo-slug $(BITBUCKET_REPO_SLUG) \
                        --workspace $(BITBUCKET_WORKSPACE) \
                        dist/*
 
