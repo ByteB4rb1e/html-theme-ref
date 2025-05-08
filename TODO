@@ -1,0 +1,120 @@
+# TODO List for html-theme-ref
+
+This is a poor-man's issue tracker. I am not primarily a GitHub user so don't
+want to commit to their issue tracking feature, but my primary SVC service
+provider (Bitbucket) only offers paid integration into their issue tracker
+(Jira). I don't have the time (and patience) at the moment to analyze the best
+approach, so this file will have to suffice.
+
+It's a very simple concept: Track any issues (features, bugfixes, hotfixes) in
+here, assign a sequential number to it and use that number when branching.
+
+I will try to develop a format so that I can parse the file later on, should I
+decide to migrate to a real issue tracker. It's probably going to be Bugzilla,
+but for that my html-theme-ref project needs to stabilize first.
+
+## Format Specification
+
+The file uses Markdown conventions for formatting headers and other text block
+entitities, but SHOULD NOT be considered a Markdown file. That's why it has no
+definitive file extension.
+
+Each issue entry follows a structured format for easier parsing and future
+migration.  Issues MUST be **appended** to this file and never moved, to
+preserve Git diffing.
+
+### Issue Format
+
+```
+
+ID: [ISSUE-NUMBER]
+Type: [feature/bugfix/hotfix]
+Title: [Short title]
+Status: [open/in-progress/done/hold/cancelled]
+Priority: [low/medium/high]
+Created: [YYYY-MM-DD]
+Description: [Detailed explanation]
+
+---
+```
+
+- ISSUE-NUMBERs must be sequential
+- truncation of description must be indentended so that every line starts at the
+  same column
+- issues must be started with two LF
+- issues must be terminated with two LF, then `---`
+- issues may have a free-text field (epilog), which must be started with two LF.
+
+## Issues
+
+ID: 1
+Type: feature
+Title: Node.js | html-webpack-plugin - using wrong webpack hooks
+Status: open
+Priority: low
+Created: 2025-04-21
+Description: - affects `webpack-dev-server`
+             - results in changes applied to watched files not emitting updated
+               outputs
+             - likely an issue with incorrect usage of hooks for proper cache
+               handling
+             - suggested workaround did not work
+             - [remediated](https://github.com/ByteB4rb1e/html-theme-ref/blob/7c15371f6ab72bb1dd69388888d0d8beffc65082/webpack.config.doc.js#L465)
+               by instructing `webpack-dev-middleware` to write to disk, instead
+               of handling changes solely in memory. This was my intended
+               behavior anyway...
+
+https://github.com/jantimon/html-webpack-plugin/issues/1768
+---
+
+ID: 2
+Type: bugfix
+Title: Node.js | ts-node - unable to correctly parse with ESM options
+Status: open
+Priority: medium
+Created: 2025-04-21
+Description: - affects `npx ts-node scripts/*.ts`
+             - results in scripts not being executed with error `TypeError
+               [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".ts" for
+               ...`, if `type` in package.json is set to `module`.
+             - suggested workaround does not work
+             - (accidentally)
+               [remediated](https://github.com/ByteB4rb1e/html-theme-ref/blob/4a2344e7f1a278063527bbeb2a2ef5281498b633/package.json#L9)
+               by setting `type` in `package.json` to `commonjs`. This is
+               contradictory to the entire build environment being authored as
+               ESM, but since I'm explicitly defining each module as an ESM
+               module through the `.mjs` extension name (you've been hit by,
+               you've been struck by a smooooth criminal 🕺), [this will
+               override the default
+               behavior](https://nodejs.org/download/release/v18.20.8/docs/api/modules.html#enabling)
+               of the `package.json`
+
+https://github.com/TypeStrong/ts-node/issues/2122
+---
+
+ID: 3
+Type: bugfix
+Title: Node.js | jest - deprecated dependencies
+Status: open
+Priority: high
+Created: 2025-04-21
+Description: - affects `npm install`.
+             - results in deprecation notice during `npm install`.
+             - [remediated](https://github.com/ByteB4rb1e/html-theme-ref/blob/cb642ec72b4488ddfc8dfb63fe977e85d9c28506/package.json#L35)
+               by adding override in `package.json` for upgrading child
+               dependencies.
+             - i will ditch `jest` altogether as I don't see behavior-driven
+               development/testing fitting for the project. I've tested quite a
+               few testing frameworks in the Javascript ecosystem and none
+               really satisfied my expectations. I'm looking for a
+               straightforward Beck/xUnit framework, which must at least be
+               authored in ESM6 to utilizie object-orientation for synatactial
+               structure. All the JavaScript testing frameworks I came across
+               all use the "workaround" syntax that was established because of
+               CommonJS. I will implement my own test runner for this as I don't
+               require more than runners, suites, cases, fixtures and
+               assertions. I treat DOM objects as I would treat any other
+               fixture, so don't (yet) see any reason why that shouldn't also
+               suffice for browser testing...
+
+https://github.com/jestjs/jest/issues/15503

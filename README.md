@@ -133,50 +133,7 @@ information about the tools used, R(Their)FM.
 
 ## Issues
 
-### Vendor
-
-#### [Node.js | jest - deprecated dependencies](https://github.com/jestjs/jest/issues/15503)
-
-- affects `npm install`.
-- results in deprecation notice during `npm install`.
-- [remediated](https://github.com/ByteB4rb1e/html-theme-ref/blob/cb642ec72b4488ddfc8dfb63fe977e85d9c28506/package.json#L35)
-  by adding override in `package.json` for upgrading child dependencies.
-- i will ditch `jest` altogether as I don't see behavior-driven
-  development/testing fitting for the project. I've tested quite a few testing
-  frameworks in the Javascript ecosystem and none really satisfied my
-  expectations. I'm looking for a straightforward Beck/xUnit framework, which
-  must at least be authored in ESM6 to utilizie object-orientation for
-  synatactial structure. All the JavaScript testing frameworks I came across all
-  use the "workaround" syntax that was established because of CommonJS. I will
-  implement my own test runner for this as I don't require more than runners,
-  suites, cases, fixtures and assertions. I treat DOM objects as I would treat
-  any other fixture, so don't (yet) see any reason why that shouldn't also
-  suffice for browser testing...
-
-#### [Node.js | html-webpack-plugin - using wrong webpack hooks](https://github.com/jantimon/html-webpack-plugin/issues/1768)
-
-- affects `webpack-dev-server`
-- results in changes applied to watched files not emitting updated outputs
-- likely an issue with incorrect usage of hooks for proper cache handling
-- suggested workaround did not work
-- [remediated](https://github.com/ByteB4rb1e/html-theme-ref/blob/7c15371f6ab72bb1dd69388888d0d8beffc65082/webpack.config.doc.js#L465)
-  by instructing `webpack-dev-middleware` to write to disk, instead of handling
-  changes solely in memory. This was my intended behavior anyway...
-
-#### [Node.js | ts-node - unable to correctly parse with ESM options](https://github.com/TypeStrong/ts-node/issues/2122)
-
-- affects `npx ts-node scripts/*.ts`
-- results in scripts not being executed with error `TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".ts" for ...`, 
-  if `type` in package.json is set to `module`.
-- suggested workaround does not work
-- (accidentally)
-  [remediated](https://github.com/ByteB4rb1e/html-theme-ref/blob/4a2344e7f1a278063527bbeb2a2ef5281498b633/package.json#L9)
-  by setting `type` in `package.json` to `commonjs`. This is contradictory to
-  the entire build environment being authored as ESM, but since I'm explicitly
-  defining each module as an ESM module through the `.mjs` extension name
-  (you've been hit by, you've been struck by a smooooth criminal 🕺), [this will
-  override the default behavior](https://nodejs.org/download/release/v18.20.8/docs/api/modules.html#enabling)
-  of the `package.json`
+Check out my [issue tracker](TODO)
 
 <a name="licensing"></a>
 ## Licensing
