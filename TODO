@@ -124,7 +124,7 @@ https://github.com/jestjs/jest/issues/15503
 ID: 4
 Type: bugfix
 Title: error when uploading Bitbucket download artifacts
-Status: open
+Status: in-progress
 Priority: high
 Created: 2025-05-08
 Description: when uploading the distribution via
