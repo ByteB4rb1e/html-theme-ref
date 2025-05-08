@@ -40,6 +40,9 @@ build/debug: package.json webpack.config.debug.mjs src/
 ifdef OUTPUT_PATH
 	$(warning OUTPUT_PATH set, overriding output path)
 endif
+ifdef WATCH
+	$(warning CI set, tests skipped and requiring manual execution)
+endif
 	npm run build:debug $(if $(OUTPUT_PATH),-- --output-path=$(OUTPUT_PATH))
 
 publish: package.json dist
