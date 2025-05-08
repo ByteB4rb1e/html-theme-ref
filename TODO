@@ -146,3 +146,17 @@ Description: when uploading the distribution via
              all of this.
 
 ---
+
+ID: 5
+Type: feature
+Title: remove Makefile watch target in favor of build option
+Status: open
+Priority: low
+Created: 2025-05-08
+Description: There currently is an explicit target for watching the build. This
+             is redundant and should be an option for the targets where it
+             applies instead. E.g. `build/debug` should have an option for
+             watching, as should `uat`, so that `make build/debug WATCH=1` is
+             possible.
+
+---
