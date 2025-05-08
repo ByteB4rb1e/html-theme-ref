@@ -7,7 +7,7 @@
 import * as child_process from 'node:child_process';
 import * as fs from 'node:fs';
 import * as https from 'node:https';
-import { ClientRequest } from 'node:http';
+import * as http from 'node:http';
 import * as path from 'node:path';
 import * as util from 'node:util';
 
@@ -27,6 +27,7 @@ const DEFAULT_BUFFER_SIZE: number = 2 * Math.pow(1024, 2);
 const MIME_TYPES: {[key: string]: string} = {
     '.tar': 'application/x-tar',
     '.tgz': 'application/x-gtar',
+    '.txt': 'text/plain',
 }
 
 export interface UploadOptions {
@@ -50,6 +51,14 @@ export interface UploadOptions {
      * size of buffer for reading local files.
      */
     bufferSize: number,
+}
+
+/**
+ * options for providing a mocking HTTP server for debugging
+ */
+export interface UploadDebugOptions {
+    hostname: string,
+    port: string,
 }
 
 /**
@@ -84,6 +93,12 @@ Options:
     -b, --buffer-size  - size of buffer (in Mebibytes) to read local files into
                          [default:${DEFAULT_BUFFER_SIZE / Math.pow(1024, 2)}]
 
+    --debug-hostname   - hostname of an alternate server for debugging via HTTP,
+                         instead of HTTPS [default:none]
+
+    --debug-port       - port number of an alternate server for debugging via
+                         HTTP [default:none]
+
     -h, --help         - display this help message
 
 Environment variables:
@@ -111,7 +126,7 @@ References:
     changes every week... https://datatracker.ietf.org/doc/html/rfc1341
  */
 export function writeMultipartData(
-    stream: ClientRequest,
+    stream: http.ClientRequest,
     boundary: string,
     data: {[key: string]: [number, string]},
     bufferSize?: number,
@@ -123,11 +138,12 @@ export function writeMultipartData(
 
         const buffer = Buffer.alloc(bufferSize);
 
-        stream.write(`--${boundary}`);
+        // no preamble (see chapter 7.1.2 of RFC1341)
         stream.write('\r\n');
-        stream.write(`Content-Disposition: form-data; name="files";filename="${basename}"`);
-        stream.write('\r\n');
-        stream.write(`Content-Type: ${mimeType}`);
+
+        stream.write(`\r\n--${boundary}`);
+        stream.write(`\r\nContent-Disposition: form-data; name="files";filename="${basename}"`);
+        stream.write(`\r\nContent-Type: ${mimeType}`);
         stream.write('\r\n\r\n');
 
         let bytesRead = 0;
@@ -136,13 +152,12 @@ export function writeMultipartData(
             // slicing so we make sure not to write any null bytes
             stream.write(buffer.slice(0, bytesRead));
         } while (bytesRead > 0);
-
         fs.close(fd);
-
-        stream.write('\r\n');
     });
+}
 
-    stream.write('\r\n');
+function onResponse() {
+
 }
 
 /**
@@ -155,7 +170,10 @@ export function writeMultipartData(
  * {@link https://developer.atlassian.com/cloud/bitbucket/rest/api-group-downloads/#api-repositories-workspace-repo-slug-downloads-post
  * | Bitbucket Cloud API Reference}
  */
-function upload(options: UploadOptions): void {
+function upload(
+    options: UploadOptions,
+    debug?: UploadDebugOptions,
+): void {
     options = {
         ...{
             bufferSize: DEFAULT_BUFFER_SIZE,
@@ -182,17 +200,19 @@ function upload(options: UploadOptions): void {
     // define a RFC1341 boundary
     const boundary = `boundary-${Math.random().toString(16).slice(2)}`;
 
-    console.log(`connecting and sending header to ${HOSTNAME}...`);
+    console.log(`connecting and sending headers to ${HOSTNAME}...`);
 
     // open the socket and set a callback for the response from the server
     // thank you Bitbucket for keeping your API stable. 🙏
-    const stream = https.request({
-        hostname: HOSTNAME,
+    const stream = (debug ? http : https).request({
+        hostname: debug ? debug.hostname : HOSTNAME,
+        port: debug ? debug.port : undefined,
         path: `/2.0/repositories/${options.workspace}/${options.repoSlug}/downloads`,
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${options.accessToken}`,
-            'Content-Type': `multipart/form-data; boundary=${boundary}`
+            'Content-Type': `multipart/form-data; boundary=${boundary}`,
+            'Expect': '100-continue'
         }
     }, (res) => {
         let responseData = '';
@@ -204,20 +224,22 @@ function upload(options: UploadOptions): void {
         });
     });
 
-    console.log(`sending body to ${HOSTNAME}...`);
+    stream.on('continue', () => {
+        console.log(`sending body to ${HOSTNAME}...`);
 
-    try {
-        writeMultipartData(stream, boundary, artifacts, options.bufferSize);
-    }
+        try {
+            writeMultipartData(stream, boundary, artifacts, options.bufferSize);
+        }
 
-    catch(e: any) {
-        console.error('error writing multipart data:', e);
-        stream.abort();
-    }
+        catch(e: any) {
+            console.error('error writing multipart data:', e);
+            stream.abort();
+        }
 
-    stream.write(`--${boundary}--`);
+        stream.write(`\r\n--${boundary}--`);
 
-    stream.end();
+        stream.end();
+    });
 };
 
 if (require.main === module) {
@@ -262,6 +284,12 @@ if (require.main === module) {
             'buffer-size': {
                 type: 'string',
                 short: 'b'
+            },
+            'debug-port': {
+                type: 'string',
+            },
+            'debug-hostname': {
+                type: 'string',
             },
             'help': {
                 type: 'boolean',
@@ -313,11 +341,17 @@ if (require.main === module) {
         process.exit(1);
     }
 
-    upload({
-        localArtifacts: positionals,
-        workspace: values['workspace']!,
-        repoSlug: values['repo-slug']!,
-        accessToken: values['access-token']!,
-        bufferSize: values['buffer-size'] as unknown as number,
-    });
+    upload(
+        {
+            localArtifacts: positionals,
+            workspace: values['workspace']!,
+            repoSlug: values['repo-slug']!,
+            accessToken: values['access-token']!,
+            bufferSize: values['buffer-size'] as unknown as number,
+        },
+        (values['debug-hostname'] && values['debug-port']) ? {
+            hostname: values['debug-hostname'],
+            port: values['debug-port']
+        } : undefined
+    );
 }
