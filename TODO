@@ -118,3 +118,31 @@ Description: - affects `npm install`.
                suffice for browser testing...
 
 https://github.com/jestjs/jest/issues/15503
+
+---
+
+ID: 4
+Type: bugfix
+Title: error when uploading Bitbucket download artifacts
+Status: open
+Priority: high
+Created: 2025-05-08
+Description: when uploading the distribution via
+             `scripts/bitbucket-cloud-upload.ts`, the upload works and is shown
+             in Bitbucket Cloud, but the data is scrambled. Not even the magic
+             byte of the gzipped tarball is correct. I suspect this has
+             something to do with the buffering of the Node.js http module, but
+             am not sure. It might make sense to test this with the streaming
+             function of the module, instead of taking care of buffering myself.
+             Though this MUST only be for testing purposes. I refuse to accept
+             that manual buffer handling isn't working in connection with the
+             module. I'm currently creating a debugging server so that I can
+             inspect the transmission in detail. It's a little involved, as
+             other things like HTTP chunking come into play... See
+             https://bitbucket.org/byteb4rb1e/py-utils, for more information.
+             Yes, I could just resort to using curl, but the whole point of the
+             script is not to have any dependencies outside of the Node.js
+             ecosystem. It also turned out to be a very good exercise debugging
+             all of this.
+
+---
