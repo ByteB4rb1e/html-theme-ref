@@ -141,6 +141,17 @@ information about the tools used, R(Their)FM.
 - results in deprecation notice during `npm install`.
 - [remediated](https://github.com/ByteB4rb1e/html-theme-ref/blob/cb642ec72b4488ddfc8dfb63fe977e85d9c28506/package.json#L35)
   by adding override in `package.json` for upgrading child dependencies.
+- i will ditch `jest` altogether as I don't see behavior-driven
+  development/testing fitting for the project. I've tested quite a few testing
+  frameworks in the Javascript ecosystem and none really satisfied my
+  expectations. I'm looking for a straightforward Beck/xUnit framework, which
+  must at least be authored in ESM6 to utilizie object-orientation for
+  synatactial structure. All the JavaScript testing frameworks I came across all
+  use the "workaround" syntax that was established because of CommonJS. I will
+  implement my own test runner for this as I don't require more than runners,
+  suites, cases, fixtures and assertions. I treat DOM objects as I would treat
+  any other fixture, so don't (yet) see any reason why that shouldn't also
+  suffice for browser testing...
 
 #### [Node.js | html-webpack-plugin - using wrong webpack hooks](https://github.com/jantimon/html-webpack-plugin/issues/1768)
 
