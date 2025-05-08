@@ -150,7 +150,7 @@ Description: when uploading the distribution via
 ID: 5
 Type: feature
 Title: remove Makefile watch target in favor of build option
-Status: open
+Status: in-progress
 Priority: low
 Created: 2025-05-08
 Description: There currently is an explicit target for watching the build. This
