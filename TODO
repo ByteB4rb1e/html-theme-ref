@@ -164,9 +164,9 @@ Description: There currently is an explicit target for watching the build. This
 ID: 6
 Type: feature
 Title: DIN 5001 letter document
-Status: open
-Priority: in-progress
-Created: 2025-05-08
+Status: in-progress
+Priority: low
+Created: 2025-06-06
 Description: document abstraction for relatively positioned documents of
              standardized German letter format DIN 5008
 
