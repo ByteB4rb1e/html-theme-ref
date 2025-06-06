@@ -1,0 +1,61 @@
+.document.document-din-5008 {
+
+    textarea {
+        resize: none;
+    }
+
+    input, textarea {
+        border: none;
+        background-color: transparent;
+        display: inline-block;
+        font-family: inherit;
+        font-size: inherit;
+    }
+
+    main > input, main > textarea {
+        width: 100%;
+    }
+
+    margin-top: 15.151%;
+    margin-left: 11.904%;
+    margin-right: 9.5238%;
+
+    > header, > .header {
+        display: flex;
+        justify-content: space-between;
+
+        > .left > .sender, > .right {
+            font-size: 0.8rem;
+        }
+
+        > .left {
+            flex-basis: 45.714%;
+            display: flex;
+            flex-direction: column;
+
+            > textarea.sender {
+                display: inline;
+                vertical-align: bottom;
+            }
+
+            > .receiver {
+                flex-grow: 1;
+            }
+        }
+
+        > .right {
+            flex-basis: 42.857%;
+
+            > label {
+                width: 100%;
+                display: flex;
+                justify-content: stretch;
+
+                > input {
+                }
+            }
+        }
+    }
+
+}
+
