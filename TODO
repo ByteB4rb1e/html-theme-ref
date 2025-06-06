@@ -160,3 +160,14 @@ Description: There currently is an explicit target for watching the build. This
              possible.
 
 ---
+
+ID: 6
+Type: feature
+Title: DIN 5001 letter document
+Status: open
+Priority: in-progress
+Created: 2025-05-08
+Description: document abstraction for relatively positioned documents of
+             standardized German letter format DIN 5008
+
+---
