@@ -175,7 +175,7 @@ Description: document abstraction for relatively positioned documents of
 ID: 7
 Type: feature
 Title: Implement Sea Harvest Clone
-Status: open
+Status: in-progress
 Priority: high
 Created: 2025-06-07
 Description: I've decided on cloning an existing HTML theme instead of coming up
