@@ -171,3 +171,19 @@ Description: document abstraction for relatively positioned documents of
              standardized German letter format DIN 5008
 
 ---
+
+ID: 7
+Type: feature
+Title: Implement Sea Harvest Clone
+Status: open
+Priority: high
+Created: 2025-06-07
+Description: I've decided on cloning an existing HTML theme instead of coming up
+             with my own, or keeping everything plain. I've tended towards
+             keeping it plain, to emphasize my focus on explicit functionality
+             rather than design. But good design in itself is functional so I'd
+             rather clone a well-designed theme as a starter to have more time
+             to focus on real functionality. I've stumbled upon the Sea Harvest
+             Australia web site, which, in my eyes, is well-designed.
+
+---
