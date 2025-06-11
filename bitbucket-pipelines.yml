@@ -1,4 +1,4 @@
-image: administratrix/cicd:latest
+image: byteb4rb1e/build-node23-ubuntu:latest
 definitions:
     caches:
         vendor: vendor
@@ -39,7 +39,7 @@ definitions:
             artifacts:
                 - build/debug/**/*
             script:
-                - make build/debug CI=1
+                - make build/debug
         - step: &build-release
             name: Build (Release)
             caches:
@@ -48,7 +48,7 @@ definitions:
             artifacts:
                 - build/release/**/*
             script:
-                - make build/release CI=1
+                - make build/release
         - step: &build-doc
             name: Build (Doc)
             caches:
@@ -57,7 +57,7 @@ definitions:
             artifacts:
                 - build/doc/**/*
             script:
-                - make build/doc CI=1
+                - make build/doc
         - step: &dist
             name: Package
             caches:
@@ -66,7 +66,16 @@ definitions:
             artifacts:
                 - dist/*
             script:
-                - make dist CI=1
+                - make dist
+        - step: &archive
+            name: Archive
+            caches:
+                - node
+                - vendor
+            artifacts:
+                - dist/*
+            script:
+                - make .archive
 pipelines:
     default:
         - step: *configure
@@ -87,3 +96,4 @@ pipelines:
                     - step: *build-doc
                     - step: *build-release
             - step: *dist
+            - step: *archive
