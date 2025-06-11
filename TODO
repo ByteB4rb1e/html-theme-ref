@@ -191,7 +191,7 @@ Description: I've decided on cloning an existing HTML theme instead of coming up
 ID: 8
 Type: feature
 Title: Rework build system interface and packaging
-Status: open
+Status: in-progress
 Priority: high
 Created: 2025-06-11
 Description: Standardize packaging and remove abstractions from build interface.
