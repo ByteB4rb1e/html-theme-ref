@@ -187,3 +187,15 @@ Description: I've decided on cloning an existing HTML theme instead of coming up
              Australia web site, which, in my eyes, is well-designed.
 
 ---
+
+ID: 8
+Type: feature
+Title: Rework build system interface and packaging
+Status: open
+Priority: high
+Created: 2025-06-11
+Description: Standardize packaging and remove abstractions from build interface.
+             Also, add workaround for issue 4 to allow for publishing archives
+             immediately.
+
+---
