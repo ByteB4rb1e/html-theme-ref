@@ -1,19 +1,29 @@
+import * as buffer from 'node:buffer';
 import * as child_process from 'node:child_process';
+import * as crypto from 'node:crypto';
 import * as fs from 'node:fs';
+import {FileHandle, open} from 'node:fs/promises';
 import * as os from 'node:os';
 import * as path from 'node:path';
 import * as util from 'node:util';
+import * as zlib from 'node:zlib';
+// dependency of pacote, which is dependency of npm cli
+import { Pack } from 'tar';
+import { Minipass } from 'minipass';
+import { WriteStream } from '@isaacs/fs-minipass';
+const { pipeline } = require('node:stream');
 
 const SCRIPTNAME = path.basename(__filename);
 
 const DEFAULT_INPUT_DIR: string = path.join('build', 'release');
 const DEFAULT_OUTPUT_DIR: string = 'dist';
-const DEFAULT_ASSETS_INDEX_BASENAME: string = 'assets.txt';
+const DEFAULT_ASSETS_INDEX_BASENAME: string = 'package.sha256sums';
 const DEFAULT_DOCS_DIRNAME: string = '';
+const DEFAULT_HASHING_ALGORITHM: string = 'sha256';
 
 function usage(exec: string): string {
     return `
-Usage: ${exec} [OPTIONS] [INPUT] [OUTPUT] [DOCS]
+Usage: ${exec} [OPTIONS] [INPUT]
 
 Create a tarball from a package
 
@@ -44,25 +54,37 @@ Positional arguments:
     INPUT  - directory of build output used as the input for packaging
              [default:${DEFAULT_INPUT_DIR}]
 
-    OUTPUT - directory to output the package (tarball) into
-             [default:${DEFAULT_OUTPUT_DIR}]
-
-    DOCS   - directory containing documentation, which is used as an auxiliary
-             input for packaging alongside INPUT. It is expected that the
-             directory has the same layout as INPUT. If the directory does not
-             follow the same layout, supply -d/--docs-dirname
-
 Options:
 
-    -a, --assets-index-basename - basename of assets index. This is the output 
-                                  file that contains a listing of all the output
-                                  files which are meant to be used by the system
-                                  integrating the HTML theme.
-                                  [default:${DEFAULT_ASSETS_INDEX_BASENAME}]
+    --digest-basename  - basename of assets index. This is the output 
+                         file that contains a listing of all the output files
+                         which are meant to be used by the system integrating
+                         the HTML theme.
+                         [default:${DEFAULT_ASSETS_INDEX_BASENAME}]
 
-    -d, --docs-dirname          - name of directory to output documentation into
-                                  (if supplied through DOCS).
-                                  [default:${DEFAULT_DOCS_DIRNAME}]
+    --docs-dirname     - name of directory to output documentation into
+                         (if supplied through DOCS).
+                         [default:${DEFAULT_DOCS_DIRNAME}]
+
+    --pack-destination - name of directory to output documentation into
+                         (if supplied through DOCS).
+                         [default:${DEFAULT_OUTPUT_DIR}]
+
+    --input-docs PATH  - directory containing documentation, which is used as an
+                         auxiliary input for packaging alongside INPUT. It is
+                         expected that the directory has the same layout as
+                         INPUT. If the directory does not follow the same
+                         layout, supply --docs-dirname
+
+    --input-test-reports  - 
+
+    -h, --help            - 
+
+Examples:
+
+    ${exec}
+
+    ${exec} --pack-destination dist
 `;
 }
 
@@ -70,8 +92,10 @@ export interface PackageOptions {
     inputDir: string,
     outputDir: string,
     docsInputDir: string | null,
-    assetsIndexBasename: string,
+    testReportsInputDir: string | null,
+    digestBasename: string,
     docsOutputDirname: string,
+    hashingAlgorithm: string,
 }
 
 /**
@@ -99,30 +123,63 @@ export function* listFiles(
     };
 };
 
-/**
- * strip a npm package specification
- *
- * @param specPath - path to specification (package.json)
- */
-export function stripPackageSpec(specPath: string): object {
-    const packageSpec = JSON.parse(fs.readFileSync(
-        specPath,
-        { encoding: 'utf-8' }
-    ));
 
-    return {
-        name: packageSpec.name,
-        version: packageSpec.version,
-        description: packageSpec.description,
-        author: packageSpec.author,
-        private: true
-    };
+export async function hashFile(
+    name: string,
+    algorithm?: string,
+    bufsize?: number
+): Promise<string> {
+    algorithm = algorithm ?? 'sha256';
+    bufsize = bufsize ?? 1000 * 1024;
+    const buf = buffer.Buffer.alloc(bufsize);
+    const fh: FileHandle = await open(name);
+    const hash: crypto.Hash = crypto.createHash(algorithm);
+
+    while(true) {
+        //buf.byteOffset = 0;
+        const bytesRead = (await fh.read(buf)).bytesRead;
+
+        if (!bytesRead) break;
+        else if (bytesRead === bufsize) hash.update(buf);
+        else hash.update(buf.subarray(0, bytesRead));
+    }
+
+    await fh.close();
+    return hash.digest('hex');
 }
+
+
+function copyFiles(
+    files: string[],
+    outputDir: string,
+    cwd?: string,
+): void {
+    cwd = cwd ?? process.cwd();
+    outputDir = path.resolve(cwd, outputDir);
+
+    files.forEach((target) => {
+        // TODO: sync file stats
+        fs.cpSync(
+            path.resolve(cwd, target),
+            (files.length == 1) ? outputDir : path.join(outputDir, target),
+            {
+                recursive: true,
+                filter: (src: string, dest: string) => {
+                    console.log(
+                        `cp: ${path.relative(cwd, src)} > ${dest}`
+                    );
+                    return true;
+                }
+            }
+        );
+    });
+}
+
 
 /**
  * TODO: write TSDOC block comment
  */
-function pack(options: PackageOptions): void {
+async function pack(options: PackageOptions): Promise<void> {
     var cwd = process.cwd();
 
     if (path.dirname(options.inputDir) == path.basename(options.inputDir)) {
@@ -140,183 +197,207 @@ function pack(options: PackageOptions): void {
     ));
 
     console.log(`${SCRIPTNAME}: copying metadata...`);
-    [
-        'LICENSE',
-        'README.md',
-    ].forEach((target) => {
-        // TODO: sync file stats
-        fs.cpSync(
-            path.join(cwd, target),
-            path.join(tempDir, target),
-            {
-                filter: (src: string, dest: string) => {
-                    console.log(
-                        `cp: ${path.relative(cwd, src)} > ${dest}`
-                    );
-                    return true;
-                }
-            }
-        );
-    });
+    copyFiles(['LICENSE', 'README.md'], tempDir);
 
     if (options.docsInputDir) {
-        console.log(`${SCRIPTNAME}: docs supplied, will copy...`);
-        // TODO: sync file stats
-        fs.cpSync(
-            path.join(cwd, options.docsInputDir),
+        console.log(`${SCRIPTNAME}: copying docs...`);
+        copyFiles(
+            [path.join(cwd, options.docsInputDir)],
             path.join(tempDir, options.docsOutputDirname),
-            {
-                recursive: true,
-                filter: (src: string, dest: string) => {
-                    console.log(
-                        `cp: ${path.relative(cwd, src)} > ${dest}`
-                    );
-                    return true;
-                }
-            }
-        );
-    }
-
-    else {
-        console.log(`${SCRIPTNAME}: no docs supplied, will not copy...`);
+        )
     }
 
     console.log(`${SCRIPTNAME}: copying build output...`);
-    fs.cpSync(
-        options.inputDir,
+    copyFiles(
+        [options.inputDir],
         tempDir,
-        {
-            recursive: true,
-            filter: (src: string, dest: string) => {
-                console.log(
-                    `cp: ${path.relative(cwd, src)} > ${dest}`
-                );
-                return true;
-            }
-        }
     );
 
     console.log(
-        `${SCRIPTNAME}: generating index (\'${options.assetsIndexBasename}\') of assets...`
+        `${SCRIPTNAME}: generating digest: ${options.digestBasename}...`
     );
     // TODO: sync file stats
     var fd: number = fs.openSync(
-        path.join(tempDir, options.assetsIndexBasename), 
+        path.join(tempDir, options.digestBasename), 
         'w'
     );
-    for (const match of listFiles(options.inputDir)) {
-        fs.writeSync(fd, `${match.replace(path.win32.sep, path.posix.sep)}\n`);
+
+    const packageSpec = JSON.parse(fs.readFileSync(
+        'package.json',
+        { encoding: 'utf-8' }
+    ));
+
+    if (!fs.existsSync(options.outputDir)) {
+        fs.mkdirSync(options.outputDir);
     }
+
+    const archivePath = path.join(
+        options.outputDir,
+        `${packageSpec.name}-${packageSpec.version}.tar`
+    );
+    console.info(`${SCRIPTNAME}: creating archive: \'${archivePath}\'...`);
+    const p = new Pack({cwd: tempDir, gzip: false});
+    const stream = new WriteStream(archivePath, {mode: 0o666});
+
+    p.pipe(stream as unknown as Minipass.Writable);
+
+    const promise = new Promise<void>((res, rej) => {
+        stream.on('error', rej)
+        stream.on('close', res)
+        p.on('error', rej)
+    })
+
+    for (const match of listFiles(tempDir)) {
+        if (match === options.digestBasename) continue;
+
+        const normpath = match.replace(path.win32.sep, path.posix.sep);
+        const hash = await hashFile(
+            path.join(tempDir, match),
+            options.hashingAlgorithm
+        );
+
+        console.debug(`tar: ${match}: ${hash} (${options.hashingAlgorithm})`);
+        fs.writeSync(fd, `${hash} *${normpath}\n`);
+        p.add(match);
+    }
+
     fs.closeSync(fd);
 
-    console.log(
-        `${SCRIPTNAME}: generating npm package specification \'package.json\'...`
-    );
-    fs.writeFileSync(
-        path.join(tempDir, 'package.json'),
-        JSON.stringify(stripPackageSpec('package.json'), null, 4)
-    );
+    console.log(`tar: ${options.digestBasename}`);
+    p.add(options.digestBasename);
 
-    const outputDir = path.resolve(cwd, options.outputDir);
-    console.log(`mkdir: ${outputDir}`);
-    fs.mkdirSync(outputDir, { recursive: true });
+    await p.end();
+    await promise;
 
-    console.log(`npm: pack --pack-destination ${outputDir}`);
-    child_process.execSync(
-        `npm pack --pack-destination ${outputDir}`,
-        {
-            cwd: tempDir,
-            stdio: "inherit"
-        }
-    );
-}
+    const archiveHashPath = `${archivePath}.${options.hashingAlgorithm}`;
+    console.log(`${options.hashingAlgorithm}: ${archiveHashPath}`);
+    const archiveHash = await hashFile(archivePath, options.hashingAlgorithm);
+    fs.writeFileSync(archiveHashPath, archiveHash);
 
-if (require.main === module) {
-    // minimum number of positional arguments
-    const minPosargs: number = 2;
-
-    // default values of options arguments
-    const defaultOptargs: {[key: string]: any} = {
-        'assets-index-basename': DEFAULT_ASSETS_INDEX_BASENAME,
-        'docs-dirname': DEFAULT_DOCS_DIRNAME,
-    };
-
-    // required options arguments
-    const requiredOptargs: string[] = [
-        'docs-dirname',
-        'assets-index-basename',
-    ];
-
-    // the interface of parseArgs is very simple and Typescript does not play
-    // nicely with it, since it expects any reassignments to be of the same type
-    // as the primitives parseArgs allows. That's why I'm doing a lot of `as
-    // unknown as whatever` kung-fu down below. The node runtime doesn't care
-    // anyway...
-    var {values, positionals} = util.parseArgs({
-        options: {
-            'docs-dirname': {
-                type: 'string',
-                short: 'd'
-            },
-            'assets-index-basename': {
-                type: 'string',
-                short: 'a'
-            },
-            'help': {
-                type: 'boolean',
-                short: 'h'
-            }
-        },
-        allowPositionals: true
-    });
-
-    // there's probably a prettier way as to not have to reassign this just to
-    // make tsc happy, but I'm a little exhausted...
-    const args: string[] = positionals;
-
-    if (values.help != undefined) {
-        const exec = [
-            'ts-node',
-            path.join(path.basename(__dirname), path.basename(__filename))
-        ].join(' ');
-        console.log(usage(exec));
-        process.exit(1);
-    }
-
-    values = {...defaultOptargs, ...values};
-
-    var errors: boolean = false;
-
-    for (var requiredOptarg of requiredOptargs) {
-        if (!(requiredOptarg in values)) {
-            console.error(
-                `error: missing options argument: --${requiredOptarg}`
+    const cArchivePath = `${archivePath}.gz`;
+    console.log(`gzip: ${archivePath} > ${cArchivePath}`);
+    await pipeline(
+        fs.createReadStream(archivePath),
+        zlib.createGzip(),
+        fs.createWriteStream(`${cArchivePath}`),
+        async () => {
+            const cArchiveHashPath = `${cArchivePath}.${options.hashingAlgorithm}`;
+            console.log(`${options.hashingAlgorithm}: ${cArchiveHashPath}`);
+            const cArchiveHash = await hashFile(
+                cArchivePath,
+                options.hashingAlgorithm
             );
-            errors = true;
+            fs.writeFileSync(cArchiveHashPath, cArchiveHash);
+            console.log(`rm: ${archivePath}`);
+            fs.rmSync(archivePath);
         }
-    }
-
-    if (positionals.length < minPosargs) {
-        if (positionals.length == 1) {
-            positionals.push(DEFAULT_OUTPUT_DIR);
-        }
-
-        else if (positionals.length == 0) {
-            positionals.push(DEFAULT_INPUT_DIR);
-            positionals.push(DEFAULT_OUTPUT_DIR);
-        }
-    }
-
-    if (errors != false) {
-        console.log(`supply -h/--help, for more information.`)
-        process.exit(1);
-    }
-
-    pack({
-        inputDir: positionals[0],
-        outputDir: positionals[1],
-        docsInputDir: positionals[2] ?? null,
-        assetsIndexBasename: values['assets-index-basename']!,
-        docsOutputDirname: values['docs-dirname']!,
-    });
+    );
 }
+
+(async (): Promise<void> => {
+    if (require.main === module) {
+        // minimum number of positional arguments
+        const minPosargs: number = 2;
+
+        // default values of options arguments
+        const defaultOptargs: {[key: string]: any} = {
+            'digest-basename': DEFAULT_ASSETS_INDEX_BASENAME,
+            'docs-dirname': DEFAULT_DOCS_DIRNAME,
+            'hashing-algorithm': DEFAULT_HASHING_ALGORITHM,
+            'pack-destination': DEFAULT_OUTPUT_DIR,
+        };
+
+        // required options arguments
+        const requiredOptargs: string[] = [
+            'docs-dirname',
+            'digest-basename',
+            'hashing-algorithm',
+            'pack-destination',
+        ];
+
+        // the interface of parseArgs is very simple and Typescript does not play
+        // nicely with it, since it expects any reassignments to be of the same type
+        // as the primitives parseArgs allows. That's why I'm doing a lot of `as
+        // unknown as whatever` kung-fu down below. The node runtime doesn't care
+        // anyway...
+        var {values, positionals} = util.parseArgs({
+            options: {
+                'docs-dirname': {
+                    type: 'string',
+                },
+                'digest-basename': {
+                    type: 'string',
+                },
+                'hashing-algorithm': {
+                    type: 'string',
+                },
+                'pack-destination': {
+                    type: 'string',
+                },
+                'input-test-reports': {
+                    type: 'string',
+                },
+                'input-docs': {
+                    type: 'string',
+                },
+                'help': {
+                    type: 'boolean',
+                    short: 'h'
+                }
+            },
+            allowPositionals: true
+        });
+
+        // there's probably a prettier way as to not have to reassign this just to
+        // make tsc happy, but I'm a little exhausted...
+        const args: string[] = positionals;
+
+        if (values.help != undefined) {
+            const exec = [
+                'ts-node',
+                path.join(path.basename(__dirname), path.basename(__filename))
+            ].join(' ');
+            console.log(usage(exec));
+            process.exit(1);
+        }
+
+        values = {...defaultOptargs, ...values};
+
+        var errors: boolean = false;
+
+        for (var requiredOptarg of requiredOptargs) {
+            if (!(requiredOptarg in values)) {
+                console.error(
+                    `error: missing options argument: --${requiredOptarg}`
+                );
+                errors = true;
+            }
+        }
+
+        if (positionals.length < minPosargs) {
+            if (positionals.length == 1) {
+                positionals.push(DEFAULT_OUTPUT_DIR);
+            }
+
+            else if (positionals.length == 0) {
+                positionals.push(DEFAULT_INPUT_DIR);
+                positionals.push(DEFAULT_OUTPUT_DIR);
+            }
+        }
+
+        if (errors != false) {
+            console.log(`supply -h/--help, for more information.`)
+            process.exit(1);
+        }
+
+        await pack({
+            inputDir: positionals[0],
+            outputDir: values['pack-destination']!,
+            docsInputDir: values['input-docs'] ?? null,
+            testReportsInputDir: values['input-test-reports'] ?? null,
+            digestBasename: values['digest-basename']!,
+            docsOutputDirname: values['docs-dirname']!,
+            hashingAlgorithm: values['hashing-algorithm']!,
+        });
+    }
+})()

@@ -640,9 +640,13 @@ class StyleDocumentationPlugin {
 }
 
 export default (env, argv) => {
+    if (env.target && !['script', 'style'].includes(env.target)) {
+        throw new Error("target must be empty, 'script' or 'style'");
+    }
 
     const parentConfig = argv.mode === 'development' ? debugConfig : releaseConfig;
     const config = parentConfig(env, argv);
+
 
     // doc is the build target (directory) and docs the subdirectory under the target
     // directory, since all the other assets will have a directory in there as well.
@@ -655,14 +659,18 @@ export default (env, argv) => {
         "outDir": path.join(config.output.path, 'script')
     };
 
-    config.plugins.push(new ScriptDocumentationPlugin({
-        configPath: './typedoc.json',
-        configOverrides: {
-            out: path.join('build', 'doc', 'docs', 'script'),
-        }
-    }));
+    if (!env.target || env.target === 'script') {
+        config.plugins.push(new ScriptDocumentationPlugin({
+            configPath: './typedoc.json',
+            configOverrides: {
+                out: path.join('build', 'doc', 'docs', 'script'),
+            }
+        }));
+    }
 
-    config.plugins.push(new StyleDocumentationPlugin());
+    if (!env.target || env.target === 'style') {
+        config.plugins.push(new StyleDocumentationPlugin());
+    }
 
     return {
         ...config,
@@ -674,7 +682,7 @@ export default (env, argv) => {
         },
         devServer: {
             compress: true,
-            open: false,
+            open: true,
             hot: true,
             liveReload: true,
             watchFiles: ['src/**/*.scss', 'src/**/*.ts'],

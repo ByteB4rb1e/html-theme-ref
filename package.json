@@ -1,7 +1,7 @@
 {
-    "name": "html-theme-ref",
+    "name": "html-theme-web2",
     "version": "1.0.0",
-    "description": "Tiara's HTML Theming Reference",
+    "description": "Tiara's HTML Reference Theme",
     "author": "Tiara Rodney <t.rodney@administratrix.de>",
     "engines": {
         "node": ">= 20.11.0"
@@ -24,6 +24,7 @@
         "sass-loader": "^16.0.5",
         "stylelint": "^16.18.0",
         "stylelint-config-standard-scss": "^14.0.0",
+        "tar": "^7.4.3",
         "ts-jest": "^29.3.2",
         "ts-loader": "^9.5.2",
         "ts-node": "^10.9.2",
@@ -40,17 +41,16 @@
         }
     },
     "scripts": {
-        "doc": "webpack -c webpack.config.doc.mjs",
-        "build:debug": "webpack -c webpack.config.debug.mjs",
-        "build:release": "webpack",
-        "dist": "ts-node -P tsconfig.node.json scripts/npm-pack.ts build/release dist",
-        "uat": "webpack serve -c webpack.config.doc.mjs --mode=development",
-        "watch": "webpack -c webpack.config.debug.mjs --watch",
-        "test:script": "jest",
-        "lint:style": "stylelint -c .stylelintrc.json src/style --output-file test-reports/style/lint",
-        "lint:script": "eslint src/script --output-file test-reports/script/lint",
-        "publish_": "ts-node -P tsconfig.node.json scripts/publish.ts",
-        "archive": "ts-node -P tsconfig.node.json scripts/bitbucket-cloud-upload.ts"
+        ".archive": "ts-node -P tsconfig.node.json scripts/bitbucket-cloud-upload.ts",
+        "build/debug": "webpack -c webpack.config.debug.mjs",
+        "build/release": "webpack",
+        "build/doc/script": "webpack -c webpack.config.doc.mjs --env target=script",
+        "build/doc/style": "webpack -c webpack.config.doc.mjs --env target=style",
+        "dist": "ts-node -P tsconfig.node.json scripts/npm-pack.ts",
+        "test-reports/lint/script": "eslint src/script --output-file test-reports/lint/script",
+        "test-reports/lint/style": "stylelint -c .stylelintrc.json src/style --output-file test-reports/lint/style",
+        "test-reports/unit/script": "jest",
+        ".user-acceptance": "webpack serve -c webpack.config.doc.mjs --mode=development --env target=style"
     },
     "dependencies": {
         "boxicons": "^2.1.4"
